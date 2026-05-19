@@ -39,3 +39,72 @@ body {
     text-decoration: none;
     margin-right: 30px;
 }
+
+footer {
+    background-color: #800020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.parte-cima-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 100px;
+}
+
+.parte-cima-indv {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.parte-cima-indv img {
+    width: 100px;
+}
+
+.parte-cima-indv-txt {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.parte-baixo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.parte-baixo-indv {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    gap: 10px;
+}
+
+.parte-baixo-indv a {
+    color: white;
+    text-decoration: none;
+}
+
+.parte-baixo-indv h3 {
+    color: #e79128;
+}
+
+.linha-footer {
+    background-color: #ffd767;
+    width: 2px;
+    height: 170px;
+    margin-inline: 100px;
+}
