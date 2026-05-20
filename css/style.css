@@ -133,7 +133,7 @@ body {
     margin-bottom: 30px;
 }
 
-.texto button {
+.btn-solicitar {
     width: 240px;
     padding: 15px;
     border: none;
@@ -144,6 +144,13 @@ body {
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase; 
+    transition: all 0.3s ease;
+}
+
+.btn-solicitar:hover {
+    background: #e79128;
+    transform: translateY(-4px) scale(1.05); 
+    box-shadow: 0 8px 20px rgba(231, 145, 40, 0.5); 
 }
 
 .imagem {
@@ -188,6 +195,8 @@ body {
     justify-content: space-between; 
     align-items: center;
     box-decoration-break: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .card img {
@@ -195,6 +204,17 @@ body {
     height: 55px; 
     object-fit: contain; 
     margin-top: 10px;
+}
+
+.card:hover {
+    background: #e79128;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .card p {
