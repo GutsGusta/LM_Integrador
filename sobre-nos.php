@@ -14,7 +14,10 @@
 
     <main>
         <div class="pagina-sobre-nos">
-            <h1 class="titulo">A História e o Compromisso da LM</h1>
+            <div class="titulo">
+                <h1>LM - Liderança e Mão de Obra</h1>
+                <h4>A História e o Compromisso da LM</h4>
+            </div>
             <div class="parte-pagina-1">
                 <div class="pagina-txt">
                     <h2>Construindo pontes no Coração de São Paulo</h2>
