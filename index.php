@@ -1,30 +1,34 @@
 <?php
-    
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>LM</title>
 </head>
+
 <body>
-     <header>
+    <header>
         <nav class="header__nav">
             <div class="nav__left">
                 <a href="#home"><img src="uploads/Logo-LM.png" alt="LM" class="logo"></a>
-                
+
             </div>
             <div class="nav__center">
                 <a class="nav__link" href="#sobre">Sobre nós</a>
-                <a class="nav__link" href="#servicos">Serviços</a> 
+                <a class="nav__link" href="#servicos">Serviços</a>
                 <a class="nav__link" href="#equipe">Equipe</a>
             </div>
 
             <div class="nav__right">
-                <a href="#"><button class="icon-btn"><img src="uploads/image (1).png" width="30" height="30"></button></a>
+                <a href="#"><button class="icon-btn"><img src="uploads/image (1).png" width="30"
+                            height="30"></button></a>
             </div>
         </nav>
     </header>
@@ -46,9 +50,9 @@
         <h2>Nossos Serviços</h2>
         <div class="cards">
             <a href="#">
-            <div class="card">
-                <img src="uploads/construcao.png" alt="Construção">
-                <p>Construção</p>
+                <div class="card">
+                    <img src="uploads/construcao.png" alt="Construção">
+                    <p>Construção</p>
                 </div>
             </a>
             <a href="#">
@@ -60,7 +64,7 @@
             <a href="#">
                 <div class="card">
                     <img src="uploads/reforma.png" alt="Reforma">
-                 <p>Reforma</p>
+                    <p>Reforma</p>
                 </div>
             </a>
             <a href="#">
@@ -74,23 +78,91 @@
                 <div class="card">
                     <img src="uploads/pintura.png" alt="Pintura">
                     <p>Pintura</p>
-            </div>
+                </div>
             </a>
-            
+
+        </div>
+
+    </section>
+
+    <section class="sobre-breve">
+        <img src="uploads/pedreiros.jpg" alt="pedreiros" style="width: 50%;">
+
+        <div class="texto-sobre">
+            <h2>LM</h2>
+            <p>A ponte definitiva entre o seu projeto e os melhores profissionais.
+                Esqueça os atrasos e as dores de cabeça. A LM (Liderança em Mão de Obra) é a plataforma que conecta você
+                a
+                pedreiros, mestres de obra e serventes de forma prática e objetiva. Nós estruturamos e organizamos a mão
+                de
+                obra do seu projeto de forma estratégica, garantindo qualidade, previsibilidade e o melhor
+                custo-benefício.
+            </p>
         </div>
     </section>
 
-   <section class="empresas">
-    <h2>Empresas Parceiras</h2>
-    <div class="empresas-logos" id="logos">
-        <img src="uploads/SENAI_logo.png" alt="SENAI">
-        <img src="uploads/mrv.png" alt="MRV">
-        <img src="uploads/makita.png" alt="Makita">
-        <img src="uploads/leroy_logo.png" alt="Leroy">
-    </div>
-</section>
+    <section class="empresas">
+        <h2>Empresas Parceiras</h2>
+        <div class="empresas-logos" id="logos">
+            <img src="uploads/SENAI_logo.png" alt="SENAI">
+            <img src="uploads/mrv.png" alt="MRV">
+            <img src="uploads/makita.png" alt="Makita">
+            <img src="uploads/leroy_logo.png" alt="Leroy">
+        </div>
+    </section>
 
-       <footer>
+    <section class="avaliacoes">
+        <h2>O que nossos clientes dizem</h2>
+
+        <div class="cards-avaliacoes">
+
+            <div class="card-avaliacao">
+                <div class="cliente-info">
+                    <img src="uploads/joao_silva.png" alt="joao silva">
+                    <div>
+                        <h3>João Silva</h3>
+                        <span class="servico">Elétrica</span>
+                    </div>
+                </div>
+                <div class="estrelas">★★★★★</div>
+                <p class="comentario">"Serviço impecável, prazo cumprido e equipe muito profissional. Super recomendo!"
+                </p>
+            </div>
+
+            <div class="card-avaliacao">
+                <div class="cliente-info">
+                    <img src="uploads/maria_souza.png" alt="Maria Souza">
+                    <div>
+                        <h3>Maria Souza</h3>
+                        <span class="servico">Pintura</span>
+                    </div>
+                </div>
+                <div class="estrelas">★★★★★</div>
+                <p class="comentario">"Encontrei os melhores profissionais pela LM. Resultado final superou as
+                    expectativas!"</p>
+            </div>
+
+            <div class="card-avaliacao">
+                <div class="cliente-info">
+                    <img src="uploads/carlos_oliveira.jpg" alt="Carlos Oliveira">
+                    <div>
+                        <h3>Carlos Oliveira</h3>
+                        <span class="servico">Reforma</span>
+                    </div>
+                </div>
+                <div class="estrelas">★★★★★</div>
+                <p class="comentario">"Organização e qualidade do início ao fim. A plataforma facilitou muito minha
+                    vida!"</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="funcionarios-mes">
+
+    </section>
+
+    <footer>
         <div class="parte-cima-footer">
             <div class="parte-cima-indv">
                 <img src="uploads/pessoas.png">
@@ -153,10 +225,11 @@
         </div>
     </footer>
 
-   <script>
-    const faixa = document.getElementById('logos');
+    <script>
+        const faixa = document.getElementById('logos');
 
-    faixa.innerHTML += faixa.innerHTML;
-   </script>
+        faixa.innerHTML += faixa.innerHTML;
+    </script>
 </body>
+
 </html>
