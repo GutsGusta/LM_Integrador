@@ -23,7 +23,7 @@ body {
   width: 100%;
               
   display: grid;
-  grid-template-columns: auto 1fr auto;  
+  grid-template-columns: 1fr auto 1fr;  
   align-items: center;
 
   padding: 15px 60px;
@@ -33,10 +33,12 @@ body {
 
 .logo{
   height: 40px;
+  justify-self: start;
 }
 
 .nav__center{
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 25px;
 }
@@ -68,6 +70,7 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .btn-login{
@@ -119,7 +122,9 @@ body {
 .hero {
     display: flex;
     min-height: 420px;
-    overflow: hidden; 
+    overflow: hidden;
+    border-top: solid 2px #e79128;
+    border-bottom: solid 2px #e79128; 
 }
 
 .texto {
@@ -192,6 +197,7 @@ body {
     background: #800020;
     padding: 40px;
     text-align: center;
+    border-bottom: solid 2px #e79128;
 }
 
 .servicos h2 {
@@ -259,6 +265,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
+    border-bottom: solid 2px #e79128;
 }
 
 .texto-sobre {
@@ -292,6 +299,7 @@ body {
     padding: 40px;
     text-align: center;
     overflow: hidden; 
+    border-bottom: solid 2px #e79128;
 }
 
 .empresas h2 {
@@ -405,6 +413,7 @@ body {
     padding: 60px 40px;
     text-align: center;
     background-color: #676767;
+    border-bottom: solid 2px #e79128;
 }
 
 .melhores-funcionarios h2 {
@@ -444,7 +453,6 @@ body {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 14px;
-    border: 2px solid #ffd767;
 }
 
 .card-funcionario h3 {

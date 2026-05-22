@@ -36,7 +36,7 @@
             <div class="card-funcionario">
                 <img src="uploads/ricardo_martins.png" alt="Ricardo Martins">
                 <h3>Ricardo Martins</h3>
-                <div class="estrelas">★★★★★</div>
+                <div class="estrelas">★★★★</div>
                 <span class="especialidade">Pedreiro</span>
             </div>
 
@@ -46,6 +46,8 @@
                 <div class="estrelas">★★★★★</div>
                 <span class="especialidade">Servente</span>
             </div>
+
+            
 
         </div>
     </section>
