@@ -37,7 +37,7 @@
                     <h2>Nosso Diferencial</h2>
                     <p>O verdadeiro motor da LM é o nosso rigoroso ecossistema de profissionais. Sabemos que uma grande estrutura só se mantém firme com uma base sólida, e é por isso que cobrimos toda a Região Metropolitana de São Paulo com uma rede selecionada de serventes prestativos, pedreiros altamente técnicos e mestres de obras com larga experiência em liderança de canteiros. Não somos apenas um catálogo de contatos; nós realizamos uma curadoria criteriosa de cada profissional que carrega a nossa bandeira. Quando a LM faz a indicação e o gerenciamento, o cliente tem a certeza de que está recebendo profissionais que entendem a dinâmica da Grande São Paulo e que possuem a competência necessária para executar desde pequenos reparos residenciais até grandes obras comerciais.</p>
                 </div>
-                <img src="uploads/trabalhadoress.jpg">
+                <img src="uploads/trabalhadores.jpg">
             </div>
             <div class="parte-pagina-2">
                 <img src="uploads/aperto-mao.avif">

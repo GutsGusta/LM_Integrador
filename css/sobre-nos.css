@@ -126,10 +126,11 @@ body {
 }
 
 .titulo {
-    color: #ffd767;
+    color: #e79128;
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
+    font-size: 25px;
 }
 
 .pagina-sobre-nos h2 {
