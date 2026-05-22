@@ -21,7 +21,7 @@
 
             </div>
             <div class="nav__center">
-                <a class="nav__link" href="#sobre">Sobre nós</a>
+                <a class="nav__link" href="sobre-nos.php">Sobre nós</a>
                 <a class="nav__link" href="#servicos">Serviços</a>
                 <a class="nav__link" href="#equipe">Equipe</a>
             </div>
@@ -158,8 +158,33 @@
         </div>
     </section>
 
-    <section class="funcionarios-mes">
+    <section class="melhores-funcionarios">
+        <h2>Melhores Funcionários</h2>
 
+        <div class="cards-funcionarios">
+
+            <div class="card-funcionario">
+                <img src="uploads/ana_pereira.png" alt="Ana Pereira">
+                <h3>Ana Pereira</h3>
+                <div class="estrelas">★★★★★</div>
+                <span class="especialidade">Mestre de Obra</span>
+            </div>
+
+            <div class="card-funcionario">
+                <img src="uploads/ricardo_martins.png" alt="Ricardo Martins">
+                <h3>Ricardo Martins</h3>
+                <div class="estrelas">★★★★★</div>
+                <span class="especialidade">Pedreiro</span>
+            </div>
+
+            <div class="card-funcionario">
+                <img src="uploads/fernando_lopes.png" alt="Fernando Lopes">
+                <h3>Fernando Lopes</h3>
+                <div class="estrelas">★★★★★</div>
+                <span class="especialidade">Servente</span>
+            </div>
+
+        </div>
     </section>
 
     <footer>

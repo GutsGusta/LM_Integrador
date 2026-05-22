@@ -10,6 +10,7 @@ body {
     font-family: 'Poppins', arial, sans-serif;
     background-color: #676767;
 }
+/* HEADER */
 
 .titulo {
     font-size: 40px;
@@ -95,6 +96,8 @@ body {
   background: #5b5a5b;
 }
 
+/* HOME SEÇÃO HERO */
+
 .hero {
     display: flex;
     min-height: 420px;
@@ -165,6 +168,8 @@ body {
     object-fit: cover;
 }
 
+/* SEÇÃO SERVIÇOS */
+
 .servicos {
     background: #800020;
     padding: 40px;
@@ -185,7 +190,7 @@ body {
 }
 
 .card {
-    background: #f5ad32;
+    background: #e79128;
     width: 135px; 
     min-height: 145px; 
     padding: 15px 10px;
@@ -207,7 +212,7 @@ body {
 }
 
 .card:hover {
-    background: #e79128;
+    background: #f5ad32;
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
@@ -229,6 +234,8 @@ body {
     text-decoration: none;
     color: inherit;
 }
+
+/* SEÇÃO SOBRE */
 
 .sobre-breve {
     display: flex;
@@ -259,6 +266,9 @@ body {
     font-size: 20px;
     align-items: center;
 }
+
+/* EMRPESAS PARCEIRAS */
+
 .empresas {
     background: #1a1a1a;
     padding: 40px;
@@ -279,6 +289,10 @@ body {
     animation: rolar 8s linear infinite;
 }
 
+@keyframes rolar {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 .empresas-logos img {
     height: 60px;
     object-fit: contain;
@@ -290,6 +304,8 @@ body {
     filter: grayscale(0%);      
 }
 
+/* FEEDBACKS */
+
 .avaliacoes {
     padding: 60px 40px;
     text-align: center;
@@ -297,7 +313,7 @@ body {
 }
 
 .avaliacoes h2 {
-    color: #f5ad32;
+    color: #e79128;
     font-size: 36px;
     margin-bottom: 40px;
 }
@@ -365,11 +381,82 @@ body {
     margin: 0;
 }
 
-@keyframes rolar {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+/* MELHORES FUNCIONÁRIOS */
+
+.melhores-funcionarios {
+    padding: 60px 40px;
+    text-align: center;
+    background-color: #676767;
 }
 
+.melhores-funcionarios h2 {
+    color: #e79128;
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.cards-funcionarios {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card-funcionario {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 36px 40px;
+    width: 200px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-funcionario:hover {
+    background-color: #333333;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-funcionario img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 14px;
+    border: 2px solid #ffd767;
+}
+
+.card-funcionario h3 {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 8px;
+}
+
+.card-funcionario .estrelas {
+    color: #ffd767;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-funcionario .especialidade {
+    background-color: #ffd767;
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+/* FOOTER */
 
 footer {
     background-color: #800020;
@@ -421,16 +508,21 @@ footer {
     justify-content: center;
     flex-direction: column;
     padding: 30px;
-    gap: 10px;
+    gap: 10px;  
 }
 
 .parte-baixo-indv a {
     color: white;
     text-decoration: none;
+    transition: ease 0.3s transform;
+}
+
+.parte-baixo-indv a:hover {
+    transform: scale(1.1);
 }
 
 .parte-baixo-indv h3 {
-    color: #E79128;
+    color: #e79128;
 }
 
 .linha-footer {
