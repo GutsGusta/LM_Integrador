@@ -80,22 +80,40 @@ body {
 }
 
 .icon-btn{
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border: none;
-  border-radius: 14px;
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  font-size: 22px;
-  transition: 0.3s;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 14px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s;
 }
 
 .icon-btn:hover{
-  background: #5b5a5b;
+    background: #5b5a5b;
 }
 
+.btn-orcamento {
+    background-color: transparent;
+    border: 1.5px solid #800020;
+    color: #800020;
+    padding: 8px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-orcamento:hover {
+    background-color: #800020;
+    color: white;
+}
 /* HOME SEÇÃO HERO */
 
 .hero {
