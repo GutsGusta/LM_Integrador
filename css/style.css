@@ -456,15 +456,15 @@ body {
 }
 
 .card-funcionario h3 {
-    min-height: 48px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0 0 8px;
 }
 
 .card-funcionario .estrelas {

@@ -26,12 +26,15 @@
 
         <div class="cards-funcionarios">
 
-            <div class="card-funcionario">
-                <img src="uploads/ana_pereira.png" alt="Ana Pereira">
-                <h3>Ana Pereira</h3>
-                <div class="estrelas">★★★★★</div>
-                <span class="especialidade">Mestre de Obra</span>
-            </div>
+
+            <a href="desc.php">
+                <div class="card-funcionario">
+                    <img src="uploads/ana_pereira.png" alt="Ana Pereira">
+                    <h3>Ana Pereira</h3>
+                    <div class="estrelas">★★★★★</div>
+                    <span class="especialidade">Mestre de Obra</span>
+                </div>
+            </a>
 
             <div class="card-funcionario">
                 <img src="uploads/ricardo_martins.png" alt="Ricardo Martins">
@@ -47,7 +50,7 @@
                 <span class="especialidade">Servente</span>
             </div>
 
-            
+
 
         </div>
     </section>
