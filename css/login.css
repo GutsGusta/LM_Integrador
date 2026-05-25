@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', arial, sans-serif;
+    background-color: #676767;
+}
+/* HEADER */
+
+.titulo {
+    font-size: 40px;
+    text-align: center;
+}
+
+.header__nav{
+  position: fixed;
+  top: 0;
+  width: 100%;
+              
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;  
+  align-items: center;
+
+  padding: 15px 60px;
+  background: #1a1a1a;
+  z-index: 999;
+}
+
+.logo{
+  height: 40px;
+  justify-self: start;
+}
+
+.nav__center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.nav__link{
+  color: #fbf4e5;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 0;
+  height: 3px;
+  background: #E79128;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+.nav__right{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.btn-login{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.icon-btn{
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 14px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.icon-btn:hover{
+    background: #5b5a5b;
+}
+
+.btn-orcamento {
+    background-color: transparent;
+    border: 1.5px solid #800020;
+    color: #800020;
+    padding: 8px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-orcamento:hover {
+    background-color: #800020;
+    color: white;
+}
+
+/* Formulario login */
