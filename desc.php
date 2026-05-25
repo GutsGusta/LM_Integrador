@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/desc.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
-    <title>Funcionario | LM</title>
+    <title>Funcionário | LM</title>
 </head>
 <body>
     <?php
@@ -18,7 +18,6 @@
  
         <div class="perfil-container">
  
-            <!-- COLUNA ESQUERDA -->
             <div class="coluna-esq">
  
                 <div class="card-foto">
@@ -51,7 +50,6 @@
  
             </div>
  
-            <!-- COLUNA DIREITA -->
             <div class="coluna-dir">
  
                 <div class="card-info">
