@@ -118,9 +118,9 @@ body {
     padding: 24px 0;
     flex-shrink: 0;
     position: fixed;
-    top: 80px;
+    top: 70px;
     left: 0;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 70px);
 }
 
 .sidebar-perfil {
