@@ -6,7 +6,7 @@
         </div>
         <div class="nav__center">
             <a class="nav__link" href="sobre-nos.php">Sobre nós</a>
-            <a class="nav__link" href="#servicos">Serviços</a>
+            <a class="nav__link" href="servicos.php">Serviços</a>
             <a class="nav__link" href="funcionarios.php">Funcionários</a>
         </div>
 
