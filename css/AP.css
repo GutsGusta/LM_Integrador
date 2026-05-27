@@ -124,7 +124,7 @@ main {
 .pagina-principal {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 50px;
 }
 
@@ -173,7 +173,8 @@ main {
 
 .area-botoes {
     display: flex;
-    
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -196,7 +197,7 @@ main {
 .dashbord {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -233,7 +234,52 @@ main {
 
 .quadrados-indv {
     background-color: #8f8e8e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     border-radius: 10px;
     text-align: center;
     width: 450px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 8);
+}
+
+.quadrados-indv h2 {
+    margin-top: 10px;
+}
+
+/* PÁGINA DOS DADOS */
+
+.dados {
+    background-color: #8f8e8e;
+    border-radius: 10px;
+}
+
+.dados button {
+    background-color: #800020;
+    color: white;
+    border: none;
+    font-size: 20px;
+    width: 100px;
+}
+
+.campo-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.campo input {
+    border: none;
+    font-size: 25px;
+    width: 300px;
+    border-radius: 5px;
 }

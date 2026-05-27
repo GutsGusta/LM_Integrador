@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/area-profissional.css">
+    <link rel="stylesheet" href="css/AP.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>Área de Trabalho</title>
 </head>
@@ -56,18 +56,18 @@
                     </div>
                 
                     <div class="estatisticas-indv">
-                        <img src="uploads/fatura.png">
+                        <img src="uploads/Certo.png">
                         <div class="estatisticas-txt">
-                            <h4>Texto</h4>
+                            <h4>Concluídos</h4>
                             <h1>15</h1>
-                            <p>Descrição</p>
+                            <p>Serviços Concluídos</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="quadrados">
                     <div class="quadrados-indv">
-                        <h3>Últimos Ganhos</h3>
+                        <h2>Últimos Ganhos</h2>
                         <div class="linha"></div>
                         <table>
                             <tr>
@@ -78,12 +78,12 @@
                             <tr>
                                 <td>Reforma Cozinha</td>
                                 <td>R$6700,00</td>
-                                <td>Pix</td>
+                                <td style="color: #138205;">Pix</td>
                             </tr>
                         </table>
                     </div>
                     <div class="quadrados-indv">
-                        <h3>Próximos Serviços</h3>
+                        <h2>Próximos Serviços</h2>
                         <div class="linha"></div>
                         <table>
                             <tr>
