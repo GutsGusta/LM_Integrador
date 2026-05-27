@@ -17,6 +17,7 @@
         <img src="uploads/icone_usuario.png">       
         <input type="email" id="email" name="email" placeholder="Email">
         <input type="password" id="Senha" name="Senha" placeholder="Senha">
+        <a href="#">Não tem conta ainda? Cadastre-se aqui</a>
         <button type="submit">Entrar</button>
     </form>
 </div>

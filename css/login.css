@@ -160,7 +160,11 @@ body {
   border: none;
    font-size: 17px;
 }
-
+.formulario-login a{
+  color: #fff;
+  text-decoration: none;
+  font-size: 9.8px;
+}
 .titulo{
   color:#1d1d1d;
   font-size: 55px;

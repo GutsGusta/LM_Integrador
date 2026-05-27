@@ -12,7 +12,7 @@
 
         <div class="nav__right">
             <button class="btn-orcamento">Solicitar Orçamento</button>
-            <a href="#"><button class="icon-btn"><img src="uploads/image (1).png" width="30" height="30"></button></a>
+            <a href="login.php"><button class="icon-btn"><img src="uploads/image (1).png" width="30" height="30"></button></a>
         </div>
     </nav>
 </header>
