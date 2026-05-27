@@ -20,7 +20,7 @@
                     <div class="pessoal-txt">
                         <h2>Nome Profissional</h2>
                         <p>Email Profissional</p>
-                        <p>Cidade e UF</p>
+                        <p>Cidade</p>
                     </div>
                 </div>
 
