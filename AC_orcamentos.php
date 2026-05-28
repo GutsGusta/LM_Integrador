@@ -37,7 +37,7 @@
                 Meus Orçamentos
             </a>
 
-            <a href="AC_agendamentos.php" class="nav-item">
+            <a href="AC_agenda.php" class="nav-item">
                 <i class="fa-solid fa-calendar"></i>
                 Meus Agendamentos
             </a>

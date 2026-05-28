@@ -23,7 +23,7 @@ body {
   width: 100%;
               
   display: grid;
-  grid-template-columns: auto 1fr auto;  
+  grid-template-columns: 1fr auto 1fr;  
   align-items: center;
 
   padding: 15px 60px;
@@ -33,10 +33,12 @@ body {
 
 .logo{
   height: 40px;
+  justify-self: start;
 }
 
 .nav__center{
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 25px;
 }
@@ -68,6 +70,7 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .btn-login{
