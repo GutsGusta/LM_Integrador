@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/AP.css">
+    <link rel="stylesheet" href="css/AP-dados.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>Meus Dados</title>
 </head>
@@ -37,7 +37,7 @@
         
             <div class="dados-principais">
                 <h4>Meus Dados:</h4>
-                <form action="" class="dados">
+                <form action="" method="POST" class="dados">
                     <div class="campo-horizontal">
                         <div class="campo">
                             <p>Nome Completo:</p>
@@ -75,6 +75,72 @@
                                 <option value="">Mestre de Obras</option>
                             </select>
                         </div>
+                    </div>
+                    <button type="submit">Salvar</button>
+                </form>
+            </div>
+            <div class="dados-principais">
+                <h4>Serviços Qualificados:</h4>
+                <form action="" method="POST" class="servicos">
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
                     </div>
                     <button type="submit">Salvar</button>
                 </form>

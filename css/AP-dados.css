@@ -197,57 +197,92 @@ main {
     width: 100px;
 }
 
-.dashbord {
+.dados-principais {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-right: 250px;
-}
-
-.estatisticas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 70px;
-}
-
-.estatisticas-indv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.estatisticas-indv img {
-    width: 100px;
-}
-
-.estatisticas-txt {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
 }
 
-.quadrados {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-.quadrados-indv {
+.dados {
     background-color: #8f8e8e;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     border-radius: 10px;
-    text-align: center;
-    width: 450px;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 8);
+    width: 650px;
 }
 
-.quadrados-indv h2 {
-    margin-top: 10px;
+.dados button {
+    background-color: #800020;
+    color: white;
+    border: none;
+    font-size: 20px;
+    width: 400px;
+    height: 35px;
+    border-radius: 5px;
+    margin: 25px;
+}
+
+.campo-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.campo p {
+    margin-top: 15px;
+}
+
+.campo input {
+    border: none;
+    font-size: 25px;
+    width: 300px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.campo select {
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.servicos {
+    background-color: #8f8e8e;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: min-content;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-right: 20px;
+    padding: 20px;
+    gap: 15px;
+}
+
+.servicos button {
+    background-color: #800020;
+    color: white;
+    border: none;
+    font-size: 20px;
+    width: 400px;
+    height: 35px;
+    border-radius: 5px;
+    margin: 25px;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
 }

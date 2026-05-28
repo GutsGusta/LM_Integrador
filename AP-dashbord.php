@@ -40,18 +40,18 @@
                     <div class="estatisticas-indv">
                         <img src="uploads/fatura.png">
                         <div class="estatisticas-txt">
-                            <h4>Texto</h4>
-                            <h1>15</h1>
-                            <p>Descrição</p>
+                            <h4>Serviços</h4>
+                            <h1>67</h1>
+                            <p>Total do Mês</p>
                         </div>
                     </div>
                         
                     <div class="estatisticas-indv">
-                        <img src="uploads/fatura.png">
+                        <img src="uploads/relogio.png">
                         <div class="estatisticas-txt">
-                            <h4>Texto</h4>
+                            <h4>Em Andamento</h4>
                             <h1>15</h1>
-                            <p>Descrição</p>
+                            <p>Serviços não Concluídos</p>
                         </div>
                     </div>
                 
@@ -73,32 +73,28 @@
                             <tr>
                                 <th>Serviço</th>
                                 <th>Valor Total</th>
-                                <th>Método Pagamento</th>
                             </tr>
                             <tr>
                                 <td>Reforma Cozinha</td>
-                                <td>R$6700,00</td>
-                                <td style="color: #138205;">Pix</td>
+                                <td>R$6700,00</td>                               
                             </tr>
                         </table>
                     </div>
                     <div class="quadrados-indv">
                         <h2>Próximos Serviços</h2>
                         <div class="linha"></div>
-                        <table>
-                            <tr>
-                                <th>Data</th>
-                                <th>Serviço</th>
-                                <th>Endereço</th>
-                                <th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>14/07/2026</td>
-                                <td>Reforma no Banheiro</td>
-                                <td>R. Boa Vista, 67</td>
-                                <td>Aguardando</td>
-                            </tr>
-                        </table>
+                        <div class="campo-servico">
+                            <div class="data">
+                                <p>Dia</p>
+                                <p>Mês</p>
+                            </div>
+                            <div class="info">
+                                <h4>Serviço</h4>
+                                <p>Hora</p>
+                                <h5>Endereço</h5>
+                            </div>
+                            <p>Status</p>
+                        </div>
                     </div>
                 </div>
             </div>
