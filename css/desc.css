@@ -272,6 +272,22 @@ body {
     margin: 0;
 }
 
+.servicos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-servico {
+    background: rgba(231, 145, 40, 0.12);
+    border: 1px solid rgba(231, 145, 40, 0.3);
+    color: #e79128;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+}
+
 /* AVALIAÇÕES */
 .avaliacoes-lista {
     display: flex;
