@@ -15,8 +15,8 @@
 
 <body>
     <?php
-        require_once "partials/header.php";
-    ?> 
+    require_once "partials/header.php";
+    ?>
 
     <section id="home" class="hero">
         <div class="texto">
@@ -34,37 +34,37 @@
     <section class="servicos">
         <h2>Nossos Serviços</h2>
         <div class="cards">
-            <a href="#">
-                <div class="card">
-                    <img src="uploads/construcao.png" alt="Construção">
-                    <p>Construção</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="card">
-                    <img src="uploads/eletrica.png" alt="Elétrica">
-                    <p>Elétrica</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="card">
-                    <img src="uploads/reforma.png" alt="Reforma">
-                    <p>Reforma</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="card">
-                    <img src="uploads/instalacao.png" alt="Instalação">
-                    <p>Instalação</p>
-                </div>
-            </a>
 
-            <a href="#">
-                <div class="card">
-                    <img src="uploads/pintura.png" alt="Pintura">
-                    <p>Pintura</p>
-                </div>
-            </a>
+            <div class="card">
+                <img src="uploads/construcao.png" alt="Construção">
+                <p>Construção</p>
+            </div>
+
+
+            <div class="card">
+                <img src="uploads/eletrica.png" alt="Elétrica">
+                <p>Elétrica</p>
+            </div>
+
+
+            <div class="card">
+                <img src="uploads/reforma.png" alt="Reforma">
+                <p>Reforma</p>
+            </div>
+
+
+            <div class="card">
+                <img src="uploads/instalacao.png" alt="Instalação">
+                <p>Instalação</p>
+            </div>
+
+
+
+            <div class="card">
+                <img src="uploads/pintura.png" alt="Pintura">
+                <p>Pintura</p>
+            </div>
+
 
         </div>
 
@@ -172,9 +172,9 @@
         </div>
     </section>
 
-   <?php
-        require_once "partials/footer.php";
-    ?> 
+    <?php
+    require_once "partials/footer.php";
+    ?>
 
     <script>
         const faixa = document.getElementById('logos');
