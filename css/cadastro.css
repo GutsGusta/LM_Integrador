@@ -119,14 +119,14 @@ body {
   color: white;
 }
 
-/* Formulario login */
-.login{
+/* Formulario cadastro */
+.cadastro{
   background-color: #800020ff;
   padding: 60px;
   border-radius: 15px;
   width:380px;
   position:absolute ;
-  top:35% ;
+  top: 33% ;
   left: 40% ;
   text-align: center;
 }
@@ -135,7 +135,7 @@ body {
   height: 90px;
 }
 
-.formulario-login {
+.formulario-cadastro {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,14 +143,14 @@ body {
   gap: 20px;
 }
 
-.formulario-login input{
+.formulario-cadastro input{
   padding: 5px;
   border-radius: 10px;
   width:300px;
   font-size: 17px;
   border: none;
 }
-.formulario-login button{
+.formulario-cadastro button{
   background-color: #e79128;
   color: #fff;
   padding: 5px;
@@ -160,7 +160,7 @@ body {
   border: none;
    font-size: 17px;
 }
-.formulario-login a{
+.formulario-cadastro a{
   color: #fff;
   text-decoration: none;
   font-size: 9.8px;
@@ -168,4 +168,10 @@ body {
 .titulo{
   color:#e79128;
   font-size: 55px;
+}
+.formulario-cadastro p{
+    color: #e79128;
+}
+.formulario-cadastro h2{
+    color: #e79128;
 }

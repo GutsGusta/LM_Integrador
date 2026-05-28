@@ -119,23 +119,23 @@ body {
   color: white;
 }
 
-/* Formulario login */
-.login{
+/* Formulario orcamento */
+.orcamento{
   background-color: #800020ff;
   padding: 60px;
   border-radius: 15px;
   width:380px;
   position:absolute ;
-  top:35% ;
+  top:28% ;
   left: 40% ;
   text-align: center;
 }
-.login img{ 
+.orcamento img{ 
   width: 90px;
   height: 90px;
 }
 
-.formulario-login {
+.formulario-orcamento {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,14 +143,15 @@ body {
   gap: 20px;
 }
 
-.formulario-login input{
+.formulario-orcamento input{
   padding: 5px;
   border-radius: 10px;
   width:300px;
-  font-size: 17px;
+  font-size: 14px;
   border: none;
+  font-family: 'Poppins', arial, sans-serif;
 }
-.formulario-login button{
+.formulario-orcamento button{
   background-color: #e79128;
   color: #fff;
   padding: 5px;
@@ -158,14 +159,25 @@ body {
   width:300px;
   cursor: pointer;
   border: none;
-   font-size: 17px;
+  font-size: 17px;
 }
-.formulario-login a{
+.formulario-orcamento a{
   color: #fff;
   text-decoration: none;
   font-size: 9.8px;
-}
+}   
 .titulo{
   color:#e79128;
   font-size: 55px;
+}
+.formulario-orcamento h2{
+  color: #e79128;
+}
+.mensagem{
+  font-family: 'Poppins', arial, sans-serif;
+  height: 120px;
+  width: 300px;
+  resize: none;
+  border-radius: 12px; 
+  padding: 5px;
 }
