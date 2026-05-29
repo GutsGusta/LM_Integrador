@@ -32,7 +32,7 @@
     </section>
 
     <section class="servicos">
-        <h2>Nossos Serviços</h2>
+        <h2>Nossos Principais Serviços</h2>
         <div class="cards">
 
             <div class="card">
