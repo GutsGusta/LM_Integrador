@@ -1,5 +1,8 @@
+
 <?php
-    // require_once 'crud.php';
+    require_once 'crud.php';
+    
+    $servicos = readAll($pdo, 'servicos');
 ?>
 
 <!DOCTYPE html>
@@ -15,157 +18,56 @@
     <?php
         require_once 'partials/header.php';
     ?>    
-    <main>
+
+<main>
         <div class="pagina-completa">
             <h1 class="titulo">Conheça os Serviços Populares</h1>
 
             <div class="produtos">
-                <article class="card">
-                    <img src="uploads/exemplo.jpeg">
-                    <h2>Nome Serviço</h2>
-                    <details>
-                        <summary>Ver Valores</summary>
-                        <div class="valores">
-                            <table>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Preço /Hora</th>
-                                </tr>
-                                <tr>
-                                    <td>Servente</td>
-                                    <td>R$11,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedreiros</td>
-                                    <td>R$25,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mestre de Obras</td>
-                                    <td>R$40,00</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </details>
-                    <a href="" class="card-botao">Ver Profissionais Qualificados</a>   <!--TER COMANDO PARA ENVIAR PARA A PÁGINA DE PROFISSIONAIS QUALIFICADOS PARA O SERVIÇO -->
-                </article>
-
-                <article class="card">
-                    <img src="uploads/exemplo.jpeg">
-                    <h2>Nome Serviço</h2>
-                    <details>
-                        <summary>Ver Valores</summary>
-                        <div class="valores">
-                            <table>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Preço /Hora</th>
-                                </tr>
-                                <tr>
-                                    <td>Servente</td>
-                                    <td>R$11,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedreiros</td>
-                                    <td>R$25,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mestre de Obras</td>
-                                    <td>R$40,00</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </details>
-                    <a href="" class="card-botao">Ver Profissionais Qualificados</a>
-                </article>
-
-                <article class="card">
-                    <img src="uploads/exemplo.jpeg">
-                    <h2>Nome Serviço</h2>
-                    <details>
-                        <summary>Ver Valores</summary>
-                        <div class="valores">
-                            <table>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Preço /Hora</th>
-                                </tr>
-                                <tr>
-                                    <td>Servente</td>
-                                    <td>R$11,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedreiros</td>
-                                    <td>R$25,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mestre de Obras</td>
-                                    <td>R$40,00</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </details>
-                    <a href="" class="card-botao">Ver Profissionais Qualificados</a>
-                </article>
-
-                <article class="card">
-                    <img src="uploads/exemplo.jpeg">
-                    <h2>Nome Serviço</h2>
-                    <details>
-                        <summary>Ver Valores</summary>
-                        <div class="valores">
-                            <table>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Preço /Hora</th>
-                                </tr>
-                                <tr>
-                                    <td>Servente</td>
-                                    <td>R$11,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedreiros</td>
-                                    <td>R$25,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mestre de Obras</td>
-                                    <td>R$40,00</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </details>
-                    <a href="" class="card-botao">Ver Profissionais Qualificados</a>
-                </article>
-
-                <article class="card">
-                    <img src="uploads/exemplo.jpeg">
-                    <h2>Nome Serviço</h2>
-                    <details>
-                        <summary>Ver Valores</summary>
-                        <div class="valores">
-                            <table>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Preço /Hora</th>
-                                </tr>
-                                <tr>
-                                    <td>Servente</td>
-                                    <td>R$11,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedreiros</td>
-                                    <td>R$25,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mestre de Obras</td>
-                                    <td>R$40,00</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </details>
-                    <a href="" class="card-botao">Ver Profissionais Qualificados</a>
-                </article>
+                <?php 
+                foreach ($servicos as $servico): 
+                    $imagem = !empty($servico['imagem_servico']) ? $servico['imagem_servico'] : 'exemplo.jpeg';
+                ?>
+                    <article class="card">
+                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['nome_servico']); ?>">
+                        <h2><?= htmlspecialchars($servico['nome_servico']); ?></h2>
+                        <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico']); ?></p>
+                        
+                        <details>
+                            <summary>Ver Valores</summary>
+                            <div class="valores">
+                                <table>
+                                    <tr>
+                                        <th>Profissional</th>
+                                        <th>Preço /Hora</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Servente</td>
+                                        <td>R$ <?= number_format($servico['valor_servente'], 2, ',', '.'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pedreiro</td>
+                                        <td>R$ <?= number_format($servico['valor_pedreiro'], 2, ',', '.'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mestre de Obras</td>
+                                        <td>R$ <?= number_format($servico['valor_mestre'], 2, ',', '.'); ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </details>
+                        
+                        <a href="funcionarios.php?id_servico=<?= $servico['id_servico']; ?>" class="card-botao">
+                            Ver Profissionais Qualificados
+                        </a> 
+                    </article>
+                <?php 
+          
+                endforeach; 
+                ?>
             </div>
         </div>
+
         <div class="parte-final">
             <img src="uploads/moca-sorrindo.png">
             <div class="parte-final-txt">
@@ -175,8 +77,11 @@
             </div>
         </div>
     </main>
+
     <?php
         require_once 'partials/footer.php';
     ?>
 </body>
 </html>
+
+
