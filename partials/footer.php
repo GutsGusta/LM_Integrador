@@ -1,7 +1,7 @@
     <footer>
         <div class="parte-cima-footer">
             <div class="parte-cima-indv">
-                <img src="uploads/pessoas.png">
+                <img src="uploads/pessoas.png" style="width: 100px;">
                 <div class="parte-cima-indv-txt">
                     <p>67</p>
                     <p>Profissionais</p>
