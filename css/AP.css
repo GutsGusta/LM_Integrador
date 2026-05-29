@@ -200,9 +200,10 @@ main {
 .dashbord {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
     margin-right: 250px;
+    height: 850px;
 }
 
 .estatisticas {
@@ -233,7 +234,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 50px;
 }
 
 .quadrados-indv {
@@ -244,10 +245,53 @@ main {
     flex-direction: column;
     border-radius: 10px;
     text-align: center;
-    width: 450px;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 8);
+    font-size: 20px;
+    min-width: 450px;
+    margin-bottom: 200px;
+    box-shadow: 1px 6px 12px rgba(0, 0, 0, 0.8);
 }
 
 .quadrados-indv h2 {
     margin-top: 10px;
+}
+
+.campo-servico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 0 15px 0 15px;
+}
+
+.ganhos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.data {
+    color: #800020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.status-confirmado {
+    color: #17cd00;
+}
+
+.status-aguardo {
+    color: #FFD767;
 }
