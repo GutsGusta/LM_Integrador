@@ -1,3 +1,35 @@
+<?php
+require_once('data/crud.php');
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$id_profissional = $_GET['id'] ?? '';
+
+if (empty($id_profissional)) {
+    echo "Profissional não especificado.";
+    exit;
+}
+
+$stmt = $pdo->prepare('SELECT * FROM profissional WHERE id_profissional = ?');
+$stmt->execute([$id_profissional]);
+$profissional = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$profissional) {
+    echo "Profissional não encontrado no sistema.";
+    exit;
+}
+
+$categorias = [
+    'mestre_de_obra' => 'Mestre de Obra',
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
+];
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -23,108 +55,164 @@
             <div class="coluna-esq">
 
                 <div class="card-foto">
-                    <img src="uploads/ana_pereira.png" alt="Ana Pereira">
-                    <h2>Ana Pereira</h2>
-                    <span class="badge-categoria">Mestre de Obra</span>
-                    <div class="estrelas-perfil">★★★★★</div>
-                    <p class="nota-texto">4.9 · 38 avaliações</p>
-                    <button class="btn-solicitar">Solicitar Orçamento</button>
+                    <?php
+
+
+                    $avalia = "id_profissional = '" . $profissional['id_profissional'] . "'";
+                    $avaliacao_filtrada = readAll($pdo, 'avaliacoes', $avalia);
+
+
+                    if (($total_avaliacoes = count($avaliacao_filtrada)) > 0) {
+                        count($avaliacao_filtrada);
+                    }
+
+                    $avaliacoesDoFuncionario = $avaliacao_filtrada;
+
+                    if (!empty($avaliacoesDoFuncionario)):
+                        $mediaNota = array_sum(array_column($avaliacoesDoFuncionario, 'nota')) / count($avaliacoesDoFuncionario);
+                    else:
+                        $mediaNota = 0;
+                    endif;
+                    $mediaArredondada = round($mediaNota, 0);
+
+
+                    $estrelas = '';
+
+                    if ($mediaArredondada == 0) {
+                        $estrelas = '☆☆☆☆☆';
+                    } else if ($mediaArredondada == 1) {
+                        $estrelas = '⭐☆☆☆☆';
+                    } else if ($mediaArredondada == 2) {
+                        $estrelas = '⭐⭐☆☆☆';
+                    } else if ($mediaArredondada == 3) {
+                        $estrelas = '⭐⭐⭐☆☆';
+                    } else if ($mediaArredondada == 4) {
+                        $estrelas = '⭐⭐⭐⭐☆';
+                    } else if ($mediaArredondada == 5) {
+                        $estrelas = '⭐⭐⭐⭐⭐';
+                    }
+                    ;
+
+                    ?>
+
+                    <?php
+
+                    $avaliacaos = '';
+                    if ($total_avaliacoes = count($avaliacao_filtrada) > 0) {
+                        $avaliacaos = count($avaliacao_filtrada);
+                    } else {
+                        $avaliacaos = 0;
+                    }
+
+
+                    echo '
+                    <img src="uploads/' . $profissional['foto'] . '" alt="' . $profissional['nome_profissional'] . '">
+                    <h2>' . $profissional['nome_profissional'] . '</h2>
+                    <span class="badge-categoria">' . (isset($categorias[$profissional['funcao']]) ? $categorias[$profissional['funcao']] : $profissional['funcao']) . '</span>
+                    <div class="estrelas-perfil">' . $estrelas . '</div>
+                    <p class="nota-texto">' . $mediaArredondada . ' · ' . $avaliacaos . ' Avaliações</p>
+                    <a href="testeagenda.php?id_profissional=' . $profissional['id_profissional'] . '">
+                        <button type="button" class="btn-solicitar">Agendar Horário</button>
+                    </a>
+                </div>';
+
+                    ?>
+
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Experiência</span>
+                            <span class="stat-valor"><?php echo ($profissional['experiencia']); ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Especialidade</span>
+                            <span class="stat-valor"><?php echo ($categorias[$profissional['funcao']]); ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Projetos concluídos</span>
+                            <span class="stat-valor"><?php echo ($profissional['projetos_concluidos']); ?></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Disponibilidade</span>
+                            <span class="stat-valor disponivel"><?php
+                            if ($profissional['disponibilidade'] == 1) {
+                                echo "<p style='color: green;'>Disponível</p>";
+                            } else {
+                                echo "<p style='color: red;'>Indisponível</p>";
+                            }
+                            ?></span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="card-stats">
-                    <div class="stat-item">
-                        <span class="stat-label">Experiência</span>
-                        <span class="stat-valor">12 anos</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Especialidade</span>
-                        <span class="stat-valor">Mestre de Obra</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Projetos concluídos</span>
-                        <span class="stat-valor">74</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Disponibilidade</span>
-                        <span class="stat-valor disponivel">Disponível</span>
-                    </div>
-                </div>
+                <div class="coluna-dir">
 
-            </div>
-
-            <div class="coluna-dir">
-
-                <div class="card-info">
-                    <h3>Sobre</h3>
-                    <p>Ana Pereira tem mais de 12 anos de experiência na coordenação de obras residenciais e comerciais.
-                        Reconhecida pela organização, pontualidade e capacidade de liderança de equipes, já atuou em
-                        projetos de pequeno a grande porte em toda a região. Comprometida com a qualidade e a satisfação
-                        do cliente em cada etapa da obra.</p>
-                </div>
-
-                <div class="card-info">
-                    <h3>Serviços que realiza</h3>
-                    <div class="servicos-lista">
-                        <span class="tag-servico">Planejamento e organização</span>
-                        <span class="tag-servico">Gestão da equipe</span>
-                        <span class="tag-servico">Acompanhamento da obra</span>
-                        <span class="tag-servico">Controle de materiais e custos</span>
-                        <span class="tag-servico">Comunicação</span>
-                        <span class="tag-servico">Alvenaria</span>
-                        <span class="tag-servico">Reboco</span>
-                        <span class="tag-servico">Assentamento de Tijolos</span>
-                        <span class="tag-servico">Fundação</span>
-                        <span class="tag-servico">Contrapiso</span>
-                        <span class="tag-servico">Muros</span>
-                    </div>
                     <div class="card-info">
-                        <h3>Avaliações dos clientes</h3>
-                        <div class="avaliacoes-lista">
+                        <h3>Sobre</h3>
+                        <p><?php echo ($profissional['sobre']); ?></p>
+                    </div>
 
-                            <div class="avaliacao-item">
-                                <div class="avaliacao-header">
-                                    <span class="avaliacao-nome">João Silva</span>
-                                    <span class="avaliacao-estrelas">★★★★★</span>
-                                </div>
-                                <p class="avaliacao-servico">Reforma Geral</p>
-                                <p class="avaliacao-texto">"Profissional exemplar. Coordenou toda a obra com muita
-                                    responsabilidade e entregou no prazo."</p>
-                            </div>
+                    <div class="card-info">
+                        <h3>Serviços que realiza</h3>
+                        <div class="servicos-lista">
+                            <span class="tag-servico"><?= $profissional['servico'] ?></span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Avaliações dos clientes</h3>
+                            <div class="avaliacoes-lista">
 
-                            <div class="avaliacao-item">
-                                <div class="avaliacao-header">
-                                    <span class="avaliacao-nome">Maria Souza</span>
-                                    <span class="avaliacao-estrelas">★★★★★</span>
-                                </div>
-                                <p class="avaliacao-servico">Alvenaria</p>
-                                <p class="avaliacao-texto">"Superou todas as expectativas. Equipe bem organizada e
-                                    resultado
-                                    final impecável."</p>
-                            </div>
+                                <div class="avaliacao-item">
+                                    <div class="avaliacao-header">
 
-                            <div class="avaliacao-item">
-                                <div class="avaliacao-header">
-                                    <span class="avaliacao-nome">Carlos Oliveira</span>
-                                    <span class="avaliacao-estrelas">★★★★☆</span>
+                                        <?php
+                                        if ($avaliacao_filtrada) {
+                                            foreach ($avaliacao_filtrada as $avaliacoes) {
+                                                $dataHora = new DateTime($avaliacoes['data_avaliacao']);
+
+
+                                                $tabelaComJoin = "avaliacoes INNER JOIN cliente ON avaliacoes.id_cliente = cliente.id_cliente";
+
+                                                $condicao = "avaliacoes.id_profissional = '" . $profissional['id_profissional'] . "' AND avaliacoes.id_cliente = '" . $avaliacoes['id_cliente'] . "' ORDER BY avaliacoes.nota DESC";
+
+                                                $avaliacoesDocliente = readALL($pdo, $tabelaComJoin, $condicao);
+
+                                                if (!empty($avaliacoesDocliente)):
+                                                    $mediaNota = array_sum(array_column($avaliacoesDocliente, 'nota')) / count($avaliacoesDocliente);
+                                                else:
+                                                    $mediaNota = 0;
+                                                endif;
+                                                $mediaArredondada = round($mediaNota, 0);
+
+                                                $nomeDoClienteBuscado = !empty($avaliacoesDocliente) ? $avaliacoesDocliente[0]['nome_cliente'] : 'Cliente Desconecido';
+
+
+
+                                                echo '<div class="avaliacao-item">
+                                                <div class="avaliacao-header">
+                                                <span class="avaliacao-nome">' . $nomeDoClienteBuscado . '</span>
+                                                <span>Data da Avaliação: ' . $dataHora->format('d/m/Y à\s H:i') . '</span>
+                                                <p class="avaliacao-servico">' . $avaliacoes['nome_servico'] . '</p>
+                                                <p>Nota:' . $avaliacoes['nota'] . '</p>
+                                                <span class="avaliacao-texto">' . $avaliacoes['texto_avaliacao'] . '</span>
+                                                </div>
+                                                </div>';
+                                            }
+                                        } else {
+                                            echo '<p>Não há avaliações para este profissional.</p>';
+                                        }
+                                        ;
+                                        ?>
+
+
+                                    </div>
                                 </div>
-                                <p class="avaliacao-servico">Acabamento</p>
-                                <p class="avaliacao-texto">"Ótimo trabalho, comunicação clara durante todo o processo.
-                                    Recomendo muito!"</p>
+
                             </div>
 
                         </div>
-
                     </div>
-                </div>
 
-            </div>
-        </div>
-    </div>
-
-    <?php
-    require_once "partials/footer.php";
-    ?>
-
+                    <?php require_once "partials/footer.php"; ?>
 </body>
 
 </html>
