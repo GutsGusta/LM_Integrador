@@ -224,6 +224,8 @@ body {
 
 .nossos-servicos-botoes a:hover {
     transform: scale(1.1);
+    color: #800020;
+    border: solid 2px #800020;
 }
 
 /* AQUI ESTÁ O CÓDIGO DO FOOTER */
@@ -253,7 +255,8 @@ footer {
 }
 
 .parte-cima-indv img {
-    width: 100px;
+    width: 70px;
+    margin-right: 20px;
 }
 
 .parte-cima-indv-txt {
