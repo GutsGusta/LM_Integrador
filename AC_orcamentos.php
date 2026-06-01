@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/AC_orcamentos.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Meus orçamentos | LM</title>
+    <title>Cliente | LM</title>
 </head>
 
 <body>

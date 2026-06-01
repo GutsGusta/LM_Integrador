@@ -15,7 +15,7 @@
     require_once "partials/header.php";
     ?>
 
-    <div class="cliente-wrapper">
+    <div style="display: flex;">
 
         <div class="sidebar">
             <div class="sidebar-perfil">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <a href="AC_dashboard.php" class="nav-item ativo">
+            <a href="AD_dashboard.php" class="nav-item ativo">
                 <i class="fa-solid fa-house"></i>
                 Meu Dashboard
             </a>
@@ -53,96 +53,128 @@
             </a>
         </div>
 
-        <h2 class="content-titulo">Dashboard ADM</h2>
 
         <div class="admin-content">
-            <p class="content-titulo">Gerenciar Serviços</p>
+            <h2 class="content-titulo">Dashboard</h2>
+            <p class="boas-vindas">Visão geral da plataforma LM hoje.</p>
 
-            <div class="tabela-card">
-                <div class="tabela-header">
-                    <h3>Tabela de Serviços</h3>
-                    <button class="btn-add">
-                        <i class="fa-solid fa-plus"></i> Novo Serviço
-                    </button>
+            <div class="dashboard-grid">
+                <div class="dash-card">
+                    <i class="fa-solid fa-helmet-safety dash-icon"></i>
+                    <div class="dash-info">
+                        <h3>24</h3>
+                        <span>Profissionais Ativos</span>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <i class="fa-solid fa-users dash-icon"></i>
+                    <div class="dash-info">
+                        <h3>138</h3>
+                        <span>Clientes Cadastrados</span>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <i class="fa-solid fa-file-lines dash-icon"></i>
+                    <div class="dash-info">
+                        <h3>12</h3>
+                        <span>Orçamentos Pendentes</span>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <i class="fa-solid fa-calendar-check dash-icon"></i>
+                    <div class="dash-info">
+                        <h3>7</h3>
+                        <span>Agendamentos Hoje</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-baixo">
+
+                <div class="orcamento-card">
+                    <h3 class="card-titulo">Últimos Orçamentos</h3>
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+                            <strong>Reforma Banheiro</strong>
+                            <span>João Pereira · Pedreiro</span>
+                        </div>
+                        <span class="orcamento-status status-pendente">Pendente</span>
+                    </div>
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+                            <strong>Levantamento Alvenaria</strong>
+                            <span>Mariana Costa · Mestre de Obra</span>
+                        </div>
+                        <span class="orcamento-status status-concluido">Concluído</span>
+                    </div>
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+                            <strong>Assentamento de Piso</strong>
+                            <span>Felipe Rodrigues · Servente</span>
+                        </div>
+                        <span class="orcamento-status status-cancelado">Cancelado</span>
+                    </div>
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+                            <strong>Reboque de Paredes</strong>
+                            <span>Eduardo Lima · Pedreiro</span>
+                        </div>
+                        <span class="orcamento-status status-pendente">Pendente</span>
+                    </div>
                 </div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Serviço</th>
-                            <th>Total de Demanda</th>
-                            <th>Profissionais Qualificados</th>
-                            <th>R$/Hora Servente</th>
-                            <th>R$/Hora Pedreiro</th>
-                            <th>R$/Hora Mestre de Obra</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Reboque de Paredes</td>
-                            <td><span class="badge-demanda">42</span></td>
-                            <td><span class="badge-prof">50</span></td>
-                            <td class="preco">R$11,00</td>
-                            <td class="preco">R$28,00</td>
-                            <td class="preco">R$40,00</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-editar">Editar</button>
-                                    <button class="btn-acao btn-excluir">Excluir</button>
+                <div class="orcamento-card">
+                    <h3 class="card-titulo">Melhores Profissionais</h3>
+                    <div class="profs-lista">
+
+                        <div class="prof-linha">
+                            <div class="prof-info">
+                                <img src="https://pravatar.cc/150?img=47" alt="Ana">
+                                <div>
+                                    <strong>Ana Pereira</strong>
+                                    <span><span class="badge-tipo badge-mestre">Mestre de Obra</span></span>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Concentragem de Laje</td>
-                            <td><span class="badge-demanda">11</span></td>
-                            <td><span class="badge-prof">48</span></td>
-                            <td class="preco">R$12,00</td>
-                            <td class="preco">R$25,00</td>
-                            <td class="preco">R$45,00</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-editar">Editar</button>
-                                    <button class="btn-acao btn-excluir">Excluir</button>
+                            </div>
+                            <span class="estrelas-mini">★★★★★ 4.9</span>
+                        </div>
+
+                        <div class="prof-linha">
+                            <div class="prof-info">
+                                <img src="https://pravatar.cc/150?img=12" alt="Ricardo">
+                                <div>
+                                    <strong>Ricardo Martins</strong>
+                                    <span><span class="badge-tipo badge-pedreiro">Pedreiro</span></span>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Levantamento de Alvenaria</td>
-                            <td><span class="badge-demanda">65</span></td>
-                            <td><span class="badge-prof">34</span></td>
-                            <td class="preco">R$11,00</td>
-                            <td class="preco">R$22,00</td>
-                            <td class="preco">R$40,00</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-editar">Editar</button>
-                                    <button class="btn-acao btn-excluir">Excluir</button>
+                            </div>
+                            <span class="estrelas-mini">★★★★★ 4.8</span>
+                        </div>
+
+                        <div class="prof-linha">
+                            <div class="prof-info">
+                                <img src="https://pravatar.cc/150?img=3" alt="Fernando">
+                                <div>
+                                    <strong>Fernando Lopes</strong>
+                                    <span><span class="badge-tipo badge-servente">Servente</span></span>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Assentamento de Piso</td>
-                            <td><span class="badge-demanda">25</span></td>
-                            <td><span class="badge-prof">29</span></td>
-                            <td class="preco">R$12,00</td>
-                            <td class="preco">R$35,00</td>
-                            <td class="preco">R$50,00</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-editar">Editar</button>
-                                    <button class="btn-acao btn-excluir">Excluir</button>
+                            </div>
+                            <span class="estrelas-mini">★★★★☆ 4.6</span>
+                        </div>
+
+                        <div class="prof-linha">
+                            <div class="prof-info">
+                                <img src="https://pravatar.cc/150?img=22" alt="Paulo">
+                                <div>
+                                    <strong>Paulo Rocha</strong>
+                                    <span><span class="badge-tipo badge-servente">Servente</span></span>
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                            <span class="estrelas-mini">★★★★☆ 4.5</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-
-    </div>
-
-
 
 </body>
 
