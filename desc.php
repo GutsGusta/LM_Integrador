@@ -68,7 +68,7 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
 
         <div class="perfil-container">
 
-            <!-- COLUNA ESQUERDA -->
+            
             <div class="coluna-esq">
 
                 <div class="card-foto">
@@ -110,9 +110,9 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
                 </div>
 
             </div>
-            <!-- FIM COLUNA ESQUERDA -->
+            
 
-            <!-- COLUNA DIREITA -->
+    
             <div class="coluna-dir">
 
                 <div class="card-info">
@@ -165,13 +165,13 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
                 </div>
 
             </div>
-            <!-- FIM COLUNA DIREITA -->
+            
 
         </div>
-        <!-- FIM perfil-container -->
+        
 
     </div>
-    <!-- FIM perfil-page -->
+    
 
     <?php require_once "partials/footer.php"; ?>
 
