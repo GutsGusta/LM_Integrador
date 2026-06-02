@@ -29,7 +29,7 @@
                     $imagem = !empty($servico['imagem_servico']) ? $servico['imagem_servico'] : 'exemplo.jpeg';
                 ?>
                     <article class="card">
-                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['nome_servico']); ?>">
+                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['imagem_servico']); ?>">
                         <h2><?= htmlspecialchars($servico['nome_servico']); ?></h2>
                         <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico']); ?></p>
                         
