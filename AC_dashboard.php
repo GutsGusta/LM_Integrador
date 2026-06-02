@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/AC_dashboard.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Dashboard | LM</title>
+    <title>Cliente | LM</title>
 </head>
 
 <body>
@@ -20,9 +20,9 @@
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <img src="uploads/joao_silvaa.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
+                    <strong>João Silva</strong>
                     <span>Cliente</span>
                 </div>
             </div>

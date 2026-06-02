@@ -35,7 +35,7 @@
                 <h3>Empresa</h3>
                 <p>Endereço:</p>
                 <p>R. Santo André, 680 - Boa Vista</p>
-                <p>(11) 4002-8922</p>
+                <p>(11) 93056-9806</p>
                 <p>Copyright © 2026 LM. Todos os direitos reservados.</p>
             </div>
 

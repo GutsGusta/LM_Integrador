@@ -44,6 +44,7 @@ if (!$profissional) {
 
     <main>
         <div class="pagina-principal">
+<<<<<<< HEAD
             <div class="funcoes">
                 <div class="pessoal">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
@@ -101,6 +102,43 @@ if (!$profissional) {
                 exit;
             }
             ?>
+=======
+            <div class="sidebar">
+            <div class="sidebar-perfil">
+                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <div class="sidebar-perfil-info">
+                    <strong>Marcos Santos</strong>
+                    <span>Cliente</span>
+                </div>
+            </div>
+
+            <a href="AP-dashboard.php" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                Meu Dashboard
+            </a>
+
+            <a href="AP-servicos.php" class="nav-item">
+                <i class="fa-solid fa-file-lines"></i>
+                Meus Serviços
+            </a>
+
+            <a href="AP-agenda.php" class="nav-item ativo">
+                <i class="fa-solid fa-calendar"></i>
+                Meus Agendamentos
+            </a>
+
+            <a href="AP-dados.php" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                Meus Dados
+            </a>
+
+            <a href="logout.php" class="nav-item nav-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
+        </div>
+        
+>>>>>>> f30575121fefc2dc0b372820b681441f3d4e15a7
             <div class="dados-principais">
                 <h4>Meus Dados:</h4>
                 <form action="" method="POST" class="nome">

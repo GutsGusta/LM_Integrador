@@ -128,40 +128,91 @@ main {
     gap: 50px;
 }
 
-.funcoes {
-    background-color: #676767;
+.sidebar {
+    width: 240px;
+    background: #1a1a1a;
     display: flex;
-    align-items: center;
-    justify-content: start;
     flex-direction: column;
-    width: 450px;
-    height: 100vh;
+    padding: 24px 0;
+    flex-shrink: 0;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    height: calc(100vh - 70px);
 }
 
-.funcoes a {
-    color: black;
+.sidebar-perfil {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    margin-bottom: 16px;
+}
+
+.sidebar-perfil img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar-perfil-info strong {
+    display: block;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.sidebar-perfil-info span {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 20px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
     text-decoration: none;
-    font-size: 20px;
 }
 
-.pessoal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
+.nav-item:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.pessoal img {
-    width: 100px;
-    border-radius: 100px;
-    margin-right: 20px;
+.nav-item.ativo {
+    color: white;
+    background: rgba(255, 255, 255, 0.06);
+    border-left-color: #800020;
 }
 
-.pessoal-txt {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.nav-item i {
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.nav-item.ativo i {
+    opacity: 1;
+}
+
+.nav-sair {
+    margin-top: auto;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-sair:hover {
+    color: #e57373;
+    background: rgba(229, 115, 115, 0.05);
 }
 
 .linha {
@@ -169,21 +220,6 @@ main {
     height: 3px;
     width: 400px;
     margin-block: 20px;
-}
-
-.area-botoes {
-    display: flex;
-    align-items: start;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.botoes {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease-in-out, ease 0.3s transform;
-    font-size: 20px;
 }
 
 .botoes:hover {

@@ -42,6 +42,7 @@ if (!$profissional) {
 
     <main>
         <div class="pagina-principal">
+<<<<<<< HEAD
 
             <div class="funcoes">
 
@@ -87,9 +88,43 @@ if (!$profissional) {
                                 style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
                         </div>
                     </form>
+=======
+            <div class="sidebar">
+            <div class="sidebar-perfil">
+                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <div class="sidebar-perfil-info">
+                    <strong>Marcos Santos</strong>
+                    <span>Cliente</span>
+>>>>>>> f30575121fefc2dc0b372820b681441f3d4e15a7
                 </div>
 
             </div>
+
+            <a href="AP-dashbord.php" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                Meu Dashboard
+            </a>
+
+            <a href="AP-servicos.php" class="nav-item">
+                <i class="fa-solid fa-file-lines"></i>
+                Meus Serviços
+            </a>
+
+            <a href="AP-agenda.php" class="nav-item ativo">
+                <i class="fa-solid fa-calendar"></i>
+                Meus Agendamentos
+            </a>
+
+            <a href="AP-dados.php" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                Meus Dados
+            </a>
+
+            <a href="logout.php" class="nav-item nav-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
+        </div>
 
             <div class="dashbord">
 

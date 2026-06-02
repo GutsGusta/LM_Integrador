@@ -129,6 +129,7 @@ body {
   top:28% ;
   left: 40% ;
   text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
 }
 .orcamento img{ 
   width: 90px;
