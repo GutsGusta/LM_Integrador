@@ -13,26 +13,40 @@
     ?>
     <main>
         <div class="pagina-principal">
-            <div class="funcoes">
-                <div class="pessoal">
-                    <img src="uploads/ricardo_martins.png">
-                    <div class="pessoal-txt">
-                        <h2>José Ribeiro</h2>
-                        <p>joseribeiro@yahoo.com.br</p>
-                        <p>Ribeirão Pires, SP</p>
-                    </div>
-                </div>
-
-                <div class="linha"></div>
-
-                <div class="area-botoes">
-                    <div class="botoes"><img src="uploads/quadrados.png"><a href="">Meu Dashbord</a></div>
-                    <div class="botoes"><img src="uploads/notas.png"><a href="">Serviços Requeridos</a></div>
-                    <div class="botoes"><img src="uploads/calendario.png"><a href="">Meus Agendamentos</a></div>
-                    <div class="botoes"><img src="uploads/dados.png"><a href="">Meus Dados</a></div>
-                    <div class="botoes"><img src="uploads/sair.png"><a href="">Sair</a></div>
+            <div class="sidebar">
+            <div class="sidebar-perfil">
+                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <div class="sidebar-perfil-info">
+                    <strong>Marcos Santos</strong>
+                    <span>Cliente</span>
                 </div>
             </div>
+
+            <a href="AP-dashboard.php" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                Meu Dashboard
+            </a>
+
+            <a href="AP-servicos.php" class="nav-item">
+                <i class="fa-solid fa-file-lines"></i>
+                Meus Serviços
+            </a>
+
+            <a href="AP-agenda.php" class="nav-item ativo">
+                <i class="fa-solid fa-calendar"></i>
+                Meus Agendamentos
+            </a>
+
+            <a href="AP-dados.php" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                Meus Dados
+            </a>
+
+            <a href="logout.php" class="nav-item nav-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
+        </div>
 
             <div class="servicos">
                 <h3>Serviços em Andamento:</h3>
