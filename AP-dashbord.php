@@ -49,16 +49,6 @@
             </a>
         </div>
 
-            <div class="dashbord">
-                <div class="estatisticas">
-                    <div class="estatisticas-indv">
-                        <img src="uploads/fatura.png">
-                        <div class="estatisticas-txt">
-                            <h4>Serviços</h4>
-                            <h1>67</h1>
-                            <p>Total do Mês</p>
-                        </div>
-                    </div>
                         
                     <div class="estatisticas-indv">
                         <img src="uploads/relogio.png">
