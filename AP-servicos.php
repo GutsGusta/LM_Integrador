@@ -25,7 +25,7 @@ SELECT
     a.preco,
     a.status,
     c.nome_cliente,
-    c.telefone,
+    c.telefone,.
     c.endereco,
     s.nome_servico
 FROM agendamento a

@@ -21,7 +21,6 @@ if (!$profissional) {
     exit;
 }
 
-<<<<<<< HEAD
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
     'pedreiro'       => 'Pedreiro',
@@ -50,13 +49,6 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
 
 <!DOCTYPE html>
 <html lang="pt-br">
-=======
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
->>>>>>> adfc705 (Enviado os dados da Bia)
 
 <head>
     <meta charset="UTF-8">
