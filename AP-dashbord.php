@@ -42,7 +42,6 @@ if (!$profissional) {
 
     <main>
         <div class="pagina-principal">
-<<<<<<< HEAD
 
             <div class="funcoes">
 
@@ -88,14 +87,6 @@ if (!$profissional) {
                                 style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
                         </div>
                     </form>
-=======
-            <div class="sidebar">
-            <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
-                <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
-                    <span>Cliente</span>
->>>>>>> f30575121fefc2dc0b372820b681441f3d4e15a7
                 </div>
 
             </div>

@@ -113,7 +113,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <main>
         <div class="pagina-principal">
-<<<<<<< HEAD
             <div class="funcoes">
                 <div class="pessoal">
                     <img src="uploads/ricardo_martins.png">
@@ -135,14 +134,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="botoes"><img src="uploads/dados.png"><a href="AP-dados.php">Meus Dados</a></div>
                     <div class="botoes"><img src="uploads/sair.png"><a href="logout.php">Sair</a></div>
-=======
-            <div class="sidebar">
-            <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
-                <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
-                    <span>Cliente</span>
->>>>>>> f30575121fefc2dc0b372820b681441f3d4e15a7
                 </div>
             </div>
 
