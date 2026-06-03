@@ -111,10 +111,18 @@ if (!$profissional) {
                 Meus Dados
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
+            <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
+                        <div class="botoes"
+                            style="border: none; background: none; padding: 0; display: flex; align-items: center;">
+                            
+                            <button type="submit" name="logout"
+                                style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
+                        </div>
+                    </form>
+            <!-- <a href="logout.php" class="nav-item nav-sair">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Sair
-            </a>
+            </a> -->
         </div>
 
             <div class="dashbord">

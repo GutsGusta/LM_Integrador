@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 require_once './data/crud.php';
 
 $profissional = readAll($pdo, 'profissional');
@@ -34,20 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-=======
-require_once('data/crud.php');
-
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$stmt_profissionais = $pdo->query('SELECT * FROM profissional');
-$lista_funcionarios = $stmt_profissionais->fetchAll(PDO::FETCH_ASSOC);
-?>
-<!DOCTYPE html>
-<html lang="en">
->>>>>>> adfc705 (Enviado os dados da Bia)
 
 <head>
     <meta charset="UTF-8">
@@ -58,18 +43,13 @@ $lista_funcionarios = $stmt_profissionais->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-<<<<<<< HEAD
     <?php
     require_once "partials/header.php";
     ?>
-=======
-    <?php require_once "partials/header.php"; ?>
->>>>>>> adfc705 (Enviado os dados da Bia)
 
     <section class="funcionarios-section">
         <h2>Nossos Profissionais</h2>
 
-<<<<<<< HEAD
         <ul class="abas">
             <li class="aba ativa"><a href="funcionarios.php">Todos</a></li>
             <?php
@@ -78,19 +58,10 @@ $lista_funcionarios = $stmt_profissionais->fetchAll(PDO::FETCH_ASSOC);
             }
             ?>
         </ul>
-=======
-        <div class="abas">
-            <button class="aba ativa">Todos</button>
-            <button class="aba">Pedreiros</button>
-            <button class="aba">Serventes</button>
-            <button class="aba">Mestres de Obra</button>
-        </div>
->>>>>>> adfc705 (Enviado os dados da Bia)
 
         <div class="cards-funcionarios">
 
             <?php
-<<<<<<< HEAD
             foreach ($profissional as $funcionario) {
                 if ($categoria_get === '' || $funcionario['funcao'] === $categoria_get) {
 
@@ -153,28 +124,3 @@ $lista_funcionarios = $stmt_profissionais->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
-=======
-            foreach ($lista_funcionarios as $funcionarios) {
-                echo '
-            <a href="desc.php?id=' . $funcionarios['id_profissional'] . '">
-                <div class="card-funcionario">
-                    <img src="' . $funcionarios['foto'] . '" alt="' . $funcionarios['nome_profissional'] . '">
-                    <h3>' . $funcionarios['nome_profissional'] . '</h3>
-                    <div class="estrelas">★★★★★</div>
-                    <span class="especialidade">' . $funcionarios['funcao'] . '</span>
-                </div>
-            </a>';
-            };
-            ?>
-
-
-        </div>
-    </section>
-
-    </section>
-
-    <?php require_once "partials/footer.php"; ?>
-</body>
-
-</html>
->>>>>>> adfc705 (Enviado os dados da Bia)

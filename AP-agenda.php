@@ -66,7 +66,9 @@ if (!$profissional) {
                     <div class="botoes"><img src="uploads/dados.png"><a href="AP-dados.php">Meus Dados</a></div>
                     <div class="botoes"><img src="uploads/sair.png"><a href="logout.php">Sair</a></div>
                 </div>
-            </div>
+
+                <div class="linha"></div>
+
 
             <a href="AP-dashboard.php" class="nav-item">
                 <i class="fa-solid fa-house"></i>
