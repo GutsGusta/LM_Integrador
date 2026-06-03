@@ -56,7 +56,7 @@ if (!$profissional) {
                     </div>
                 </div>
 
-                <div class="linha"></div>
+                <!-- <div class="linha"></div>
 
                 <div class="area-botoes">
                     <div class="botoes">
@@ -77,16 +77,9 @@ if (!$profissional) {
                     <div class="botoes">
                         <img src="uploads/dados.png">
                         <a href="AP-dados.php">Meus Dados</a>
-                    </div>
+                    </div> -->
 
-                    <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
-                        <div class="botoes"
-                            style="border: none; background: none; padding: 0; display: flex; align-items: center;">
-                            <img src="uploads/sair.png" alt="Sair">
-                            <button type="submit" name="logout"
-                                style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
-                        </div>
-                    </form>
+                    
                 </div>
 
             </div>
@@ -111,113 +104,121 @@ if (!$profissional) {
                 Meus Dados
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
+            <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
+                        <div class="botoes"
+                            style="border: none; background: none; padding: 0; display: flex; align-items: center;">
+                            
+                            <button type="submit" name="logout"
+                                style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
+                        </div>
+                    </form>
+            <!-- <a href="logout.php" class="nav-item nav-sair">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Sair
-            </a>
+            </a> -->
         </div>
 
-        <div class="dashbord">
+            <div class="dashbord">
 
-            <div class="estatisticas">
+                <div class="estatisticas">
 
-                <div class="estatisticas-indv">
-                    <img src="uploads/fatura.png">
+                    <div class="estatisticas-indv">
+                        <img src="uploads/fatura.png">
 
-                    <div class="estatisticas-txt">
-                        <h4>Experiência</h4>
-                        <h1><?php echo $profissional['experiencia']; ?></h1>
-                        <p>Tempo de atuação</p>
+                        <div class="estatisticas-txt">
+                            <h4>Experiência</h4>
+                            <h1><?php echo $profissional['experiencia']; ?></h1>
+                            <p>Tempo de atuação</p>
+                        </div>
                     </div>
+
+                    <div class="estatisticas-indv">
+                        <img src="uploads/relogio.png">
+
+                        <div class="estatisticas-txt">
+                            <h4>Disponibilidade</h4>
+                            <h1>
+                                <?php
+                                echo $profissional['disponibilidade']
+                                    ? 'Sim'
+                                    : 'Não';
+                                ?>
+                            </h1>
+                            <p>Status atual</p>
+                        </div>
+                    </div>
+
+                    <div class="estatisticas-indv">
+                        <img src="uploads/Certo.png">
+
+                        <div class="estatisticas-txt">
+                            <h4>Projetos</h4>
+                            <h1><?php echo $profissional['projetos_concluidos']; ?></h1>
+                            <p>Projetos concluídos</p>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="estatisticas-indv">
-                    <img src="uploads/relogio.png">
+                <div class="quadrados">
 
-                    <div class="estatisticas-txt">
-                        <h4>Disponibilidade</h4>
-                        <h1>
-                            <?php
-                            echo $profissional['disponibilidade']
-                                ? 'Sim'
-                                : 'Não';
-                            ?>
-                        </h1>
-                        <p>Status atual</p>
+                    <div class="quadrados-indv">
+                        <h2>Informações Profissionais</h2>
+
+                        <div class="linha"></div>
+
+                        <div class="campo-servico">
+                            <div class="ganhos">
+                                <h4>Serviço</h4>
+                                <p><?php echo $profissional['servico']; ?></p>
+                            </div>
+                        </div>
+
+                        <div class="campo-servico">
+                            <div class="ganhos">
+                                <h4>Função</h4>
+                                <p><?php echo $profissional['funcao']; ?></p>
+                            </div>
+                        </div>
+
+                        <div class="campo-servico">
+                            <div class="ganhos">
+                                <h4>Sobre</h4>
+                                <p><?php echo $profissional['sobre']; ?></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="estatisticas-indv">
-                    <img src="uploads/Certo.png">
+                    <div class="quadrados-indv">
+                        <h2>Dados de Contato</h2>
 
-                    <div class="estatisticas-txt">
-                        <h4>Projetos</h4>
-                        <h1><?php echo $profissional['projetos_concluidos']; ?></h1>
-                        <p>Projetos concluídos</p>
+                        <div class="linha"></div>
+
+                        <div class="campo-servico">
+                            <div class="info">
+                                <h4>Email</h4>
+                                <p><?php echo $profissional['email']; ?></p>
+                            </div>
+                        </div>
+
+                        <div class="campo-servico">
+                            <div class="info">
+                                <h4>Telefone</h4>
+                                <p><?php echo $profissional['telefone']; ?></p>
+                            </div>
+                        </div>
+
+                        <div class="campo-servico">
+                            <div class="info">
+                                <h4>Cidade</h4>
+                                <p><?php echo $profissional['cidade_estado']; ?></p>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
-
-            <div class="quadrados">
-
-                <div class="quadrados-indv">
-                    <h2>Informações Profissionais</h2>
-
-                    <div class="linha"></div>
-
-                    <div class="campo-servico">
-                        <div class="ganhos">
-                            <h4>Serviço</h4>
-                            <p><?php echo $profissional['servico']; ?></p>
-                        </div>
-                    </div>
-
-                    <div class="campo-servico">
-                        <div class="ganhos">
-                            <h4>Função</h4>
-                            <p><?php echo $profissional['funcao']; ?></p>
-                        </div>
-                    </div>
-
-                    <div class="campo-servico">
-                        <div class="ganhos">
-                            <h4>Sobre</h4>
-                            <p><?php echo $profissional['sobre']; ?></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="quadrados-indv">
-                    <h2>Dados de Contato</h2>
-
-                    <div class="linha"></div>
-
-                    <div class="campo-servico">
-                        <div class="info">
-                            <h4>Email</h4>
-                            <p><?php echo $profissional['email']; ?></p>
-                        </div>
-                    </div>
-
-                    <div class="campo-servico">
-                        <div class="info">
-                            <h4>Telefone</h4>
-                            <p><?php echo $profissional['telefone']; ?></p>
-                        </div>
-                    </div>
-
-                    <div class="campo-servico">
-                        <div class="info">
-                            <h4>Cidade</h4>
-                            <p><?php echo $profissional['cidade_estado']; ?></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
 
         </div>
     </main>

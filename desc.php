@@ -53,7 +53,6 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <link rel="stylesheet" href="css/desc.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>Funcionário | LM</title>
@@ -179,91 +178,3 @@ elseif ($mediaArredondada == 5)  $estrelas = '⭐⭐⭐⭐⭐';
 </body>
 
 </html>
-=======
-    <link rel="stylesheet" href="css/funcionarios.css">
-    <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
-    <title>LM | Funcionários</title>
-</head>
-
-<body>
-<a href="testeagenda.php?id_profissional=<?php echo $profissional['id_profissional']; ?>">
-            <button type="submit">Agendar Horário
-</button>
-    </a>
-
-
-<h1>avaliação</h1>
-
-<a href="testeenviar.php?id_profissional=<?php echo $profissional['id_profissional']; ?>&nome_profissional=<?php echo urlencode($profissional['nome_profissional']); ?>">
-    <button type="submit">Enviar Avaliação</button>
-</a>
-
-<?php
-
-$avalia = "id_profissional = '" . $profissional['id_profissional'] . "'";
-$avaliacao_filtrada = readAll($pdo, 'avaliacoes', $avalia);
-
-
-if ($total_avaliacoes = count($avaliacao_filtrada) > 0) {
-    echo '<p>Total de Avaliações: ' . count($avaliacao_filtrada) .'';
-    } else {
-        echo '<p>Total de Avaliações: 0';
-    }
-
-
-    $totalAvaliacoes = readALL($pdo, 'avaliacoes');
-    if (!empty($totalAvaliacoes)):
-
-        $mediaNota = array_sum(array_column($totalAvaliacoes, 'nota')) / count($totalAvaliacoes);
-    else:
-        $mediaNota = 0;
-    endif;
-    $mediaArredondada = round($mediaNota, 1);
-    echo "Média final: " . $mediaArredondada;
-
-
-    if ($mediaArredondada == 0) {
-        echo'⭐'; 
-        }
-        else if ($mediaArredondada == 1) {
-            echo '⭐';
-        }
-        else if ($mediaArredondada == 2) {
-            echo '⭐⭐';
-        }
-        else if ($mediaArredondada == 3) {
-            echo '⭐⭐⭐';
-        }
-        else if ($mediaArredondada == 4) {
-            echo '⭐⭐⭐⭐';
-        }
-        else if ($mediaArredondada == 5) {
-            echo '⭐⭐⭐⭐⭐';
-        };
-
-
-    if ($avaliacao_filtrada) {
-    foreach ($avaliacao_filtrada as $avaliacoes) {
-        $dataHora = new DateTime($avaliacoes['data_avaliacao']);
-
-    echo '
-    <p>ID:' . $avaliacoes['id'] . '</p>
-    <p>Título:' . $avaliacoes['titulo'] . '</p>';
-
-        echo '
-    <p>Data da Avaliação: ' . $dataHora->format('d/m/Y à\s H:i') . '</p>
-    
-    <p>Nota:' . $avaliacoes['nota'] . '</p>
-    <p>Texto da Avaliação:<br>' . $avaliacoes['texto_avaliacao'] . '</p>
-    <p>Profissional avaliado: ' . $avaliacoes['nome_profissional'] . '</p>';
-    }
-     
-    } else {
-        echo '<p>Não há avaliações para este profissional.</p>';
-    };
-
-?>
-
-</body>
-</html>
->>>>>>> adfc705 (Enviado os dados da Bia)

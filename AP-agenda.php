@@ -56,17 +56,6 @@ if (!$profissional) {
 
                 <div class="linha"></div>
 
-                <div class="area-botoes">
-                    <div class="botoes"><img src="uploads/quadrados.png"><a href="AP-dashbord.php">Meu Dashbord</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/notas.png"><a href="AP-servicos.php">Serviços Requeridos</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/calendario.png"><a href="AP-agenda.php">Meus Agendamentos</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/dados.png"><a href="AP-dados.php">Meus Dados</a></div>
-                    <div class="botoes"><img src="uploads/sair.png"><a href="logout.php">Sair</a></div>
-                </div>
-            </div>
 
             <a href="AP-dashboard.php" class="nav-item">
                 <i class="fa-solid fa-house"></i>
