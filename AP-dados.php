@@ -44,38 +44,48 @@ if (!$profissional) {
 
     <main>
         <div class="pagina-principal">
-            <div class="funcoes">
-                <div class="pessoal">
+            <div class="sidebar">
+                <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
+
                     <div class="pessoal-txt">
                         <h2><?php echo $profissional['nome_profissional']; ?></h2>
                         <p><?php echo $profissional['email']; ?></p>
                         <p><?php echo $profissional['cidade_estado']; ?></p>
                         <p><?php echo $profissional['funcao']; ?></p>
                     </div>
+
                 </div>
 
-                <div class="linha"></div>
+                <a href="AP-dashbord.php" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    Meu Dashboard
+                </a>
 
-                <div class="area-botoes">
-                    <div class="botoes"><img src="uploads/quadrados.png"><a href="AP-dashbord.php">Meu Dashbord</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/notas.png"><a href="AP-servicos.php">Serviços Requeridos</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/calendario.png"><a href="AP-agenda.php">Meus Agendamentos</a>
-                    </div>
-                    <div class="botoes"><img src="uploads/dados.png"><a href="AP-dados.php">Meus Dados</a></div>
+                <a href="AP-servicos.php" class="nav-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Meus Serviços
+                </a>
 
-                    <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
-                        <div class="botoes"
-                            style="border: none; background: none; padding: 0; display: flex; align-items: center;">
-                            <img src="uploads/sair.png" alt="Sair">
-                            <button type="submit" name="logout"
-                                style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <a href="AP-agenda.php" class="nav-item ativo">
+                    <i class="fa-solid fa-calendar"></i>
+                    Meus Agendamentos
+                </a>
+
+                <a href="AP-dados.php" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    Meus Dados
+                </a>
+
+                <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
+                    <div class="botoes"
+                        style="border: none; background: none; padding: 0; display: flex; align-items: center;">
+                                
+                        <button type="submit" name="logout"
+                            style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
+                    </div>
+                </form>
+            </div>      
             <?php
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nome_profissional = $_POST['nome_profissional'];
