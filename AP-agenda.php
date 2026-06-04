@@ -48,13 +48,11 @@ if (!$profissional) {
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
 
-                    <div class="pessoal-txt">
-                        <h2><?php echo $profissional['nome_profissional']; ?></h2>
-                        <p><?php echo $profissional['email']; ?></p>
-                        <p><?php echo $profissional['cidade_estado']; ?></p>
-                        <p><?php echo $profissional['funcao']; ?></p>
+                    <div class="slide-perfil-info">
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
                     </div>
-
                 </div>
 
                 <a href="AP-dashbord.php" class="nav-item">

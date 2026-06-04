@@ -124,8 +124,11 @@ main {
 .pagina-principal {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 50px;
+    justify-content: center;
+    flex-direction: row;
+    gap: 70px;
+    margin-top: 300px;
+    margin-left: 200px;
 }
 
 .sidebar {
@@ -233,6 +236,7 @@ main {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     width: 650px;
 }
@@ -288,7 +292,9 @@ main {
     grid-template-rows: min-content;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
     border-radius: 10px;
+    max-width: 700px;
     margin-right: 20px;
     padding: 20px;
     gap: 15px;

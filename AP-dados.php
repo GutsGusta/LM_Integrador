@@ -47,12 +47,10 @@ if (!$profissional) {
             <div class="sidebar">
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
-
-                    <div class="pessoal-txt">
-                        <h2><?php echo $profissional['nome_profissional']; ?></h2>
-                        <p><?php echo $profissional['email']; ?></p>
-                        <p><?php echo $profissional['cidade_estado']; ?></p>
-                        <p><?php echo $profissional['funcao']; ?></p>
+                    <div class="slide-perfil-info">
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
                     </div>
 
                 </div>
@@ -111,53 +109,89 @@ if (!$profissional) {
                 exit;
             }
             ?>
-            <div class="dados-principais">
-                <h4>Meus Dados:</h4>
-                <form action="" method="POST" class="nome">
-                    <div class="campo-horizontal">
-                        <div class="campo">
+                <div class="dados-principais">
+                    <h4>Meus Dados:</h4>
+                    <form action="" method="POST" class="dados">
+                        <div class="campo-horizontal">
+                            <div class="campo">
 
-                            <p>Nome Completo:</p>
-                            <input type="text" name="nome_profissional"
-                                value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
+                                <p>Nome Completo:</p>
+                                <input type="text" name="nome_profissional"
+                                    value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
+                            </div>
+                            <div class="campo">
+                                <p>E-mail:</p>
+                                <input type="email" name="email"
+                                    value="<?php echo htmlspecialchars($profissional['email']); ?>" required>
+                            </div>
                         </div>
-                        <div class="campo">
-                            <p>E-mail:</p>
-                            <input type="email" name="email"
-                                value="<?php echo htmlspecialchars($profissional['email']); ?>" required>
-                        </div>
-                    </div>
-                    <div class="campo-horizontal">
-                        <div class="campo">
-                            <p>Telefone:</p>
-                            <input type="text" name="telefone"
-                                value="<?php echo htmlspecialchars($profissional['telefone']); ?>" required>
-                        </div>
-                        <div class="campo">
-                            <p>Cidade de Residência:</p>
-                            <input type="text" name="cidade_estado"
-                                value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
+                        <div class="campo-horizontal">
+                            <div class="campo">
+                                <p>Telefone:</p>
+                                <input type="text" name="telefone"
+                                    value="<?php echo htmlspecialchars($profissional['telefone']); ?>" required>
+                            </div>
+                            <div class="campo">
+                                <p>Cidade de Residência:</p>
+                                <input type="text" name="cidade_estado"
+                                    value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="campo-horizontal">
-                        <div class="campo">
-                            <p>Função</p>
-                            <input type="text" name="funcao"
-                                value="<?php echo htmlspecialchars($profissional['funcao']); ?>" required>
+                        <div class="campo-horizontal">
+                            <div class="campo">
+                                <p>Função</p>
+                                <input type="text" name="funcao"
+                                    value="<?php echo htmlspecialchars($profissional['funcao']); ?>" required>
+                            </div>
                         </div>
+                        <div class="botoes">
+                        <button type="submit">Salvar</button>
                     </div>
-                    <div class="botoes">
-                    <button type="submit">Salvar</button>
+                    </form>
                 </div>
-                </form>
-            </div>
-            <div class="dados-principais">
-                <h4>Serviços Qualificados:</h4>
-                <form action="" method="POST" class="servicos">
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
+                <div class="dados-principais">
+                    <h4>Serviços Qualificados:</h4>
+                    <form action="" method="POST" class="servicos">
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
+                        </div>
+                        <div class="check">
+                            <p>Serviço</p>
+                            <input type="checkbox">
                     </div>
                     <div class="check">
                         <p>Serviço</p>
@@ -176,44 +210,8 @@ if (!$profissional) {
                         <input type="checkbox">
                     </div>
                     <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
-                    </div>
-                    <div class="check">
-                        <p>Serviço</p>
-                        <input type="checkbox">
+                            <p>Serviço</p>
+                           <input type="checkbox">
                     </div>
                     <button type="submit">Salvar</button>
                 </form>
