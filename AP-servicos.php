@@ -153,92 +153,94 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>    
 
-            <div class="servicos">
-                <h3>Serviços em Andamento:</h3>
-                <table class="servicos-tabela">
-                   <table class="servicos-tabela">
-    <tr>
-        <th>Nome do Cliente</th>
-        <th>Contato</th>
-        <th>Serviço</th>
-        <th>Endereço</th>
-        <th>Valor Total</th>
-    </tr>
+            <div class="pagina-servicos">
 
-    <?php if (!empty($agendamentos)): ?>
+                <div class="servicos">
+                    <h3>Serviços em Andamento:</h3>
+                    <table class="servicos-tabela">
+                        <tr>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
+                        </tr>
 
-        <?php foreach ($agendamentos as $agendamento): ?>
+        <?php if (!empty($agendamentos)): ?>
+
+            <?php foreach ($agendamentos as $agendamento): ?>
+
+                <tr>
+                    <td><?= $agendamento['nome_cliente'] ?></td>
+                    <td><?= $agendamento['telefone'] ?></td>
+                    <td><?= $agendamento['nome_servico'] ?></td>
+                    <td><?= $agendamento['endereco'] ?></td>
+                    <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
+                </tr>
+
+            <?php endforeach; ?>
+
+        <?php else: ?>
 
             <tr>
-                <td><?= $agendamento['nome_cliente'] ?></td>
-                <td><?= $agendamento['telefone'] ?></td>
-                <td><?= $agendamento['nome_servico'] ?></td>
-                <td><?= $agendamento['endereco'] ?></td>
-                <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
+                <td colspan="5">Nenhum serviço encontrado.</td>
             </tr>
 
-        <?php endforeach; ?>
+        <?php endif; ?>
 
-    <?php else: ?>
+    </table>
+                    </table>
+                </div>
 
-        <tr>
-            <td colspan="5">Nenhum serviço encontrado.</td>
-        </tr>
-
-    <?php endif; ?>
-
-</table>
-                </table>
-            </div>
-
-            <div class="servicos">
-                <h3>Respostas Pendentes:</h3>
-                <table class="servicos-tabela">
-                    <tr>
-                        <th>Nome do Cliente</th>
-                        <th>Contato</th>
-                        <th>Serviço</th>
-                        <th>Endereço</th>
-                        <th>Valor Total</th>
-                        <th>Resposta</th>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                    src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                    src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                    src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                    src="uploads/errado.png"></a></td>
-                    </tr>
-                </table>
+                <div class="servicos">
+                    <h3>Respostas Pendentes:</h3>
+                    <table class="servicos-tabela">
+                        <tr>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
+                            <th>Resposta</th>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
