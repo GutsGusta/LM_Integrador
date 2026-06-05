@@ -44,10 +44,10 @@ if (!$profissional) {
 
     <main>
         <div class="pagina-principal">
-            <div class="sidebar">
+           <div class="sidebar">
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
-                    <div class="slide-perfil-info">
+                    <div class="sidebar-perfil-info">
                         <strong><?php echo $profissional['nome_profissional']; ?></strong>
                         <span><?php echo $profissional['cidade_estado']; ?></span>
                         <span><?php echo $profissional['funcao']; ?></span>
@@ -75,13 +75,11 @@ if (!$profissional) {
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" style="display: flex; align-items: center; margin: 0;">
-                    <div class="botoes"
-                        style="border: none; background: none; padding: 0; display: flex; align-items: center;">
-                                
-                        <button type="submit" name="logout"
-                            style="background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding-left: 8px;">Logout</button>
-                    </div>
+                <form method="POST" action="" class="form-sair">                                                   
+                    <button type="submit" name="logout" class="nav-sair">
+                        <i class="fa-solid fa-user"></i>
+                        Sair
+                    </button>
                 </form>
             </div>      
             <?php

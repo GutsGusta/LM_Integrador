@@ -166,6 +166,7 @@ main {
 }
 
 .sidebar-perfil-info span {
+    display: block;
     color: rgba(255, 255, 255, 0.4);
     font-size: 11px;
 }
@@ -205,19 +206,25 @@ main {
     opacity: 1;
 }
 
+.form-sair {
+    margin-top: auto;
+    width: 100%;
+}
+
 .nav-sair {
     border: none;
     background: none;
-    padding: 0;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
     display: flex;
     align-items: center;
-    margin-top: auto;
+    gap: 12px;
+    padding: 13px 20px; 
+    width: 100%;
     color: rgba(255, 255, 255, 0.4);
-}
-
-.nav-sair:hover {
-    color: #e57373;
-    background: rgba(229, 115, 115, 0.05);
 }
 
 .linha {
