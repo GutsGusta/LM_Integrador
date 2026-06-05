@@ -298,6 +298,7 @@ main {
 .dia {
     background-color: #2e2e2e;
     border: 1px solid #333333;
+    width: 120px;
     min-height: 120px; 
     padding: 8px;
     border-radius: 6px;
@@ -342,13 +343,7 @@ main {
     text-overflow: ellipsis;
 }
 
-.primeiro-servico {
-    background-color: rgba(128, 0, 32, 0.2);
-    color: rgb(128, 0, 32);
-    border-left: 3px solid #800020;
-}
-
-.segundo-servico {
+.servico-aviso {
     background-color: rgba(255, 215, 103, 0.2);
     color: rgb(255, 215, 103);
     border-left: 3px solid #E79128;
