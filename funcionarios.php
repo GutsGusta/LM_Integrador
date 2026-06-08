@@ -51,16 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Nossos Profissionais</h2>
 
         <ul class="abas">
-    <li class="aba <?= $categoria_get === '' ? 'ativa' : '' ?>">
-        <a href="funcionarios.php">Todos</a>
-    </li>
-    <?php
-    foreach ($categorias as $kcat => $vcat) {
-        $ativa = $categoria_get === $kcat ? 'ativa' : '';
-        echo '<li class="aba ' . $ativa . '"><a href="funcionarios.php?categoria=' . $kcat . '">' . $vcat . '</a></li>';
-    }
-    ?>
-</ul>
+            <li class="aba <?= $categoria_get === '' ? 'ativa' : '' ?>">
+                <a href="funcionarios.php">Todos</a>
+            </li>
+            <?php
+            foreach ($categorias as $kcat => $vcat) {
+                $ativa = $categoria_get === $kcat ? 'ativa' : '';
+                echo '<li class="aba ' . $ativa . '"><a href="funcionarios.php?categoria=' . $kcat . '">' . $vcat . '</a></li>';
+            }
+            ?>
+        </ul>
 
         <div class="cards-funcionarios">
 
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo '
             <a href="desc.php?id=' . $funcionario['id_profissional'] . '">
                 <div class="card-funcionario">
-                <img src="' . $funcionario['foto'] . '" alt="' . $funcionario['nome_profissional'] . '">
+                <img src="' . 'uploads/' . $funcionario['foto'] . '" alt="' . $funcionario['nome_profissional'] . '">
                     <h3>' . $funcionario['nome_profissional'] . '</h3>
                     <div class="estrelas">' . $estrelas . '</div>
                     <span class="especialidade">' . $categorias[$funcionario['funcao']] . '</span>
