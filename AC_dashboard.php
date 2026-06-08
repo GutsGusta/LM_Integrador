@@ -172,7 +172,6 @@ if (is_array($servicos)) {
 
                     <div class="orcamento-linha">
                         <div class="orcamento-info">
-<<<<<<< HEAD
                             <strong class="destaque">' . $usuario['titulo'] . '</strong>
                             <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
                         </div>
