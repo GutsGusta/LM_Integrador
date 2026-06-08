@@ -146,7 +146,6 @@ if (is_array($servicos)) {
                                 ;
                                 ?>
                             </h3>
-
                             <span>Próximo Agendamento</span>
                         </div>
                     </div>
@@ -157,16 +156,23 @@ if (is_array($servicos)) {
                             <h3 class="destaque">
                                 <?php echo $total_servicos_concluidos; ?>
                             </h3>
+
                             <span>Serviços Concluídos</span>
                         </div>
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 <?php
                 if (is_array($usuarios)) {
                     foreach ($usuarios as $usuario) {
                         echo '
+
+                <div class="orcamento-card">
+                    <h3 class="card-titulo">Última Atividade</h3>
+
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+<<<<<<< HEAD
                             <strong class="destaque">' . $usuario['titulo'] . '</strong>
                             <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
                         </div>
