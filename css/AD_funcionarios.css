@@ -209,6 +209,8 @@ body {
 .admin-content {
     margin-left: 240px;
     padding: 40px 48px;
+    min-height: calc(100vh - 70px);
+    width: calc(100% - 240px);
 }
  
 .content-titulo {
@@ -224,7 +226,9 @@ body {
     border-radius: 12px;
     padding: 28px;
     overflow-x: auto;
-}
+    width: 100%;
+    
+} 
  
 .tabela-header {
     display: flex;

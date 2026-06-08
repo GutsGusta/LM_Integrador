@@ -15,7 +15,7 @@
     require_once "partials/header.php";
     ?>
 
-    <div style="display: flex;">
+    <div>
 
         <div class="sidebar">
             <div class="sidebar-perfil">
@@ -60,7 +60,7 @@
             <div class="tabela-card">
                 <div class="tabela-header">
                     <h3>Tabela de Funcionários</h3>
-                    <button class="btn-add" onclick="abrirModal()">
+                    <button class="btn-add">
                         <i class="fa-solid fa-plus"></i> Novo Funcionário
                     </button>
                 </div>

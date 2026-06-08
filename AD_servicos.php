@@ -15,7 +15,7 @@
     require_once "partials/header.php";
     ?>
 
-    <div style="display: flex;">
+    <div>
 
         <div class="sidebar">
             <div class="sidebar-perfil">
