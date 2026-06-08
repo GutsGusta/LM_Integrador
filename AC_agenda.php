@@ -1,3 +1,31 @@
+<?php
+require_once('data/crud.php');
+
+session_start();
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+
+    session_destroy();
+    header('Location: ./login.php');
+    exit();
+}
+
+
+if (isset($_SESSION['user_tipo'])) {
+    $usuarioLogado = $_SESSION['user_tipo'];
+    if ($usuarioLogado !== 'cliente') {
+        header('Location: login.php');
+        exit();
+    }
+} else {
+    header('Location: login.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,9 +47,9 @@
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <img src="uploads/default.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
+                    <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
                 </div>
             </div>
@@ -46,9 +74,8 @@
                 Meus Dados
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
+            <a href="login.php" class="nav-item nav-sair" name="logout"> <i class="fa-solid fa-right-from-bracket">
+                    Sair</i>
             </a>
         </div>
 

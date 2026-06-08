@@ -2,24 +2,25 @@
 require_once 'crud.php';
 
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 if (isset($_POST['titulo'])) {
 
-    $novaAvaliacao = [
-        'id_cliente'        => $_POST['id_cliente'],
-        'id_profissional'   => $_POST['id_profissional'],
-        'nome_profissional' => $_POST['nome_profissional'],
-        'titulo'            => $_POST['titulo'],
-        'nota'              => $_POST['nota'],
-        'texto_avaliacao'   => $_POST['texto_avaliacao']
-    ];
+  $novaAvaliacao = [
+    'id_cliente' => $_POST['id_cliente'],
+    'id_profissional' => $_POST['id_profissional'],
+    'nome_profissional' => $_POST['nome_profissional'],
+    'nome_servico' => $_POST['nome_servico'],
+    'titulo' => $_POST['titulo'],
+    'nota' => $_POST['nota'],
+    'texto_avaliacao' => $_POST['texto_avaliacao']
+  ];
 
-    $idAvaliacaoNova = create($pdo, 'avaliacoes', $novaAvaliacao);
+  $idAvaliacaoNova = create($pdo, 'avaliacoes', $novaAvaliacao);
 
-    header('Location: ../desc.php?id=' . $_POST['id_profissional']);
-    exit;
+  header('Location: ../desc.php?id=' . $_POST['id_profissional']);
+  exit;
 
 } elseif (isset($_POST['nome_profissional'])) {
   $novoProfissional = [
@@ -58,12 +59,12 @@ if (isset($_POST['titulo'])) {
 
   if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $file)) {
     $fotoUrl = $file;
-    
+
     update(
       $pdo,
       'profissional',
       ['foto' => $fotoUrl],
-      "id_profissional = $idProfissionalNovo" 
+      "id_profissional = $idProfissionalNovo"
     );
     echo "Profissional inserido com sucesso! ID: $idProfissionalNovo";
     echo "<a href='colecao.php? id=$idProfissionalNovo'>Ver Profissional</a>";
@@ -108,19 +109,32 @@ if (isset($_POST['titulo'])) {
 
   if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $file)) {
     $fotoUrl = $file;
-    
+
     update(
       $pdo,
       'cliente',
       ['foto' => $fotoUrl],
-      "id_cliente = $idClienteNovo" 
+      "id_cliente = $idClienteNovo"
     );
     echo "Cliente inserido com sucesso! ID: $idClienteNovo";
     echo "<a href='colecao.php? id=$idClienteNovo'>Ver Cliente</a>";
   } else {
     echo "Erro ao enviar a imagem da capa.";
   }
+} elseif (isset($_POST['orcamento_id_cliente'])) {
+
+  $novoOrcamento = [
+    'pendente' => trim($_POST['pendente'] ?? ''),
+    'cancelado' => trim($_POST['cancelado'] ?? ''),
+    'concluido' => trim($_POST['concluido'] ?? ''),
+    'aceito' => trim($_POST['aceito'] ?? ''),
+  ];
+
+  $idOrcamentoNovo = create($pdo, 'orcamentos', $novoOrcamento);
+
+  header('Location: ../AC_orcamentos.php');
+  exit;
 }
-?>
+;
 
 ?>

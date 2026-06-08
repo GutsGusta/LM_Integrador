@@ -1,3 +1,52 @@
+<?php
+require_once('data/crud.php');
+
+session_start();
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+
+    session_destroy();
+    header('Location: ./login.php');
+    exit();
+}
+
+
+if (isset($_SESSION['user_tipo'])) {
+    $usuarioLogado = $_SESSION['user_tipo'];
+    if ($usuarioLogado !== 'cliente') {
+        header('Location: login.php');
+        exit();
+    }
+} else {
+    header('Location: login.php');
+    exit();
+}
+
+
+$tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
+
+$condicaoJoin = "orcamentos.id_cliente = '" . $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
+
+$buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
+
+$usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
+    $id_orcamentos = (int) $_POST['id_orcamento'];
+
+    $dadosAtualizados = [
+        'status' => trim($_POST['status'])
+    ];
+
+    update($pdo, 'orcamentos', $dadosAtualizados, "id_orcamento = $id_orcamentos");
+    header('Location: AC_orcamentos.php');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,9 +69,9 @@
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
+                <img src="uploads/default.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
+                    <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
                 </div>
             </div>
@@ -47,9 +96,8 @@
                 Meus Dados
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
+            <a href="login.php" class="nav-item nav-sair" name="logout"> <i class="fa-solid fa-right-from-bracket">
+                    Sair</i>
             </a>
         </div>
 
@@ -57,64 +105,56 @@
             <h2 class="content-titulo">Meus Orçamentos:</h2>
 
             <div class="orcamento-card">
+                <h3 class="card-titulo">Última Atividade</h3>
 
-                <div class="orcamento-linha">
-                    <div class="orcamento-info">
-                        <strong>Reforma Banheiro</strong>
-                        <span>João Silva - Pedreiro</span>
-                    </div>
-                    <div class="orcamento-valores">
-                        <strong>R$ 3.500 - R$ 4.200</strong>
-                        <span>10/05/2026</span>
-                    </div>
-                    <div class="orcamento-status status-pendente">
-                        Pendente
-                    </div>
-                </div>
+                <?php
+                if (is_array($usuarios)) {
+                    foreach ($usuarios as $usuario) {
+                        echo '
+                <div class="orcamento-card">
 
-                <div class="orcamento-linha">
-                    <div class="orcamento-info">
-                        <strong>Reforma Banheiro</strong>
-                        <span>João Silva - Pedreiro</span>
-                    </div>
-                    <div class="orcamento-valores">
-                        <strong>R$ 3.500 - R$ 4.200</strong>
-                        <span>10/05/2026</span>
-                    </div>
-                    <div class="orcamento-status status-aceito">
-                        Aceito
-                    </div>
-                </div>
+                    <div class="orcamento-linha">
+                        <div class="orcamento-info">
+                            <strong class="destaque">' . $usuario['titulo'] . '</strong>
+                            <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
+                        </div>
+                        <div class="orcamento-valores">
+                            <strong class="destaque">R$' . $usuario['preco'] . '</strong>
+                            <span>' . $usuario['data'] . '</span>
+                        </div>
 
-                <div class="orcamento-linha">
-                    <div class="orcamento-info">
-                        <strong>Reforma Banheiro</strong>
-                        <span>João Silva - Pedreiro</span>
-                    </div>
-                    <div class="orcamento-valores">
-                        <strong>R$ 3.500 - R$ 4.200</strong>
-                        <span>10/05/2026</span>
-                    </div>
-                    <div class="orcamento-status status-concluido">
-                        Concluído
-                    </div>
-                </div>
+                        <div class="orcamento-status status-pendente">
+                            ' . $usuario['status'] . '
+                        </div>
+                        <p>Mudar Solicitação:</p>
+                        <form method="POST" action="AC_orcamentos.php">
+                            <input type="hidden" name="id_orcamento" value="' . $usuario['id_orcamento'] . '">
+                        <select class="orcamento-status" name="status">
+                        <option value="pendente" ' . ($usuario['status'] === 'Pendente' ? 'selected' : '') . ' class="status-pendente">Pendente</option>
+                        <option value="aceito" ' . ($usuario['status'] === 'Aceito' ? 'selected' : '') . ' class="status-aceito">Aceito</option>
+                        <option value="concluido" ' . ($usuario['status'] === 'Concluído' ? 'selected' : '') . ' class="status-concluido">Concluído</option>
+                        <option value="cancelado" ' . ($usuario['status'] === 'Cancelado' ? 'selected' : '') . ' class="status-cancelado">Cancelado</option>
+                            </select>
 
-                <div class="orcamento-linha">
-                    <div class="orcamento-info">
-                        <strong>Reforma Banheiro</strong>
-                        <span>João Silva - Pedreiro</span>
+        
                     </div>
-                    <div class="orcamento-valores">
-                        <strong>R$ 3.500 - R$ 4.200</strong>
-                        <span>10/05/2026</span>
-                    </div>
-                    <div class="orcamento-status status-cancelado">
-                        Cancelado
-                    </div>
-                </div>
 
-                <button class="btn-salvar">Salvar</button>
+                </div>';
+
+                    }
+                    ;
+                } else {
+                    echo '<div class="orcamento-card"><p class="destaque">Nenhuma atividade recente encontrada.</p></div>';
+                }
+
+                ;
+
+                echo '<button class="btn-salvar">Salvar</button>
+                
+                </form>';
+
+                ?>
+
             </div>
         </div>
     </div>
