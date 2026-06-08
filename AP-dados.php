@@ -1,5 +1,5 @@
 <?php
-require_once('crud.php');
+require_once './data/crud.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {

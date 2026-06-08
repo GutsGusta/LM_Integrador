@@ -1,5 +1,5 @@
 <?php
-require_once('crud.php');
+require_once './data/crud.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -24,51 +24,7 @@ if (!$profissional) {
     die('Profissional não encontrado.');
 }
 
-
-
-$profissional = read(
-    $pdo,
-    'profissional',
-    'id_profissional = ' . (int) $_SESSION['user_id']
-);
-
-$sql = "
-SELECT
-    a.*,
-    c.nome_cliente,
-    c.telefone,
-    c.endereco,
-    s.nome_servico
-FROM agendamento a
-INNER JOIN cliente c
-    ON a.id_cliente = c.id_cliente
-INNER JOIN servicos s
-    ON a.id_servico = s.id_servico
-WHERE a.id_profissional = ?
-";
-?>
-
-
-
-<?php
-require_once('crud.php');
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
-
-$profissional = read(
-    $pdo,
-    'profissional',
-    'id_profissional = ' . (int)$_SESSION['user_id']
-);
-
-if (!$profissional) {
-    die('Profissional não encontrado.');
-}
-
+/* Serviços em andamento */
 $sql = "
 SELECT
     a.id,
@@ -77,8 +33,13 @@ SELECT
     a.preco,
     a.status,
     c.nome_cliente,
-    c.telefone,.
-    c.endereco,
+    c.telefone_cliente,
+    CONCAT(
+        c.rua, ', ',
+        c.numero, ' - ',
+        c.cidade, '/',
+        c.estado
+    ) AS endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
@@ -86,12 +47,44 @@ INNER JOIN cliente c
 INNER JOIN servicos s
     ON a.id_servico = s.id_servico
 WHERE a.id_profissional = ?
+AND a.status = 'Em andamento'
 ";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_SESSION['user_id']]);
 
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* Serviços pendentes */
+$sqlPendentes = "
+SELECT
+    a.id,
+    a.data_agenda,
+    a.horario,
+    a.preco,
+    a.status,
+    c.nome_cliente,
+    c.telefone_cliente,
+    CONCAT(
+        c.rua, ', ',
+        c.numero, ' - ',
+        c.cidade, '/',
+        c.estado
+    ) AS endereco,
+    s.nome_servico
+FROM agendamento a
+INNER JOIN cliente c
+    ON a.id_cliente = c.id_cliente
+INNER JOIN servicos s
+    ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ?
+AND a.status = 'Pendente'
+";
+
+$stmtPendentes = $pdo->prepare($sqlPendentes);
+$stmtPendentes->execute([$_SESSION['user_id']]);
+
+$pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +106,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <main>
         <div class="pagina-principal">
-            
+
             <div class="sidebar">
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
@@ -145,13 +138,13 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">                                                   
+                <form method="POST" action="" class="form-sair">
                     <button type="submit" name="logout" class="nav-sair">
                         <i class="fa-solid fa-user"></i>
                         Sair
                     </button>
                 </form>
-            </div>    
+            </div>
 
             <div class="pagina-servicos">
 
@@ -164,36 +157,38 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Serviço</th>
                             <th>Endereço</th>
                             <th>Valor Total</th>
+                            <th>Status</th>
                         </tr>
 
-        <?php if (!empty($agendamentos)): ?>
+                        <?php if (!empty($agendamentos)): ?>
 
-            <?php foreach ($agendamentos as $agendamento): ?>
+                            <?php foreach ($agendamentos as $agendamento): ?>
 
-                <tr>
-                    <td><?= $agendamento['nome_cliente'] ?></td>
-                    <td><?= $agendamento['telefone'] ?></td>
-                    <td><?= $agendamento['nome_servico'] ?></td>
-                    <td><?= $agendamento['endereco'] ?></td>
-                    <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
-                </tr>
+                                <tr>
+                                    <td><?= $agendamento['nome_cliente'] ?></td>
+                                    <td><?= $agendamento['telefone_cliente'] ?></td>
+                                    <td><?= $agendamento['nome_servico'] ?></td>
+                                    <td><?= $agendamento['endereco'] ?></td>
+                                    <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
+                                    <td><?= $agendamento['status'] ?></td>
+                                </tr>
 
-            <?php endforeach; ?>
+                            <?php endforeach; ?>
 
-        <?php else: ?>
+                        <?php else: ?>
 
-            <tr>
-                <td colspan="5">Nenhum serviço encontrado.</td>
-            </tr>
+                            <tr>
+                                <td colspan="6">Nenhum serviço encontrado.</td>
+                            </tr>
 
-        <?php endif; ?>
+                        <?php endif; ?>
 
-    </table>
+                    </table>
                     </table>
                 </div>
-
                 <div class="servicos">
                     <h3>Respostas Pendentes:</h3>
+
                     <table class="servicos-tabela">
                         <tr>
                             <th>Nome do Cliente</th>
@@ -203,46 +198,41 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Valor Total</th>
                             <th>Resposta</th>
                         </tr>
-                        <tr>
-                            <td>Rogério Alcantra</td>
-                            <td>(11) 98765-4321</td>
-                            <td>Levantamento de Casa</td>
-                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                            <td>R$2400,00</td>
-                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                        src="uploads/errado.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>Rogério Alcantra</td>
-                            <td>(11) 98765-4321</td>
-                            <td>Levantamento de Casa</td>
-                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                            <td>R$2400,00</td>
-                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                        src="uploads/errado.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>Rogério Alcantra</td>
-                            <td>(11) 98765-4321</td>
-                            <td>Levantamento de Casa</td>
-                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                            <td>R$2400,00</td>
-                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                        src="uploads/errado.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>Rogério Alcantra</td>
-                            <td>(11) 98765-4321</td>
-                            <td>Levantamento de Casa</td>
-                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                            <td>R$2400,00</td>
-                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
-                                        src="uploads/errado.png"></a></td>
-                        </tr>
+
+                        <?php if (!empty($pendentes)): ?>
+
+                            <?php foreach ($pendentes as $item): ?>
+
+                                <tr>
+                                    <td><?= $item['nome_cliente'] ?></td>
+                                    <td><?= $item['telefone_cliente'] ?></td>
+                                    <td><?= $item['nome_servico'] ?></td>
+                                    <td><?= $item['endereco'] ?></td>
+                                    <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
+
+                                    <td>
+                                        <a href="aprovar.php?id=<?= $item['id'] ?>">
+                                            <img src="uploads/certo-botao.png" alt="Aprovar">
+                                        </a>
+
+                                        <a href="recusar.php?id=<?= $item['id'] ?>">
+                                            <img src="uploads/errado.png" alt="Recusar">
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+                                <td colspan="6">Nenhuma solicitação pendente.</td>
+                            </tr>
+
+                        <?php endif; ?>
+
                     </table>
                 </div>
-            </div>
-        </div>
     </main>
 </body>
 

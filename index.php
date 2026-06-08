@@ -22,7 +22,7 @@
         <div class="texto">
             <h1 class="titulo">Soluções para sua <span>casa</span></h1>
             <p>conectamos você com os melhores profissionais para serviços de construção, reforma e manutenção.</p>
-            <button class="btn-solicitar">Solicitar orçamento</button>
+            <button class="btn-solicitar"> <a href="orcamento.php">Solicitar orçamento</a></button>
         </div>
 
         <div class="imagem">
