@@ -1,5 +1,96 @@
+<?php
+require_once './data/crud.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+
+$profissional = read(
+    $pdo,
+    'profissional',
+    'id_profissional = ' . (int) $_SESSION['user_id']
+);
+
+if (!$profissional) {
+    die('Profissional não encontrado.');
+}
+
+/* Serviços em andamento */
+$sql = "
+SELECT
+    a.id,
+    a.data_agenda,
+    a.horario,
+    a.preco,
+    a.status,
+    c.nome_cliente,
+    c.telefone_cliente,
+    CONCAT(
+        c.rua, ', ',
+        c.numero, ' - ',
+        c.cidade, '/',
+        c.estado
+    ) AS endereco,
+    s.nome_servico
+FROM agendamento a
+INNER JOIN cliente c
+    ON a.id_cliente = c.id_cliente
+INNER JOIN servicos s
+    ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ?
+AND a.status = 'Em andamento'
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$_SESSION['user_id']]);
+
+$agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* Serviços pendentes */
+$sqlPendentes = "
+SELECT
+    a.id,
+    a.data_agenda,
+    a.horario,
+    a.preco,
+    a.status,
+    c.nome_cliente,
+    c.telefone_cliente,
+    CONCAT(
+        c.rua, ', ',
+        c.numero, ' - ',
+        c.cidade, '/',
+        c.estado
+    ) AS endereco,
+    s.nome_servico
+FROM agendamento a
+INNER JOIN cliente c
+    ON a.id_cliente = c.id_cliente
+INNER JOIN servicos s
+    ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ?
+AND a.status = 'Pendente'
+";
+
+$stmtPendentes = $pdo->prepare($sqlPendentes);
+$stmtPendentes->execute([$_SESSION['user_id']]);
+
+$pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,120 +98,142 @@
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>Serviços Requeridos</title>
 </head>
+
+
 <body>
     <?php
-        require_once 'partials/header.php';
+    require_once 'partials/header.php';
     ?>
     <main>
         <div class="pagina-principal">
-            <div class="funcoes">
-                <div class="pessoal">
-                    <img src="uploads/ricardo_martins.png">
-                    <div class="pessoal-txt">
-                        <h2>José Ribeiro</h2>
-                        <p>joseribeiro@yahoo.com.br</p>
-                        <p>Ribeirão Pires, SP</p>
+
+            <div class="sidebar">
+                <div class="sidebar-perfil">
+                    <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
+                    <div class="sidebar-perfil-info">
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
                     </div>
+
                 </div>
 
-                <div class="linha"></div>
+                <a href="AP-dashbord.php" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    Meu Dashboard
+                </a>
 
-                <div class="area-botoes">
-                    <div class="botoes"><img src="uploads/quadrados.png"><a href="">Meu Dashbord</a></div>
-                    <div class="botoes"><img src="uploads/notas.png"><a href="">Serviços Requeridos</a></div>
-                    <div class="botoes"><img src="uploads/calendario.png"><a href="">Meus Agendamentos</a></div>
-                    <div class="botoes"><img src="uploads/dados.png"><a href="">Meus Dados</a></div>
-                    <div class="botoes"><img src="uploads/sair.png"><a href="">Sair</a></div>
+                <a href="AP-servicos.php" class="nav-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Meus Serviços
+                </a>
+
+                <a href="AP-agenda.php" class="nav-item ativo">
+                    <i class="fa-solid fa-calendar"></i>
+                    Meus Agendamentos
+                </a>
+
+                <a href="AP-dados.php" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    Meus Dados
+                </a>
+
+                <form method="POST" action="" class="form-sair">
+                    <button type="submit" name="logout" class="nav-sair">
+                        <i class="fa-solid fa-user"></i>
+                        Sair
+                    </button>
+                </form>
+            </div>
+
+            <div class="pagina-servicos">
+
+                <div class="servicos">
+                    <h3>Serviços em Andamento:</h3>
+                    <table class="servicos-tabela">
+                        <tr>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
+                            <th>Status</th>
+                        </tr>
+
+                        <?php if (!empty($agendamentos)): ?>
+
+                            <?php foreach ($agendamentos as $agendamento): ?>
+
+                                <tr>
+                                    <td><?= $agendamento['nome_cliente'] ?></td>
+                                    <td><?= $agendamento['telefone_cliente'] ?></td>
+                                    <td><?= $agendamento['nome_servico'] ?></td>
+                                    <td><?= $agendamento['endereco'] ?></td>
+                                    <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
+                                    <td><?= $agendamento['status'] ?></td>
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+                                <td colspan="6">Nenhum serviço encontrado.</td>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </table>
+                    </table>
                 </div>
-            </div>
+                <div class="servicos">
+                    <h3>Respostas Pendentes:</h3>
 
-            <div class="servicos">
-                <h3>Serviços em Andamento:</h3>
-                <table class="servicos-tabela">
-                    <tr>
-                        <th>Nome do Cliente</th>
-                        <th>Contato</th>
-                        <th>Serviço</th>
-                        <th>Endereço</th>
-                        <th>Valor Total</th>
-                    </tr>
-                    <tr>
-                        <td>Neymar Junior</td>
-                        <td>(11) 91234-5678</td>
-                        <td>Construção de Calçada</td>
-                        <td>R. Brasil do Impiranga, 88 - Santo André</td>
-                        <td>R$600,00</td>
-                    </tr>
-                    <tr>
-                        <td>Neymar Junior</td>
-                        <td>(11) 91234-5678</td>
-                        <td>Construção de Calçada</td>
-                        <td>R. Brasil do Impiranga, 88 - Santo André</td>
-                        <td>R$600,00</td>
-                    </tr>
-                    <tr>
-                        <td>Neymar Junior</td>
-                        <td>(11) 91234-5678</td>
-                        <td>Construção de Calçada</td>
-                        <td>R. Brasil do Impiranga, 88 - Santo André</td>
-                        <td>R$600,00</td>
-                    </tr>
-                    <tr>
-                        <td>Neymar Junior</td>
-                        <td>(11) 91234-5678</td>
-                        <td>Construção de Calçada</td>
-                        <td>R. Brasil do Impiranga, 88 - Santo André</td>
-                        <td>R$600,00</td>
-                    </tr>
-                </table>
-            </div>
+                    <table class="servicos-tabela">
+                        <tr>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
+                            <th>Resposta</th>
+                        </tr>
 
-            <div class="servicos">
-                <h3>Respostas Pendentes:</h3>
-                <table class="servicos-tabela">
-                    <tr>
-                        <th>Nome do Cliente</th>
-                        <th>Contato</th>
-                        <th>Serviço</th>
-                        <th>Endereço</th>
-                        <th>Valor Total</th>
-                        <th>Resposta</th>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img src="uploads/errado.png"></a></td>
-                    </tr>
-                    <tr>
-                        <td>Rogério Alcantra</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Levantamento de Casa</td>
-                        <td>R. Recebaby da Silva, 71 - São Paulo</td>
-                        <td>R$2400,00</td>
-                        <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img src="uploads/errado.png"></a></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                        <?php if (!empty($pendentes)): ?>
+
+                            <?php foreach ($pendentes as $item): ?>
+
+                                <tr>
+                                    <td><?= $item['nome_cliente'] ?></td>
+                                    <td><?= $item['telefone_cliente'] ?></td>
+                                    <td><?= $item['nome_servico'] ?></td>
+                                    <td><?= $item['endereco'] ?></td>
+                                    <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
+
+                                    <td>
+                                        <a href="aprovar.php?id=<?= $item['id'] ?>">
+                                            <img src="uploads/certo-botao.png" alt="Aprovar">
+                                        </a>
+
+                                        <a href="recusar.php?id=<?= $item['id'] ?>">
+                                            <img src="uploads/errado.png" alt="Recusar">
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+                                <td colspan="6">Nenhuma solicitação pendente.</td>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </table>
+                </div>
     </main>
 </body>
+
 </html>

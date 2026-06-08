@@ -121,11 +121,13 @@ if (is_array($servicos)) {
                 <h2 class="content-titulo">Meu Dashboard</h2>
                 <p class="boas-vindas">Olá, <?php echo $_SESSION['user_name']; ?>! Resumo da sua conta hoje.</p>
 
+
                 <div class="dashboard-grid">
                     <div class="dash-card">
                         <i class="fa-solid fa-file-lines dash-icon"></i>
                         <div class="dash-info">
                             <h3 class="destaque"><?php echo $total_orcamentos_pendentes; ?></h3>
+
                             <span>Orçamentos Pendentes</span>
                         </div>
                     </div>
@@ -144,6 +146,7 @@ if (is_array($servicos)) {
                                 ;
                                 ?>
                             </h3>
+
                             <span>Próximo Agendamento</span>
                         </div>
                     </div>
@@ -159,15 +162,11 @@ if (is_array($servicos)) {
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <?php
                 if (is_array($usuarios)) {
                     foreach ($usuarios as $usuario) {
                         echo '
-                <div class="orcamento-card">
-                    <h3 class="card-titulo">Última Atividade</h3>
-
-                    <div class="orcamento-linha">
-                        <div class="orcamento-info">
                             <strong class="destaque">' . $usuario['titulo'] . '</strong>
                             <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
                         </div>
@@ -189,6 +188,7 @@ if (is_array($servicos)) {
 
                 ;
                 ?>
+
             </div>
         </div>
 

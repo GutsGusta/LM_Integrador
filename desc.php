@@ -23,8 +23,8 @@ if (!$profissional) {
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro' => 'Pedreiro',
-    'servente' => 'Servente'
+    'pedreiro'       => 'Pedreiro',
+    'servente'       => 'Servente'
 ];
 
 $avalia = "id_profissional = '" . $profissional['id_profissional'] . "'";
@@ -51,6 +51,8 @@ elseif ($mediaArredondada == 4)
     $estrelas = '⭐⭐⭐⭐☆';
 elseif ($mediaArredondada == 5)
     $estrelas = '⭐⭐⭐⭐⭐';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +75,6 @@ elseif ($mediaArredondada == 5)
         <a href="funcionarios.php" class="voltar">← Voltar aos profissionais</a>
 
         <div class="perfil-container">
-
 
             <div class="coluna-esq">
 
@@ -120,8 +121,6 @@ elseif ($mediaArredondada == 5)
                 </div>
 
             </div>
-
-
 
             <div class="coluna-dir">
 

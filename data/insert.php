@@ -22,6 +22,8 @@ if (isset($_POST['titulo'])) {
   header('Location: ../desc.php?id=' . $_POST['id_profissional']);
   exit;
 
+
+
 } elseif (isset($_POST['nome_profissional'])) {
   $novoProfissional = [
     'nome_profissional' => $_POST['nome_profissional'],
@@ -59,7 +61,6 @@ if (isset($_POST['titulo'])) {
 
   if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $file)) {
     $fotoUrl = $file;
-
     update(
       $pdo,
       'profissional',
@@ -109,7 +110,6 @@ if (isset($_POST['titulo'])) {
 
   if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $file)) {
     $fotoUrl = $file;
-
     update(
       $pdo,
       'cliente',
@@ -121,7 +121,8 @@ if (isset($_POST['titulo'])) {
   } else {
     echo "Erro ao enviar a imagem da capa.";
   }
-} elseif (isset($_POST['orcamento_id_cliente'])) {
+
+  } elseif (isset($_POST['orcamento_id_cliente'])) {
 
   $novoOrcamento = [
     'pendente' => trim($_POST['pendente'] ?? ''),

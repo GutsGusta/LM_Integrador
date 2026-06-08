@@ -139,8 +139,12 @@ body {
     justify-content: center;
     gap: 8px;
     margin-bottom: 36px;
+<<<<<<< HEAD
     list-style-type: none;
     text-decoration: none;
+=======
+    list-style: none;
+>>>>>>> ffdb18fa15b658541ecd0e08457813748949204a
 }
 
 .aba {
@@ -156,6 +160,14 @@ body {
     text-transform: uppercase;
     transition: all 0.25s ease;
     list-style-type: none;
+    text-decoration: none;
+}
+
+.aba a,
+.aba a:visited,
+.aba a:hover,
+.aba a:active {
+    color: inherit;
     text-decoration: none;
 }
 
