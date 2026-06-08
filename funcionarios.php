@@ -51,13 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Nossos Profissionais</h2>
 
         <ul class="abas">
-            <li class="aba ativa"><a href="funcionarios.php">Todos</a></li>
-            <?php
-            foreach ($categorias as $kcat => $vcat) {
-                echo '<li class="aba"><a href="funcionarios.php?categoria=' . $kcat . '">' . $vcat . '</a></li>';
-            }
-            ?>
-        </ul>
+    <li class="aba <?= $categoria_get === '' ? 'ativa' : '' ?>">
+        <a href="funcionarios.php">Todos</a>
+    </li>
+    <?php
+    foreach ($categorias as $kcat => $vcat) {
+        $ativa = $categoria_get === $kcat ? 'ativa' : '';
+        echo '<li class="aba ' . $ativa . '"><a href="funcionarios.php?categoria=' . $kcat . '">' . $vcat . '</a></li>';
+    }
+    ?>
+</ul>
 
         <div class="cards-funcionarios">
 
