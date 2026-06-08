@@ -28,7 +28,7 @@ require 'crud.php';
 
         if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $arquivo = $_FILES['arquivo'];
-            $tipos_permitidos = ['image/jpeg', 'image/png', 'image/gif'];
+            $tipos_permitidos = ['image/jpeg', 'image/png', 'image/jpg'];
 
             if (!in_array($arquivo['type'], $tipos_permitidos)) {
                 echo "<div class='mensagem erro'>Tipo de arquivo não permitido.</div>";

@@ -7,6 +7,58 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+
+$profissional = read(
+    $pdo,
+    'profissional',
+    'id_profissional = ' . (int) $_SESSION['user_id']
+);
+
+if (!$profissional) {
+    die('Profissional não encontrado.');
+}
+
+
+
+$profissional = read(
+    $pdo,
+    'profissional',
+    'id_profissional = ' . (int) $_SESSION['user_id']
+);
+
+$sql = "
+SELECT
+    a.*,
+    c.nome_cliente,
+    c.telefone,
+    c.endereco,
+    s.nome_servico
+FROM agendamento a
+INNER JOIN cliente c
+    ON a.id_cliente = c.id_cliente
+INNER JOIN servicos s
+    ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ?
+";
+?>
+
+
+
+<?php
+require_once('crud.php');
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 $profissional = read(
     $pdo,
     'profissional',
@@ -25,7 +77,7 @@ SELECT
     a.preco,
     a.status,
     c.nome_cliente,
-    c.telefone,
+    c.telefone,.
     c.endereco,
     s.nome_servico
 FROM agendamento a
@@ -45,6 +97,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="pt-br">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,132 +106,144 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Serviços Requeridos</title>
 </head>
 
+
 <body>
+    <?php
+    require_once 'partials/header.php';
+    ?>
+    <main>
+        <div class="pagina-principal">
+            
+            <div class="sidebar">
+                <div class="sidebar-perfil">
+                    <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
+                    <div class="sidebar-perfil-info">
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
+                    </div>
 
-<?php require_once 'partials/header.php'; ?>
-
-<main>
-    <div class="pagina-principal">
-
-        <div class="funcoes">
-            <div class="pessoal">
-                <img src="uploads/<?php echo $profissional['foto']; ?>">
-
-                <div class="pessoal-txt">
-                    <h2><?php echo $profissional['nome_profissional']; ?></h2>
-                    <p><?php echo $profissional['email']; ?></p>
-                    <p><?php echo $profissional['cidade_estado']; ?></p>
-                </div>
-            </div>
-
-            <div class="linha"></div>
-
-            <div class="area-botoes">
-                <div class="botoes">
-                    <img src="uploads/quadrados.png">
-                    <a href="AP-dashbord.php">Meu Dashboard</a>
                 </div>
 
-                <div class="botoes">
-                    <img src="uploads/notas.png">
-                    <a href="AP-servicos.php">Serviços Requeridos</a>
-                </div>
+                <a href="AP-dashbord.php" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    Meu Dashboard
+                </a>
 
-                <div class="botoes">
-                    <img src="uploads/calendario.png">
-                    <a href="AP-agenda.php">Meus Agendamentos</a>
-                </div>
+                <a href="AP-servicos.php" class="nav-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Meus Serviços
+                </a>
 
-                <div class="botoes">
-                    <img src="uploads/dados.png">
-                    <a href="AP-dados.php">Meus Dados</a>
-                </div>
+                <a href="AP-agenda.php" class="nav-item ativo">
+                    <i class="fa-solid fa-calendar"></i>
+                    Meus Agendamentos
+                </a>
 
-                <div class="botoes">
-                    <img src="uploads/sair.png">
-                    <a href="logout.php">Sair</a>
-                </div>
-            </div>
-        </div>
+                <a href="AP-dados.php" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    Meus Dados
+                </a>
 
-        <div class="servicos">
-            <h3>Serviços em Andamento:</h3>
+                <form method="POST" action="" class="form-sair">                                                   
+                    <button type="submit" name="logout" class="nav-sair">
+                        <i class="fa-solid fa-user"></i>
+                        Sair
+                    </button>
+                </form>
+            </div>    
 
-            <table class="servicos-tabela">
-                <tr>
-                    <th>Nome do Cliente</th>
-                    <th>Contato</th>
-                    <th>Serviço</th>
-                    <th>Endereço</th>
-                    <th>Valor Total</th>
-                    <th>Status</th>
-                </tr>
+            <div class="pagina-servicos">
 
-                <?php if (!empty($agendamentos)): ?>
-
-                    <?php foreach ($agendamentos as $agendamento): ?>
-
+                <div class="servicos">
+                    <h3>Serviços em Andamento:</h3>
+                    <table class="servicos-tabela">
                         <tr>
-                            <td><?php echo $agendamento['nome_cliente']; ?></td>
-
-                            <td><?php echo $agendamento['telefone']; ?></td>
-
-                            <td><?php echo $agendamento['nome_servico']; ?></td>
-
-                            <td><?php echo $agendamento['endereco']; ?></td>
-
-                            <td>
-                                R$
-                                <?php echo number_format(
-                                    $agendamento['preco'],
-                                    2,
-                                    ',',
-                                    '.'
-                                ); ?>
-                            </td>
-
-                            <td><?php echo $agendamento['status']; ?></td>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
                         </tr>
 
-                    <?php endforeach; ?>
+        <?php if (!empty($agendamentos)): ?>
 
-                <?php else: ?>
-
-                    <tr>
-                        <td colspan="6">
-                            Nenhum serviço encontrado.
-                        </td>
-                    </tr>
-
-                <?php endif; ?>
-
-            </table>
-        </div>
-
-        <div class="servicos">
-            <h3>Respostas Pendentes:</h3>
-
-            <table class="servicos-tabela">
-                <tr>
-                    <th>Nome do Cliente</th>
-                    <th>Contato</th>
-                    <th>Serviço</th>
-                    <th>Endereço</th>
-                    <th>Valor Total</th>
-                    <th>Resposta</th>
-                </tr>
+            <?php foreach ($agendamentos as $agendamento): ?>
 
                 <tr>
-                    <td colspan="6">
-                        Área ainda não implementada.
-                    </td>
+                    <td><?= $agendamento['nome_cliente'] ?></td>
+                    <td><?= $agendamento['telefone'] ?></td>
+                    <td><?= $agendamento['nome_servico'] ?></td>
+                    <td><?= $agendamento['endereco'] ?></td>
+                    <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
                 </tr>
 
-            </table>
+            <?php endforeach; ?>
+
+        <?php else: ?>
+
+            <tr>
+                <td colspan="5">Nenhum serviço encontrado.</td>
+            </tr>
+
+        <?php endif; ?>
+
+    </table>
+                    </table>
+                </div>
+
+                <div class="servicos">
+                    <h3>Respostas Pendentes:</h3>
+                    <table class="servicos-tabela">
+                        <tr>
+                            <th>Nome do Cliente</th>
+                            <th>Contato</th>
+                            <th>Serviço</th>
+                            <th>Endereço</th>
+                            <th>Valor Total</th>
+                            <th>Resposta</th>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Rogério Alcantra</td>
+                            <td>(11) 98765-4321</td>
+                            <td>Levantamento de Casa</td>
+                            <td>R. Recebaby da Silva, 71 - São Paulo</td>
+                            <td>R$2400,00</td>
+                            <td><a href=""><img src="uploads/certo-botao.png"></a><a href=""><img
+                                        src="uploads/errado.png"></a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-
-    </div>
-</main>
-
+    </main>
 </body>
+
 </html>

@@ -1,5 +1,33 @@
+<?php
+require_once('crud.php');
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+
+$profissional = read(
+    $pdo,
+    'profissional',
+    'id_profissional = ' . (int) $_SESSION['user_id']
+);
+
+if (!$profissional) {
+    die('Profissional não encontrado.');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,150 +35,162 @@
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <title>Área de Trabalho</title>
 </head>
+
+
+                <div class="pessoal">
+                    
+                </div>
 <body>
-    <?php
-        require_once 'partials/header.php';
-    ?>
+
+    <?php require_once 'partials/header.php'; ?>
 
     <main>
         <div class="pagina-principal">
+
             <div class="sidebar">
-            <div class="sidebar-perfil">
-                <img src="uploads/marcos_santos.png" alt="Cliente">
-                <div class="sidebar-perfil-info">
-                    <strong>Marcos Santos</strong>
-                    <span>Cliente</span>
+                <div class="sidebar-perfil">
+                    <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
+                    <div class="sidebar-perfil-info">
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
+                    </div>
+
                 </div>
-            </div>
 
-            <a href="AP-dashbord.php" class="nav-item">
-                <i class="fa-solid fa-house"></i>
-                Meu Dashboard
-            </a>
+                <a href="AP-dashbord.php" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    Meu Dashboard
+                </a>
 
-            <a href="AP-servicos.php" class="nav-item">
-                <i class="fa-solid fa-file-lines"></i>
-                Meus Serviços
-            </a>
+                <a href="AP-servicos.php" class="nav-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Meus Serviços
+                </a>
 
-            <a href="AP-agenda.php" class="nav-item ativo">
-                <i class="fa-solid fa-calendar"></i>
-                Meus Agendamentos
-            </a>
+                <a href="AP-agenda.php" class="nav-item ativo">
+                    <i class="fa-solid fa-calendar"></i>
+                    Meus Agendamentos
+                </a>
 
-            <a href="AP-dados.php" class="nav-item">
-                <i class="fa-solid fa-user"></i>
-                Meus Dados
-            </a>
+                <a href="AP-dados.php" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    Meus Dados
+                </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
-            </a>
-        </div>
+                <form method="POST" action="" class="form-sair">                                                   
+                    <button type="submit" name="logout" class="nav-sair">
+                        <i class="fa-solid fa-user"></i>
+                        Sair
+                    </button>
+                </form>
+            </div>        
+          
+            <div class="dashbord">
 
-                        
+                <div class="estatisticas">
+
+                    <div class="estatisticas-indv">
+                        <img src="uploads/fatura.png">
+
+                        <div class="estatisticas-txt">
+                            <h4>Experiência</h4>
+                            <h1><?php echo $profissional['experiencia']; ?></h1>
+                            <p>Tempo de atuação</p>
+                        </div>
+                    </div>
+
                     <div class="estatisticas-indv">
                         <img src="uploads/relogio.png">
+
                         <div class="estatisticas-txt">
-                            <h4>Em Andamento</h4>
-                            <h1>15</h1>
-                            <p>Serviços não Concluídos</p>
+                            <h4>Disponibilidade</h4>
+                            <h1>
+                                <?php
+                                echo $profissional['disponibilidade']
+                                    ? 'Sim'
+                                    : 'Não';
+                                ?>
+                            </h1>
+                            <p>Status atual</p>
                         </div>
                     </div>
-                
+
                     <div class="estatisticas-indv">
                         <img src="uploads/Certo.png">
+
                         <div class="estatisticas-txt">
-                            <h4>Concluídos</h4>
-                            <h1>42</h1>
-                            <p>Serviços Concluídos</p>
+                            <h4>Projetos</h4>
+                            <h1><?php echo $profissional['projetos_concluidos']; ?></h1>
+                            <p>Projetos concluídos</p>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="quadrados">
+
                     <div class="quadrados-indv">
-                        <h2>Últimos Ganhos</h2>
+                        <h2>Informações Profissionais</h2>
+
                         <div class="linha"></div>
-                        <div class="campo-servico">                           
+
+                        <div class="campo-servico">
                             <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
+                                <h4>Serviço</h4>
+                                <p><?php echo $profissional['servico']; ?></p>
                             </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>           
                         </div>
-                        <div class="campo-servico">                           
+
+                        <div class="campo-servico">
                             <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
+                                <h4>Função</h4>
+                                <p><?php echo $profissional['funcao']; ?></p>
                             </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>           
                         </div>
-                        <div class="campo-servico">                           
+
+                        <div class="campo-servico">
                             <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
+                                <h4>Sobre</h4>
+                                <p><?php echo $profissional['sobre']; ?></p>
                             </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>           
                         </div>
                     </div>
+
                     <div class="quadrados-indv">
-                        <h2>Próximos Serviços</h2>
+                        <h2>Dados de Contato</h2>
+
                         <div class="linha"></div>
+
                         <div class="campo-servico">
-                            <div class="data">
-                                <h4>18</h4>
-                                <h4>Maio</h4>
-                            </div>
                             <div class="info">
-                                <h4>Levantamento de Casa</h4>
-                                <p>06:00-07:00</p>
-                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                                <h4>Email</h4>
+                                <p><?php echo $profissional['email']; ?></p>
                             </div>
-                            <p class="status-confirmado">Confirmado</p>
                         </div>
+
                         <div class="campo-servico">
-                            <div class="data">
-                                <h4>18</h4>
-                                <h4>Maio</h4>
-                            </div>
                             <div class="info">
-                                <h4>Levantamento de Casa</h4>
-                                <p>06:00-07:00</p>
-                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                                <h4>Telefone</h4>
+                                <p><?php echo $profissional['telefone']; ?></p>
                             </div>
-                            <p class="status-aguardo">Aguardando</p>
                         </div>
+
                         <div class="campo-servico">
-                            <div class="data">
-                                <h4>18</h4>
-                                <h4>Maio</h4>
-                            </div>
                             <div class="info">
-                                <h4>Levantamento de Casa</h4>
-                                <p>06:00-07:00</p>
-                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                                <h4>Cidade</h4>
+                                <p><?php echo $profissional['cidade_estado']; ?></p>
                             </div>
-                            <p class="status-confirmado">Confirmado</p>
                         </div>
                     </div>
+
                 </div>
+
             </div>
+
         </div>
     </main>
 
 </body>
+
 </html>

@@ -124,7 +124,7 @@ main {
 .pagina-principal {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 50px;
 }
 
@@ -205,39 +205,43 @@ main {
     opacity: 1;
 }
 
-.nav-sair {
+.form-sair {
     margin-top: auto;
+    width: 100%;
+}
+
+.nav-sair {
+    border: none;
+    background: none;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 20px; 
+    width: 100%;
     color: rgba(255, 255, 255, 0.4);
 }
 
-.nav-sair:hover {
-    color: #e57373;
-    background: rgba(229, 115, 115, 0.05);
-}
-
-.linha {
-    background-color: black;
-    height: 3px;
-    width: 400px;
-    margin-block: 20px;
-}
-
-.botoes:hover {
-    background-color: #5b5a5b;
-    width: 400px;
-    border-radius: 5px;
-    transform: scale(1.05);
-}
-
-.botoes img {
-    width: 100px;
-}
 
 /*PÁGINA DOS SERVIÇOS*/
+
+.pagina-servicos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 300px;
+    gap: 50px;
+}
 
 .servicos {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .servicos-tabela {
@@ -245,6 +249,17 @@ main {
     border-radius: 20px;
     text-align: center;
     box-shadow: 3px 6px 12px rgba( 0, 0, 0, 0.8);
+}
+
+.servicos-tabela th {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px 25px 10px 25px;
+}
+
+.servicos-tabela td, tr {
+    padding: 18px 25px;
+    vertical-align: middle;
 }
 
 .servicos-tabela img {
