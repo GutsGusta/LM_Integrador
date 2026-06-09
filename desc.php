@@ -86,7 +86,7 @@ elseif ($mediaArredondada == 5)
                     </span>
                     <div class="estrelas-perfil"><?= $estrelas ?></div>
                     <p class="nota-texto"><?= $mediaArredondada ?> · <?= $total_avaliacoes ?> Avaliações</p>
-                    <a href="testeagenda.php?id_profissional=<?= $profissional['id_profissional'] ?>">
+                    <a href="agendahorario.php?id_profissional=<?= $profissional['id_profissional'] ?>">
                         <button type="button" class="btn-solicitar">Agendar Horário</button>
                     </a>
                     <a
@@ -158,7 +158,7 @@ elseif ($mediaArredondada == 5)
                                 <div class="avaliacao-item">
                                     <div class="avaliacao-header">
                                         <span class="avaliacao-nome"><?= $nomeDoCliente ?></span>
-                                        <span>Data da Avaliação: <?= $dataHora->format('d/m/Y às H:i') ?></span>
+                                        <span class="avaliacao-data">Data da Avaliação: <?= $dataHora->format('d/m/Y') . ' às ' . $dataHora->format('H:i') ?></span>
                                         <p class="avaliacao-servico"><?= $avaliacao['nome_servico'] ?></p>
                                         <p>Nota: <?= $avaliacao['nota'] ?></p>
                                         <span class="avaliacao-texto"><?= $avaliacao['texto_avaliacao'] ?></span>

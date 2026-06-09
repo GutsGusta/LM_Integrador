@@ -19,6 +19,7 @@
         <input type="text" id="nome" name="Nome" placeholder="Nome">
         <input type="email" id="email" name="email" placeholder="Email">
         <input type="text" id="tefone" name="Telefone" placeholder="Telefone">
+        <input type="text" id="cpf" name="cpf" placeholder="CPF">
         <input type="password" id="Senha" name="Senha" placeholder="Senha">
         <p>Escolha sua Foto de Perfil:</p>
         <input type="file">

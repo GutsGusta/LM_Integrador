@@ -62,7 +62,7 @@ $melhoresProfissionais = $pdo->query("
             <div class="sidebar-perfil">
                 <img src="uploads/ricardo_almeida.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Ricardo Almeida</strong>
+                    <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Admin</span>
                 </div>
             </div>

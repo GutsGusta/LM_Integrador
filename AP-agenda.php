@@ -1,6 +1,6 @@
 <?php
-require_once './data/crud.php';
- session_start();
+require_once('crud.php');
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -135,9 +135,9 @@ foreach ($agendamentos as $agendamento) {
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">
-                    <button type="submit" name="logout" class="nav-sair">
-                        <i class="fa-solid fa-user"></i>
+                <form method="POST" action="AP-agenda.php">
+                    <button type="submit" name="logout" class="nav-item nav-sair">
+                        <i class="fa-solid fa-right-from-bracket">Sair</i>
                         Sair
                     </button>
                 </form>
@@ -195,128 +195,6 @@ foreach ($agendamentos as $agendamento) {
                         echo '<div class="dia fora-do-mes"><p class="numero-dia">' . $prox_dia . '</p></div>';
                     }
                     ?>
-
-
-                    <!-- <div class="dia">
-                        <p class="numero-dia">1</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">2</p>
-                    </div>
-
-                    <div class="dia tem-servico">
-                        <p class="numero-dia">3</p>
-                        <p class="servico primeiro-servico">08:00 - Contrapiso</p>
-                    </div>
-
-                    <div class="dia">
-                        <p class="numero-dia">4</p>
-                    </div>
-
-                    <div class="dia dia-hoje">
-                        <p class="numero-dia">5</p>
-                    </div>
-
-                    <div class="dia">
-                        <p class="numero-dia">6</p>
-                    </div>
-
-                    <div class="dia tem-servico">
-                        <p class="numero-dia">7</p>
-                        <p class="servico primeiro-servico">07:30 - Reboco Muro</p>
-                        <p class="servico segundo-servico">14:00 - Orçamento</p>
-                    </div>
-
-                    <div class="dia">
-                        <p class="numero-dia">8</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">9</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">10</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">11</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">12</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">13</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">14</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">15</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">16</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">17</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">18</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">19</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">20</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">21</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">22</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">23</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">24</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">25</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">26</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">27</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">28</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">29</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">30</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">31</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">1</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">2</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">3</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">4</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">5</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">6</p>
-                    </div> -->
                 </div>
             </div>
         </div>

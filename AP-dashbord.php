@@ -1,5 +1,5 @@
 <?php
-require_once('./data/crud.php');
+require_once('crud.php');
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -78,12 +78,11 @@ if (!$profissional) {
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">                                                   
-                    <button type="submit" name="logout" class="nav-sair">
-                        <i class="fa-solid fa-user"></i>
-                        Sair
-                    </button>
-                </form>
+                <form method="POST" action="AP-dashbord.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                </button>
+            </form>
             </div>        
           
             <div class="dashbord">

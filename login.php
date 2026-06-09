@@ -4,6 +4,19 @@ require_once 'data/crud.php';
 
 session_start();
 
+if (isset($_SESSION['user_tipo'])) {
+    if ($_SESSION['user_tipo'] === 'profissional') {
+        header('Location: AP-dashbord.php');
+        exit;
+    } elseif ($_SESSION['user_tipo'] === 'cliente') {
+        header('Location: AC_dashboard.php');
+        exit;
+    } elseif ($_SESSION['user_tipo'] === 'admin') {
+        header('Location: AD_dashboard.php');
+        exit;
+    }
+}
+
 $erro = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -83,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
     <link rel="stylesheet" href="css/login.css">
     <link rel="icon" type="image/png" href="uploads/Logo-LM.png">
 </head>
