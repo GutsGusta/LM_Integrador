@@ -1,30 +1,13 @@
 <?php
-require_once('data/crud.php');
-
 session_start();
-
-if (isset($_POST['logout'])) {
-
-    session_unset();
-
-    session_destroy();
-    header('Location: ./login.php');
-    exit();
-}
+require_once 'data/crud.php';
+$clientes = readAll($pdo, 'cliente');
 
 
-if (isset($_SESSION['user_tipo'])) {
-    $usuarioLogado = $_SESSION['user_tipo'];
-    if ($usuarioLogado !== 'admin') {
-        header('Location: login.php');
-        exit();
-    }
-} else {
-    header('Location: login.php');
-    exit();
-};
+
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -95,80 +78,60 @@ if (isset($_SESSION['user_tipo'])) {
                     <thead>
                         <tr>
                             <th>Nome do Cliente</th>
-                            <th>Tipo de Profissional</th>
-                            <th>Data do Agendamento</th>
-                            <th>Horário</th>
-                            <th>Preço Total</th>
-                            <th>Profissional</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Endereço</th>
+                            <th>CPF</th>
+                            <th>Disponibilidade</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>João Pereira</td>
-                            <td><span class="badge-tipo badge-pedreiro">Pedreiro</span></td>
-                             <td class="data">01/08/2026 - 06/08/2026</td>
-                            <td class="horario">08:00 - 14:00</td>
-                            <td class="preco">R$500,00</td>
-                            <td class="profissional">Luis Almeida</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-excluir">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mariana Costa</td>
-                            <td><span class="badge-tipo badge-mestre">Mestre de Obra</span></td>
-                             <td class="data">01/08/2026 - 06/08/2026</td>
-                            <td class="horario">08:00 - 14:00</td>
-                            <td class="preco">R$700,00</td>
-                            <td class="profissional">Pedro Silveira</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-excluir">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Felipe Rodrigues</td>
-                            <td><span class="badge-tipo badge-servente">Servente</span></td>
-                            <td class="data">01/08/2026 - 06/08/2026</td>
-                            <td class="horario">08:00 - 14:00</td>
-                            <td class="preco">R$350,00</td>
-                            <td class="profissional">Vitor Rodrigues</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-excluir">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Camila Santos</td>
-                            <td><span class="badge-tipo badge-servente">Servente</span></td>
-                            <td class="data">01/08/2026 - 06/08/2026</td>
-                            <td class="horario">08:00 - 14:00</td>
-                            <td class="preco">R$1800,00</td>
-                            <td class="profissional">Marta Oliveira</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-excluir">Excluir</button>
-                                </div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Eduardo Lima</td>
-                            <td><span class="badge-tipo badge-pedreiro">Pedreiro</span></td>
-                            <td class="data">01/08/2026 - 06/08/2026</td>
-                            <td class="horario">08:00 - 14:00</td>
-                            <td class="preco">R$600,00</td>
-                            <td class="profissional">Ronaldo Filho</td>
-                            <td>
-                                <div class="acoes">
-                                    <button class="btn-acao btn-excluir">Excluir</button>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php if (!empty($clientes)): ?>
+
+                            <?php foreach ($clientes as $cliente): ?>
+
+                                <tr>
+
+                                    <td>
+                                        <div class="func-nome">
+                                            <img src="uploads/icone_usuario.png" alt="">
+                                            <?= $cliente['nome_cliente'] ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <?= $cliente['email'] ?>
+                                    </td>
+
+                                    <td>
+                                        <?= $cliente['telefone'] ?>
+                                    </td>
+
+                                    <td>
+                                        <?= $cliente['endereco'] ?>
+                                    </td>
+
+
+
+                                    <td>
+                                        <?= $cliente['cpf'] ?>
+                                    </td>
+
+
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+                                <td colspan="7">
+                                    Nenhum profissional encontrado.
+                                </td>
+                            </tr>
+
+                        <?php endif; ?>
+
                     </tbody>
                 </table>
             </div>

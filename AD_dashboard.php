@@ -1,73 +1,41 @@
 <?php
-require_once('data/crud.php');
-
 session_start();
+require_once 'data/crud.php';
 
-if (isset($_POST['logout'])) {
+/* CARDS */
+$totalProfissionais = $pdo->query("
+    SELECT COUNT(*) FROM profissional
+")->fetchColumn();
 
-    session_unset();
+$totalClientes = $pdo->query("
+    SELECT COUNT(*) FROM cliente
+")->fetchColumn();
 
-    session_destroy();
-    header('Location: ./login.php');
-    exit();
-}
+$totalOrcamentos = $pdo->query("
+    SELECT COUNT(*) FROM orcamento
+")->fetchColumn();
 
-
-if (isset($_SESSION['user_tipo'])) {
-    $usuarioLogado = $_SESSION['user_tipo'];
-    if ($usuarioLogado !== 'admin') {
-        header('Location: login.php');
-        exit();
-    }
-} else {
-    header('Location: login.php');
-    exit();
-};
-
+$orcamentosPendentes = $pdo->query("
+    SELECT COUNT(*)
+    FROM orcamento
+    WHERE status = 'Pendente'
+")->fetchColumn();
 
 
-$orcamentos   = readAll($pdo, 'orcamentos');
-$profissionais = readAll($pdo, 'profissional');
-$servicos      = readAll($pdo, 'servicos');
-$clientes      = readAll($pdo, 'cliente');
-$agendamentos  = readAll($pdo, 'agendamento');
-
-$total_orcamentos_pendentes = 0;
-if (is_array($orcamentos)) {
-    foreach ($orcamentos as $orcamento) {
-        if ($orcamento['status'] == 'Pendente') {
-            $total_orcamentos_pendentes++;
-        }
-    }
-} else {
-    $total_orcamentos_pendentes = 0;
-}
-
-$servicos = readAll($pdo, 'servicos');
-$total_servicos_concluidos = 0;
-
-if (is_array($servicos)) {
-    foreach ($servicos as $servico) {
-        if (($servico['status'] ?? '') == 'concluido') {
-            $total_servicos_concluidos++;
-        }
-    }
-} else {
-    $total_servicos_concluidos = 0;
-}
+$ultimosOrcamentos = $pdo->query("
+    SELECT *
+    FROM orcamento
+    ORDER BY id_orcamento DESC
+    LIMIT 5
+")->fetchAll(PDO::FETCH_ASSOC);
 
 
-if (is_array($profissionais)) {
-    $total_profissionais = count($profissionais);
-} else {
-    $total_profissionais = 0;
-}
-
-if (is_array($clientes)) {
-    $total_clientes = count($clientes);
-} else {
-    $total_clientes = 0;
-}
+$melhoresProfissionais = $pdo->query("
+    SELECT *
+    FROM profissional
+    ORDER BY projetos_concluidos DESC
+    LIMIT 5
+")->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -84,13 +52,13 @@ if (is_array($clientes)) {
 </head>
 
 <body>
-    <?php
-    require_once "partials/header.php";
-    ?>
 
-    <div style="display: flex;">
+    <?php require_once "partials/header.php"; ?>
+
+    <div style="display:flex;">
 
         <div class="sidebar">
+
             <div class="sidebar-perfil">
                 <img src="uploads/ricardo_almeida.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
@@ -106,7 +74,7 @@ if (is_array($clientes)) {
 
             <a href="AD_usuarios.php" class="nav-item">
                 <i class="fa-solid fa-users"></i>
-                Usuarios
+                Usuários
             </a>
 
             <a href="AD_servicos.php" class="nav-item">
@@ -119,151 +87,148 @@ if (is_array($clientes)) {
                 Funcionários
             </a>
 
+            <a href="logout.php" class="nav-item nav-sair">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sair
+            </a>
 
-            <form method="POST" action="AD_dashboard.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
-                    Sair
-                </button>
-            </form>
         </div>
 
-
         <div class="admin-content">
+
             <div class="dashboard-content">
+
                 <h2 class="content-titulo">Dashboard</h2>
-                <p class="boas-vindas">Visão geral da plataforma LM hoje.</p>
+
+                <p class="boas-vindas">
+                    Visão geral da plataforma LM hoje.
+                </p>
 
                 <div class="dashboard-grid">
+
                     <div class="dash-card">
                         <i class="fa-solid fa-helmet-safety dash-icon"></i>
                         <div class="dash-info">
-                            <h3><?php echo $total_profissionais; ?></h3>
+                            <h3><?= $totalProfissionais ?></h3>
                             <span>Profissionais Ativos</span>
                         </div>
                     </div>
+
                     <div class="dash-card">
                         <i class="fa-solid fa-users dash-icon"></i>
                         <div class="dash-info">
-                            <h3><?php echo $total_clientes; ?></h3>
+                            <h3><?= $totalClientes ?></h3>
                             <span>Clientes Cadastrados</span>
                         </div>
                     </div>
+
                     <div class="dash-card">
                         <i class="fa-solid fa-file-lines dash-icon"></i>
                         <div class="dash-info">
-                            <h3><?php echo $total_orcamentos_pendentes; ?></h3>
+                            <h3><?= $orcamentosPendentes ?></h3>
                             <span>Orçamentos Pendentes</span>
                         </div>
                     </div>
+
                     <div class="dash-card">
                         <i class="fa-solid fa-calendar-check dash-icon"></i>
                         <div class="dash-info">
-                            <h3>7</h3>
-                            <span>Agendamentos Hoje</span>
+                            <h3><?= $totalOrcamentos ?></h3>
+                            <span>Total de Orçamentos</span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="cards-baixo">
 
                     <div class="orcamento-card">
-                        <h3 class="card-titulo">Últimos Orçamentos</h3>
-                        <?php 
-                        foreach ($orcamentos as $orcamento) {
-                            echo '
+
+                        <h3 class="card-titulo">
+                            Últimos Orçamentos
+                        </h3>
+
+                        <?php foreach ($ultimosOrcamentos as $orcamento): ?>
+
                             <div class="orcamento-linha">
+
                                 <div class="orcamento-info">
-                                    <strong class="destaque">' . $orcamento['titulo'] . '</strong>
-                                    <span> ' . $orcamento['nome_profissional'] . ' -  ' . $orcamento['funcao'] . '</span>
+
+                                    <strong>
+                                        <?= htmlspecialchars($orcamento['nome']) ?>
+                                    </strong>
+
+                                    <span>
+                                        <?= htmlspecialchars($orcamento['email']) ?>
+                                    </span>
+                                    <span>
+                                        <?= htmlspecialchars($orcamento['nome_cliente'] ?? 'Cliente') ?>
+                                        ·
+                                        <?= htmlspecialchars($orcamento['nome_profissional'] ?? 'Sem profissional') ?>
+                                    </span>
+
                                 </div>
-                                <span class="orcamento-status status-' . ($orcamento['status']) . '">' . $orcamento['status'] . '</span>
-                            </div>';
-                        }
-                        ?>
-                        <!-- <div class="orcamento-linha">
-                            <div class="orcamento-info">
-                                <strong>Reforma Banheiro</strong>
-                                <span>João Pereira · Pedreiro</span>
+
+                                <span class="orcamento-status">
+                                    <?= htmlspecialchars($orcamento['status']) ?>
+                                </span>
+
                             </div>
-                            <span class="orcamento-status status-pendente">Pendente</span>
-                        </div>
-                        <div class="orcamento-linha">
-                            <div class="orcamento-info">
-                                <strong>Levantamento Alvenaria</strong>
-                                <span>Mariana Costa · Mestre de Obra</span>
-                            </div>
-                            <span class="orcamento-status status-concluido">Concluído</span>
-                        </div>
-                        <div class="orcamento-linha">
-                            <div class="orcamento-info">
-                                <strong>Assentamento de Piso</strong>
-                                <span>Felipe Rodrigues · Servente</span>
-                            </div>
-                            <span class="orcamento-status status-cancelado">Cancelado</span>
-                        </div>
-                        <div class="orcamento-linha">
-                            <div class="orcamento-info">
-                                <strong>Reboque de Paredes</strong>
-                                <span>Eduardo Lima · Pedreiro</span>
-                            </div>
-                            <span class="orcamento-status status-pendente">Pendente</span>
-                        </div> -->
+
+                        <?php endforeach; ?>
+
                     </div>
 
                     <div class="orcamento-card">
-                        <h3 class="card-titulo">Melhores Profissionais</h3>
+
+                        <h3 class="card-titulo">
+                            Melhores Profissionais
+                        </h3>
+
                         <div class="profs-lista">
 
-                            <div class="prof-linha">
-                                <div class="prof-info">
-                                    <img src="uploads/ana.jpg" alt="Ana">
-                                    <div>
-                                        <strong>Ana Pereira</strong>
-                                        <span><span class="badge-tipo badge-mestre">Mestre de Obra</span></span>
-                                    </div>
-                                </div>
-                                <span class="estrelas-mini">★★★★★ 4.9</span>
-                            </div>
+                            <?php foreach ($melhoresProfissionais as $prof): ?>
 
-                            <div class="prof-linha">
-                                <div class="prof-info">
-                                    <img src="uploads/ricardo.jpg" alt="Ricardo">
-                                    <div>
-                                        <strong>Ricardo Martins</strong>
-                                        <span><span class="badge-tipo badge-pedreiro">Pedreiro</span></span>
-                                    </div>
-                                </div>
-                                <span class="estrelas-mini">★★★★★ 4.8</span>
-                            </div>
+                                <div class="prof-linha">
 
-                            <div class="prof-linha">
-                                <div class="prof-info">
-                                    <img src="uploads/fernando.jpg" alt="Fernando">
-                                    <div>
-                                        <strong>Fernando Lopes</strong>
-                                        <span><span class="badge-tipo badge-servente">Servente</span></span>
-                                    </div>
-                                </div>
-                                <span class="estrelas-mini">★★★★☆ 4.6</span>
-                            </div>
+                                    <div class="prof-info">
 
-                            <div class="prof-linha">
-                                <div class="prof-info">
-                                    <img src="uploads/image (1).png" alt="Paulo">
-                                    <div>
-                                        <strong>Paulo Rocha</strong>
-                                        <span><span class="badge-tipo badge-servente">Servente</span></span>
+                                        <img src="uploads/icone_usuario.png" alt="">
+
+                                        <div>
+
+                                            <strong>
+                                                <?= htmlspecialchars($prof['nome_profissional']) ?>
+                                            </strong>
+
+                                            <span>
+                                                <?= htmlspecialchars($prof['funcao']) ?>
+                                            </span>
+
+                                        </div>
+
                                     </div>
+
+                                    <span class="estrelas-mini">
+                                        <?= $prof['projetos_concluidos'] ?> serviços
+                                    </span>
+
                                 </div>
-                                <span class="estrelas-mini">★★★★☆ 4.5</span>
-                            </div>
+
+                            <?php endforeach; ?>
+
                         </div>
+
                     </div>
 
                 </div>
+
             </div>
+
         </div>
+
+    </div>
+
 </body>
 
 </html>
