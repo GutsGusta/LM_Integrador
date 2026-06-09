@@ -300,6 +300,7 @@ body {
     border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
+
 .avaliacao-item:first-child {
     padding-top: 0;
 }
@@ -320,6 +321,12 @@ body {
     color: white;
     font-size: 14px;
     font-weight: 500;
+}
+
+.avaliacao-data {
+    color: #e79128;
+    font-size: 13px;
+    font-weight: 400;
 }
 
 .avaliacao-estrelas {

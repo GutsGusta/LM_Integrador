@@ -22,7 +22,7 @@
         <div class="texto">
             <h1 class="titulo">Soluções para sua <span>casa</span></h1>
             <p>conectamos você com os melhores profissionais para serviços de construção, reforma e manutenção.</p>
-            <button class="btn-solicitar"> <a href="orcamento.php">Solicitar orçamento</a></button>
+            <a href="orcamento.php"><button class="btn-solicitar"> Solicitar orçamento</button></a>
         </div>
 
         <div class="imagem">
@@ -129,7 +129,7 @@
 
             <div class="card-avaliacao">
                 <div class="cliente-info">
-                    <img src="uploads/carlos_oliveira.jpg" alt="Carlos Oliveira">
+                    <img src="uploads/carlos.jpg" alt="Carlos Oliveira">
                     <div>
                         <h3>Carlos Oliveira</h3>
                         <span class="servico">Reforma</span>
@@ -149,7 +149,7 @@
         <div class="cards-funcionarios">
 
             <div class="card-funcionario">
-                <img src="uploads/ana_pereira.png" alt="Ana Pereira">
+                <img src="uploads/ana.jpg" alt="Ana Pereira">
                 <h3>Ana Pereira</h3>
                 <div class="estrelas">★★★★★</div>
                 <span class="especialidade">Mestre de Obra</span>
