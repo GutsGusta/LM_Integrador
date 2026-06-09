@@ -4,6 +4,19 @@ require_once 'data/crud.php';
 
 session_start();
 
+if (isset($_SESSION['user_tipo'])) {
+    if ($_SESSION['user_tipo'] === 'profissional') {
+        header('Location: AP-dashbord.php');
+        exit;
+    } elseif ($_SESSION['user_tipo'] === 'cliente') {
+        header('Location: AC_dashboard.php');
+        exit;
+    } elseif ($_SESSION['user_tipo'] === 'admin') {
+        header('Location: AD_dashboard.php');
+        exit;
+    }
+}
+
 $erro = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

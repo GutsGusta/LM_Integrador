@@ -26,8 +26,8 @@ if (!$profissional) {
 
 // LÓGICA DA NAVEGAÇÃO DO CALENDÁRIO
 
-$mes = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
-$ano = isset($_GET['ano']) ? (int)$_GET['ano'] : (int)date('Y');
+$mes = isset($_GET['mes']) ? (int) $_GET['mes'] : (int) date('m');
+$ano = isset($_GET['ano']) ? (int) $_GET['ano'] : (int) date('Y');
 
 $antes_mes = ($mes == 1) ? 12 : $mes - 1;
 $antes_ano = ($mes == 1) ? $ano - 1 : $ano;
@@ -35,8 +35,18 @@ $prox_mes = ($mes == 12) ? 1 : $mes + 1;
 $prox_ano = ($mes == 12) ? $ano + 1 : $ano;
 
 $meses_nomes = [
-    1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril', 5 => 'Maio', 6 => 'Junho',
-    7 => 'Julho', 8 => 'Agosto', 9 => 'Setembro', 10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
+    1 => 'Janeiro',
+    2 => 'Fevereiro',
+    3 => 'Março',
+    4 => 'Abril',
+    5 => 'Maio',
+    6 => 'Junho',
+    7 => 'Julho',
+    8 => 'Agosto',
+    9 => 'Setembro',
+    10 => 'Outubro',
+    11 => 'Novembro',
+    12 => 'Dezembro'
 ];
 
 $primeiro_dia_timestamp = mktime(0, 0, 0, $mes, 1, $ano);
@@ -48,7 +58,7 @@ $ano_anterior = ($mes == 1) ? $ano - 1 : $ano;
 $total_dias_mes_anterior = date('t', mktime(0, 0, 0, $mes_anterior, 1, $ano_anterior));
 
 // AQUI BUSCA OS AGENDAMENTOS
-$mes_formatado = str_pad($mes, 2, "0", STR_PAD_LEFT); 
+$mes_formatado = str_pad($mes, 2, "0", STR_PAD_LEFT);
 $data_inicio_busca = "$ano-$mes_formatado-01";
 $data_fim_busca = "$ano-$mes_formatado-$total_dias_mes";
 
@@ -70,7 +80,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $agenda_organizada = [];
 foreach ($agendamentos as $agendamento) {
-    $dia_do_compromisso = (int)date('d', strtotime($agendamento['data_agenda']));
+    $dia_do_compromisso = (int) date('d', strtotime($agendamento['data_agenda']));
     $agenda_organizada[$dia_do_compromisso][] = $agendamento;
 }
 ?>
@@ -94,7 +104,7 @@ foreach ($agendamentos as $agendamento) {
     ?>
     <main>
         <div class="pagina-principal">
-           <div class="sidebar">
+            <div class="sidebar">
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
                     <div class="sidebar-perfil-info">
@@ -125,20 +135,21 @@ foreach ($agendamentos as $agendamento) {
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">                                                   
-                    <button type="submit" name="logout" class="nav-sair">
-                        <i class="fa-solid fa-user"></i>
+                <form method="POST" action="AP-agenda.php">
+                    <button type="submit" name="logout" class="nav-item nav-sair">
+                        <i class="fa-solid fa-right-from-bracket">Sair</i>
                         Sair
                     </button>
                 </form>
-            </div>    
+            </div>
 
             <div class="agenda">
 
                 <div class="agenda-txt">
-                    <a href="?mes=<?= $antes_mes ?>&ano=<?= $antes_ano ?>" class="btn-nav">< Mês Anterior</a>
-                        <h2><?=$meses_nomes[$mes]?> de <?= $ano ?></h2>
-                    <a href="?mes=<?= $prox_mes ?>&ano=<?= $prox_ano ?>"class="btn-nav">Próximo Mês ></a>
+                    <a href="?mes=<?= $antes_mes ?>&ano=<?= $antes_ano ?>" class="btn-nav">
+                        < Mês Anterior</a>
+                            <h2><?= $meses_nomes[$mes] ?> de <?= $ano ?></h2>
+                            <a href="?mes=<?= $prox_mes ?>&ano=<?= $prox_ano ?>" class="btn-nav">Próximo Mês ></a>
                 </div>
 
                 <div class="dias-semana">
@@ -153,34 +164,36 @@ foreach ($agendamentos as $agendamento) {
 
                 <div class="calendario">
                     <?php
-                        for ($i = $dia_semana_inicio - 1; $i >= 0; $i--){
-                            $num_dia_ant = $total_dias_mes_anterior - $i;
-                            echo '<div class="dia fora-do-mes"><p class="numero-dia">'. $num_dia_ant .'</p></div>';
-                        }
+                    for ($i = $dia_semana_inicio - 1; $i >= 0; $i--) {
+                        $num_dia_ant = $total_dias_mes_anterior - $i;
+                        echo '<div class="dia fora-do-mes"><p class="numero-dia">' . $num_dia_ant . '</p></div>';
+                    }
 
-                        for ($dia_atual = 1; $dia_atual <= $total_dias_mes; $dia_atual++){
-                            $hoje_classe = ($dia_atual == (int)date('d') && $mes == (int)date('m') && $ano == (int)date('Y')) ? 'dia-hoje' : '';
+                    for ($dia_atual = 1; $dia_atual <= $total_dias_mes; $dia_atual++) {
+                        $hoje_classe = ($dia_atual == (int) date('d') && $mes == (int) date('m') && $ano == (int) date('Y')) ? 'dia-hoje' : '';
 
-                            echo '<div class="dia '.$hoje_classe.'">';
-                            echo '<p class="numero-dia">'.$dia_atual.'</p>';
+                        echo '<div class="dia ' . $hoje_classe . '">';
+                        echo '<p class="numero-dia">' . $dia_atual . '</p>';
 
-                            if (isset($agenda_organizada[$dia_atual])){
-                                foreach ($agenda_organizada[$dia_atual] as $key => $servico) {
-                                    $hora_formatada = date('H:i', strtotime($servico['horario']));
+                        if (isset($agenda_organizada[$dia_atual])) {
+                            foreach ($agenda_organizada[$dia_atual] as $key => $servico) {
+                                $hora_formatada = date('H:i', strtotime($servico['horario']));
 
-                                    echo "<p class='servico-aviso'><strong>{$hora_formatada}</strong> - {$servico['nome_servico']}</p>";
-                                }
+                                echo "<p class='servico-aviso'><strong>{$hora_formatada}</strong> - {$servico['nome_servico']}</p>";
                             }
-                            echo '</div>';
                         }
+                        echo '</div>';
+                    }
 
-                        $total_dias_calendario = $dia_semana_inicio + $total_dias_mes;
-                        $resto_calendario = 42 - $total_dias_calendario;
-                        if ($resto_calendario >= 7) {$resto_calendario -= 7; }
+                    $total_dias_calendario = $dia_semana_inicio + $total_dias_mes;
+                    $resto_calendario = 42 - $total_dias_calendario;
+                    if ($resto_calendario >= 7) {
+                        $resto_calendario -= 7;
+                    }
 
-                        for ($prox_dia = 1; $prox_dia <= $resto_calendario; $prox_dia++) {
-                            echo '<div class="dia fora-do-mes"><p class="numero-dia">'.$prox_dia.'</p></div>';
-                        }
+                    for ($prox_dia = 1; $prox_dia <= $resto_calendario; $prox_dia++) {
+                        echo '<div class="dia fora-do-mes"><p class="numero-dia">' . $prox_dia . '</p></div>';
+                    }
                     ?>
 
 

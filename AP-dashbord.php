@@ -78,12 +78,12 @@ if (!$profissional) {
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">                                                   
-                    <button type="submit" name="logout" class="nav-sair">
-                        <i class="fa-solid fa-user"></i>
-                        Sair
-                    </button>
-                </form>
+                <form method="POST" action="AP-dashbord.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    Sair
+                </button>
+            </form>
             </div>        
           
             <div class="dashbord">

@@ -25,6 +25,7 @@ if (isset($_SESSION['user_tipo'])) {
 }
 
 
+
 $tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
 
 $condicaoJoin = "orcamentos.id_cliente = '" . $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
@@ -96,9 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                 Meus Dados
             </a>
 
-            <a href="login.php" class="nav-item nav-sair" name="logout"> <i class="fa-solid fa-right-from-bracket">
-                    Sair</i>
-            </a>
+          <form method="POST" action="AC_orcamentos.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    Sair
+                </button>
+            </form>
         </div>
 
         <div class="orcamentos-content">
@@ -108,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                 <h3 class="card-titulo">Última Atividade</h3>
 
                 <?php
-                if (is_array($usuarios)) {
+                if (!empty($usuarios)) {
                     foreach ($usuarios as $usuario) {
                         echo '
                 <div class="orcamento-card">

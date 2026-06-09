@@ -83,9 +83,12 @@ $cliente = read(
                 Meus Dados
             </a>
 
-              <a href="login.php" class="nav-item nav-sair" name="logout"> <i class="fa-solid fa-right-from-bracket">
-                    Sair</i>
-            </a>
+            <form method="POST" action="AC_dados.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    Sair
+                </button>
+            </form>
 
             </a>
         </div>
@@ -162,7 +165,7 @@ $cliente = read(
 
                 <button type="submit" onclick="return confirm('Tem certeza que deseja salvar as alterações?')"
                     name="salvar_dados" class="btn-salvar">Salvar</button>
-                    
+
 
             </form>
         </div>
