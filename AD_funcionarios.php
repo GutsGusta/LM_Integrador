@@ -81,7 +81,7 @@
                         <tr>
                             <td>
                                 <div class="func-nome">
-                                    <img src="https://pravatar.cc/150?img=47" alt="Ana">
+                                    <img src="uploads/ana.jpg" alt="Ana">
                                     Ana Pereira
                                 </div>
                             </td>
@@ -100,7 +100,7 @@
                         <tr>
                             <td>
                                 <div class="func-nome">
-                                    <img src="https://pravatar.cc/150?img=12" alt="Ricardo">
+                                    <img src="uploads/ricardo.jpg" alt="Ricardo">
                                     Ricardo Martins
                                 </div>
                             </td>
@@ -119,7 +119,7 @@
                         <tr>
                             <td>
                                 <div class="func-nome">
-                                    <img src="https://pravatar.cc/150?img=3" alt="Fernando">
+                                    <img src="uploads/fernando.jpg" alt="Fernando">
                                     Fernando Lopes
                                 </div>
                             </td>
@@ -138,7 +138,7 @@
                         <tr>
                             <td>
                                 <div class="func-nome">
-                                    <img src="https://pravatar.cc/150?img=22" alt="Paulo">
+                                    <img src="uploads/paulo.jpg" alt="Paulo">
                                     Paulo Rocha
                                 </div>
                             </td>
@@ -157,7 +157,7 @@
                         <tr>
                             <td>
                                 <div class="func-nome">
-                                    <img src="https://pravatar.cc/150?img=57" alt="Carlos">
+                                    <img src="uploads/carlos.jpg" alt="Carlos">
                                     Carlos Mendes
                                 </div>
                             </td>

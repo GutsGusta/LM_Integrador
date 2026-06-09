@@ -215,7 +215,7 @@ if (is_array($clientes)) {
 
                             <div class="prof-linha">
                                 <div class="prof-info">
-                                    <img src="https://pravatar.cc/150?img=47" alt="Ana">
+                                    <img src="uploads/ana.jpg" alt="Ana">
                                     <div>
                                         <strong>Ana Pereira</strong>
                                         <span><span class="badge-tipo badge-mestre">Mestre de Obra</span></span>
@@ -226,7 +226,7 @@ if (is_array($clientes)) {
 
                             <div class="prof-linha">
                                 <div class="prof-info">
-                                    <img src="https://pravatar.cc/150?img=12" alt="Ricardo">
+                                    <img src="uploads/ricardo.jpg" alt="Ricardo">
                                     <div>
                                         <strong>Ricardo Martins</strong>
                                         <span><span class="badge-tipo badge-pedreiro">Pedreiro</span></span>
@@ -237,7 +237,7 @@ if (is_array($clientes)) {
 
                             <div class="prof-linha">
                                 <div class="prof-info">
-                                    <img src="https://pravatar.cc/150?img=3" alt="Fernando">
+                                    <img src="uploads/fernando.jpg" alt="Fernando">
                                     <div>
                                         <strong>Fernando Lopes</strong>
                                         <span><span class="badge-tipo badge-servente">Servente</span></span>
@@ -248,7 +248,7 @@ if (is_array($clientes)) {
 
                             <div class="prof-linha">
                                 <div class="prof-info">
-                                    <img src="https://pravatar.cc/150?img=22" alt="Paulo">
+                                    <img src="uploads/image (1).png" alt="Paulo">
                                     <div>
                                         <strong>Paulo Rocha</strong>
                                         <span><span class="badge-tipo badge-servente">Servente</span></span>
