@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuarioencontrado = null;
     $tipoUsuario = null;
 
-    // Procura na tabela profissional
     $usuario = read($pdo, 'profissional', "email = " . $pdo->quote($email));
 
     if ($usuario) {
@@ -35,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tipoUsuario = 'profissional';
     }
 
-    // Procura na tabela cliente
     if (!$usuarioencontrado) {
         $usuario = read($pdo, 'cliente', "email = " . $pdo->quote($email));
 
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Procura na tabela admin
     if (!$usuarioencontrado) {
         $usuario = read($pdo, 'admin', "email = " . $pdo->quote($email));
 

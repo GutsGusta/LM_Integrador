@@ -1,5 +1,5 @@
 <?php
-require 'crud.php';
+require 'data/crud.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
