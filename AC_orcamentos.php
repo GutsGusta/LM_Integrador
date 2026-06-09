@@ -134,9 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                         <form method="POST" action="AC_orcamentos.php">
                             <input type="hidden" name="id_orcamento" value="' . $usuario['id_orcamento'] . '">
                         <select class="orcamento-status" name="status">
-                        <option value="pendente" ' . ($usuario['status'] === 'Pendente' ? 'selected' : '') . ' class="status-pendente">Pendente</option>
-                        <option value="aceito" ' . ($usuario['status'] === 'Aceito' ? 'selected' : '') . ' class="status-aceito">Aceito</option>
-                        <option value="concluido" ' . ($usuario['status'] === 'Concluído' ? 'selected' : '') . ' class="status-concluido">Concluído</option>
+                        <option value="" onclick="return confirm(\'Tem certeza que deseja cancelar este orçamento?\');">Cancelar orçamento</option>
                         <option value="cancelado" ' . ($usuario['status'] === 'Cancelado' ? 'selected' : '') . ' class="status-cancelado">Cancelado</option>
                             </select>
 
