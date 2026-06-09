@@ -24,6 +24,11 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$categorias = [
+    'mestre_de_obra' => 'Mestre de Obra',
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
+];
 
 
 $tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
@@ -97,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                 Meus Dados
             </a>
 
-          <form method="POST" action="AC_orcamentos.php">
+            <form method="POST" action="AC_orcamentos.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket">Sair</i>
                     Sair
@@ -120,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                     <div class="orcamento-linha">
                         <div class="orcamento-info">
                             <strong class="destaque">' . $usuario['titulo'] . '</strong>
-                            <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
+                            <span> ' . $usuario['nome_profissional'] . ' -  ' . $categorias[$usuario['funcao']] . '</span>
                         </div>
                         <div class="orcamento-valores">
                             <strong class="destaque">R$' . $usuario['preco'] . '</strong>
@@ -130,18 +135,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                         <div class="orcamento-status status-pendente">
                             ' . $usuario['status'] . '
                         </div>
-                        <p>Mudar Solicitação:</p>
                         <form method="POST" action="AC_orcamentos.php">
                             <input type="hidden" name="id_orcamento" value="' . $usuario['id_orcamento'] . '">
-                        <select class="orcamento-status" name="status">
-                        <option value="" onclick="return confirm(\'Tem certeza que deseja cancelar este orçamento?\');">Cancelar orçamento</option>
-                        <option value="cancelado" ' . ($usuario['status'] === 'Cancelado' ? 'selected' : '') . ' class="status-cancelado">Cancelado</option>
-                            </select>
+                                <select class="orcamento-status" name="status">
+                                    <option value="">Cancelar solicitação</option>
+                                    <option value="cancelado" ' . ($usuario['status'] === 'Cancelado' ? 'selected' : '') . ' class="status-cancelado">Cancelar</option>
+                                </select>
 
-        
+                        </div>
+
                     </div>
-
-                </div>';
+                            <button type="submit" onclick="return confirm(\'Tem certeza que deseja salvar as alterações?\');"
+                                name="salvar_dados" class="btn-salvar">Salvar</button>
+                                </form>'
+                        ;
 
                     }
                     ;
@@ -151,9 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
                 ;
 
-                echo '<button class="btn-salvar">Salvar</button>
-                
-                </form>';
+
 
                 ?>
 

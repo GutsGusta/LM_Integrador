@@ -157,7 +157,7 @@ $cliente = read(
 
                     <div class="campo">
                         <label>Nova Senha</label>
-                        <input type="password" name="senha" placeholder="Digite para alterar">
+                        <input type="password" name="senha" value="<?= ($cliente['senha']) ?>"  placeholder="Digite para alterar">
                     </div>
 
 
