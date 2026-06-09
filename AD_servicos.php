@@ -1,3 +1,30 @@
+<?php
+require_once('data/crud.php');
+
+session_start();
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+
+    session_destroy();
+    header('Location: ./login.php');
+    exit();
+}
+
+
+if (isset($_SESSION['user_tipo'])) {
+    $usuarioLogado = $_SESSION['user_tipo'];
+    if ($usuarioLogado !== 'admin') {
+        header('Location: login.php');
+        exit();
+    }
+} else {
+    header('Location: login.php');
+    exit();
+};
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
