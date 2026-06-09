@@ -47,10 +47,12 @@
             </a>
 
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
-            </a>
+            <form method="POST" action="AD_usuarios.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    Sair
+                </button>
+            </form>
         </div>
 
         <h2 class="content-titulo">Dashboard ADM</h2>

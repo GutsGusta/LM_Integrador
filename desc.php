@@ -86,7 +86,7 @@ elseif ($mediaArredondada == 5)
                     </span>
                     <div class="estrelas-perfil"><?= $estrelas ?></div>
                     <p class="nota-texto"><?= $mediaArredondada ?> · <?= $total_avaliacoes ?> Avaliações</p>
-                    <a href="testeagenda.php?id_profissional=<?= $profissional['id_profissional'] ?>">
+                    <a href="agendahorario.php?id_profissional=<?= $profissional['id_profissional'] ?>">
                         <button type="button" class="btn-solicitar">Agendar Horário</button>
                     </a>
                     <a
