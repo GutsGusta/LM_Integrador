@@ -47,10 +47,9 @@
             </a>
 
 
-            <form method="POST" action="AD_funcionarios.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
+            <form method="POST" action="AD_funcionarios.php" class="nav-item nav-sair">
+                <button type="submit" name="logout" >
                     <i class="fa-solid fa-right-from-bracket">Sair</i>
-                    Sair
                 </button>
             </form>
         </div>
