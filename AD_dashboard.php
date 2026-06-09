@@ -1,3 +1,76 @@
+<?php
+require_once('data/crud.php');
+
+session_start();
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+
+    session_destroy();
+    header('Location: ./login.php');
+    exit();
+}
+
+
+if (isset($_SESSION['user_tipo'])) {
+    $usuarioLogado = $_SESSION['user_tipo'];
+    if ($usuarioLogado !== 'admin') {
+        header('Location: login.php');
+        exit();
+    }
+} else {
+    header('Location: login.php');
+    exit();
+};
+
+
+
+$orcamentos   = readAll($pdo, 'orcamentos');
+$profissionais = readAll($pdo, 'profissional');
+$servicos      = readAll($pdo, 'servicos');
+$clientes      = readAll($pdo, 'cliente');
+$agendamentos  = readAll($pdo, 'agendamento');
+
+$total_orcamentos_pendentes = 0;
+if (is_array($orcamentos)) {
+    foreach ($orcamentos as $orcamento) {
+        if ($orcamento['status'] == 'Pendente') {
+            $total_orcamentos_pendentes++;
+        }
+    }
+} else {
+    $total_orcamentos_pendentes = 0;
+}
+
+$servicos = readAll($pdo, 'servicos');
+$total_servicos_concluidos = 0;
+
+if (is_array($servicos)) {
+    foreach ($servicos as $servico) {
+        if (($servico['status'] ?? '') == 'concluido') {
+            $total_servicos_concluidos++;
+        }
+    }
+} else {
+    $total_servicos_concluidos = 0;
+}
+
+
+if (is_array($profissionais)) {
+    $total_profissionais = count($profissionais);
+} else {
+    $total_profissionais = 0;
+}
+
+if (is_array($clientes)) {
+    $total_clientes = count($clientes);
+} else {
+    $total_clientes = 0;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +94,7 @@
             <div class="sidebar-perfil">
                 <img src="uploads/ricardo_almeida.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Ricardo Almeida</strong>
+                    <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Admin</span>
                 </div>
             </div>
@@ -63,21 +136,21 @@
                     <div class="dash-card">
                         <i class="fa-solid fa-helmet-safety dash-icon"></i>
                         <div class="dash-info">
-                            <h3>24</h3>
+                            <h3><?php echo $total_profissionais; ?></h3>
                             <span>Profissionais Ativos</span>
                         </div>
                     </div>
                     <div class="dash-card">
                         <i class="fa-solid fa-users dash-icon"></i>
                         <div class="dash-info">
-                            <h3>138</h3>
+                            <h3><?php echo $total_clientes; ?></h3>
                             <span>Clientes Cadastrados</span>
                         </div>
                     </div>
                     <div class="dash-card">
                         <i class="fa-solid fa-file-lines dash-icon"></i>
                         <div class="dash-info">
-                            <h3>12</h3>
+                            <h3><?php echo $total_orcamentos_pendentes; ?></h3>
                             <span>Orçamentos Pendentes</span>
                         </div>
                     </div>
@@ -94,7 +167,19 @@
 
                     <div class="orcamento-card">
                         <h3 class="card-titulo">Últimos Orçamentos</h3>
-                        <div class="orcamento-linha">
+                        <?php 
+                        foreach ($orcamentos as $orcamento) {
+                            echo '
+                            <div class="orcamento-linha">
+                                <div class="orcamento-info">
+                                    <strong class="destaque">' . $orcamento['titulo'] . '</strong>
+                                    <span> ' . $orcamento['nome_profissional'] . ' -  ' . $orcamento['funcao'] . '</span>
+                                </div>
+                                <span class="orcamento-status status-' . ($orcamento['status']) . '">' . $orcamento['status'] . '</span>
+                            </div>';
+                        }
+                        ?>
+                        <!-- <div class="orcamento-linha">
                             <div class="orcamento-info">
                                 <strong>Reforma Banheiro</strong>
                                 <span>João Pereira · Pedreiro</span>
@@ -121,7 +206,7 @@
                                 <span>Eduardo Lima · Pedreiro</span>
                             </div>
                             <span class="orcamento-status status-pendente">Pendente</span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="orcamento-card">

@@ -1,6 +1,6 @@
 
 <?php
-require_once './data/crud.php';
+require_once 'data/crud.php';
 
 session_start();
 
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_name'] = $usuarioencontrado['nome_admin'];
             $_SESSION['user_tipo'] = 'admin';
 
-            header('Location: admin.php');
+            header('Location: AD_dashboard.php');
             exit;
         }
 
