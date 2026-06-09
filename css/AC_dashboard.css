@@ -209,6 +209,7 @@ body {
 }
 
 
+/* DASHBOARD */
 
 .dashboard-content {
     flex: 1;
@@ -227,7 +228,7 @@ body {
 }
 
 .boas-vindas {
-    color: #e0e0e0;
+    color: #e79128;
     text-align: center;
     margin-bottom: 40px;
     font-size: 14px;
