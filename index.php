@@ -156,14 +156,14 @@
             </div>
 
             <div class="card-funcionario">
-                <img src="uploads/ricardo_martins.png" alt="Ricardo Martins">
+                <img src="uploads/ricardo_m.png" alt="Ricardo Martins">
                 <h3>Ricardo Martins</h3>
                 <div class="estrelas">★★★★★</div>
                 <span class="especialidade">Pedreiro</span>
             </div>
 
             <div class="card-funcionario">
-                <img src="uploads/fernando_lopes.png" alt="Fernando Lopes">
+                <img src="uploads/fernando.jpg" alt="Fernando Lopes">
                 <h3>Fernando Lopes</h3>
                 <div class="estrelas">★★★★★</div>
                 <span class="especialidade">Servente</span>

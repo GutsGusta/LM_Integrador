@@ -203,6 +203,26 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.btn-avaliar {
+    width: 100%;
+    background: #ffd767;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-avaliar:hover {
+    background: #fcc849;
+}
+
 .btn-solicitar:hover {
     background: #9a0025;
 }

@@ -311,7 +311,7 @@ body {
     display: flex;
     gap: 200px;
     width: max-content;         
-    animation: rolar 8s linear infinite;
+    animation: rolar 15s linear infinite;
 }
 
 @keyframes rolar {

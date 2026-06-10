@@ -24,6 +24,12 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$categorias = [
+    'mestre_de_obra' => 'Mestre de Obra',
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
+];
+
 $id_cliente = $_SESSION['user_id'] ?? 0;
 
 $usuarios = readAll($pdo, "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional", "orcamentos.id_cliente = '$id_cliente' ORDER BY orcamentos.data DESC LIMIT 1");
@@ -177,10 +183,10 @@ if (is_array($servicos)) {
                     <div class="orcamento-linha">
                         <div class="orcamento-info">
                             <strong class="destaque">' . $usuario['titulo'] . '</strong>
-                            <span> ' . $usuario['nome_profissional'] . ' -  ' . $usuario['funcao'] . '</span>
+                            <span> ' . $usuario['nome_profissional'] . ' -  ' . $categorias[$usuario['funcao']] . '</span>
                         </div>
                         <div class="orcamento-valores">
-                            <strong class="destaque">' . $usuario['preco'] . '</strong>
+                            <strong class="destaque">R$' . $usuario['preco'] . '</strong>
                             <span>' . $usuario['data'] . '</span>
                         </div>
                         <div class="orcamento-status status-pendente">
