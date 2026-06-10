@@ -87,14 +87,19 @@
     </section>
 
     <section class="empresas">
-        <h2>Empresas Parceiras</h2>
-        <div class="empresas-logos" id="logos">
-            <img src="uploads/SENAI_logo.png" alt="SENAI">
-            <img src="uploads/mrv.png" alt="MRV">
-            <img src="uploads/makita.png" alt="Makita">
-            <img src="uploads/leroy_logo.png" alt="Leroy">
-        </div>
-    </section>
+    <h2>Empresas Parceiras</h2>
+    <div class="empresas-logos" id="logos">
+        <img src="uploads/SENAI_logo.png" alt="SENAI">
+        <img src="uploads/mrv.png" alt="MRV">
+        <img src="uploads/makita.png" alt="Makita">
+        <img src="uploads/leroy_logo.png" alt="Leroy">
+        <!-- duplicados para o loop -->
+        <img src="uploads/SENAI_logo.png" alt="SENAI">
+        <img src="uploads/mrv.png" alt="MRV">
+        <img src="uploads/makita.png" alt="Makita">
+        <img src="uploads/leroy_logo.png" alt="Leroy">
+    </div>
+</section>
 
     <section class="avaliacoes">
         <h2>O que nossos clientes dizem</h2>
@@ -171,16 +176,6 @@
 
         </div>
     </section>
-
-    <?php
-    require_once "partials/footer.php";
-    ?>
-
-    <script>
-        const faixa = document.getElementById('logos');
-
-        faixa.innerHTML += faixa.innerHTML;
-    </script>
 </body>
 
 </html>
