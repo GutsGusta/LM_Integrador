@@ -52,10 +52,12 @@ $profissionais = readAll($pdo, 'profissional');
                 Funcionários
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
-            </a>
+
+            <form method="POST" action="AD_funcionarios.php" class="nav-item nav-sair">
+                <button type="submit" name="logout" >
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                </button>
+            </form>
         </div>
 
         <div class="admin-content">
