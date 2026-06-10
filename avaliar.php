@@ -16,7 +16,29 @@ if (empty($id_profissional_avaliado) || empty($nome_profissional_avaliado)) {
 }
 
 if (!isset($_SESSION['user_tipo'])) {
-    header('Location: login.php');
+    ?>
+   <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+        <title>Acesso Negado</title>
+    </head>
+    <body>
+        <?php require_once 'partials/header.php'; ?>
+
+        <main style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:60vh; gap:16px; text-align:center;">
+            <img src="uploads/acesso_negado.png" alt="Acesso Negado" style="width:500px; max-width:90%;">
+            <p style="color:#ccc;">Você precisa estar logado para deixar uma avaliação.</p>
+            <a href="login.php" style="background:#ffd767; color:#1a1a1a; padding:12px 24px; border-radius:8px; font-weight:600; text-decoration:none;">
+                Fazer Login
+            </a>
+        </main>
+    </body>
+    </html>
+    <?php
     exit;
 }
 
