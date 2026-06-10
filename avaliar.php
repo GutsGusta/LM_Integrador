@@ -5,6 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+
+
 $id_profissional_avaliado = $_GET['id_profissional'] ?? '';
 $nome_profissional_avaliado = $_GET['nome_profissional'] ?? '';
 
@@ -13,10 +15,8 @@ if (empty($id_profissional_avaliado) || empty($nome_profissional_avaliado)) {
     exit;
 }
 
-if (!isset($_SESSION['user_id'])) {
-    echo "Você precisa estar logado para deixar uma avaliação.
-    <br><br>
-    <a href='login.php'>Faça login aqui</a>.";
+if (!isset($_SESSION['user_tipo'])) {
+    header('Location: login.php');
     exit;
 }
 
