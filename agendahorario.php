@@ -30,6 +30,12 @@ $data_selecionada = $_GET['data_agenda'] ?? $_POST['data_agenda'] ?? date('Y-m-d
 
 $id_profissional_selecionado = $_GET['id_profissional'] ?? $_POST['id_profissional'] ?? '';
 
+
+$tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
+$condicaoJoin = "orcamentos.id_cliente = '" . $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
+$buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
+$usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 
     $id_orcamento_selecionado = $_POST['id_orcamento'];
@@ -107,15 +113,6 @@ $horario_sistema = [
     '19:00:00' => '19:00',
     '20:00:00' => '20:00',
 ];
-
-
-$tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
-
-$condicaoJoin = "orcamentos.id_cliente = '" . $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
-
-$buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
-
-$usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
 
 
 ?>
