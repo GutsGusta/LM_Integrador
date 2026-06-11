@@ -111,10 +111,12 @@ elseif ($mediaArredondada == 5)
                     <div class="stat-item">
                         <span class="stat-label">Disponibilidade</span>
                         <span class="stat-valor disponivel">
-                            <?php if ($profissional['disponibilidade'] == 1): ?>
+                            <?php if ($profissional['disponibilidade'] == 'Disponivel'): ?>
                                 <p style="color: green;">Disponível</p>
-                            <?php else: ?>
+                            <?php elseif ($profissional['disponibilidade'] == 'Indisponivel'): ?>
                                 <p style="color: red;">Indisponível</p>
+                            <?php elseif ($profissional['disponibilidade'] == 'Alocado'): ?>
+                                <p style="color: orange;">Alocado</p>
                             <?php endif; ?>
                         </span>
                     </div>

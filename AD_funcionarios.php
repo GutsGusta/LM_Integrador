@@ -52,14 +52,13 @@ $profissionais = readAll($pdo, 'profissional');
                 Funcionários
             </a>
 
-
-            <form method="POST" action="AD_funcionarios.php" class="nav-item nav-sair">
-                <button type="submit" name="logout" >
+            <form method="POST" action="AD_usuarios.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket">Sair</i>
                 </button>
             </form>
-        </div>
 
+        </div>
         <div class="admin-content">
 
             <h2 class="content-titulo">Gerenciar Funcionários</h2>
@@ -79,7 +78,8 @@ $profissionais = readAll($pdo, 'profissional');
                             <th>Telefone</th>
                             <th>Cidade</th>
                             <th>Experiência</th>
-                            <th>Status</th>
+                            <th>Disponibilidade</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
 
@@ -116,32 +116,40 @@ $profissionais = readAll($pdo, 'profissional');
                                         <?= $profissional['experiencia'] ?>
                                     </td>
                                     <td>
-                                    <div class="acoes">
-                                        <button class="btn-acao btn-editar"><a href="alterarfuncionario.php?id=<?= $profissional['id_profissional'] ?>">Editar</a></button>
-                                        <button class="btn-acao btn-excluir"><a href="deleteprof.php?id=<?= $profissional['id_profissional'] ?>" onclick="return confirm('Deseja excluir este funcionário?')">Excluir</a></button>
+
+
+                                        <?= $profissional['disponibilidade'] ?>
                                     </td>
-                                    </div>
-                                </tr>
+                                    <td>
+                                        <div class="acoes">
+                                            <button class="btn-acao btn-editar"><a
+                                                    href="alterarfuncionario.php?id=<?= $profissional['id_profissional'] ?>">Editar</a></button>
+                                            <button class="btn-acao btn-excluir"><a
+                                                    href="deleteprof.php?id=<?= $profissional['id_profissional'] ?>"
+                                                    onclick="return confirm('Deseja excluir este funcionário?')">Excluir</a></button>
+                                    </td>
+                    </div>
+                    </tr>
 
-                            <?php endforeach; ?>
+                <?php endforeach; ?>
 
-                        <?php else: ?>
+            <?php else: ?>
 
-                            <tr>
-                                <td colspan="7">
-                                    Nenhum profissional encontrado.
-                                </td>
-                            </tr>
+                <tr>
+                    <td colspan="7">
+                        Nenhum profissional encontrado.
+                    </td>
+                </tr>
 
-                        <?php endif; ?>
+            <?php endif; ?>
 
-                    </tbody>
+            </tbody>
 
-                </table>
-
-            </div>
+            </table>
 
         </div>
+
+    </div>
 
     </div>
 
