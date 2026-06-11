@@ -29,10 +29,9 @@
                     $imagem = !empty($servico['imagem_servico']) ? $servico['imagem_servico'] : 'exemplo.jpeg';
                 ?>
                     <article class="card">
-                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['imagem_servico']); ?>">
-                        <h2><?= htmlspecialchars($servico['nome_servico']); ?></h2>
-                        <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico']); ?></p>
-                        
+                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['imagem_servico'] ?? ''); ?>">
+                        <h2><?= htmlspecialchars($servico['nome_servico'] ?? 'Serviço sem Nome'); ?></h2>
+                        <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico'] ?? 'Geral'); ?></p>
                         <details>
                             <summary>Ver Valores</summary>
                             <div class="valores">
@@ -57,7 +56,7 @@
                             </div>
                         </details>
                         
-                        <a href="funcionarios.php?id_servico=<?= $servico['id_servico']; ?>" class="card-botao">
+                        <a href="funcionarios_Servico.php?id_servico=<?= $servico['id_servico']; ?>" class="card-botao">
                             Ver Profissionais Qualificados
                         </a> 
                     </article>
