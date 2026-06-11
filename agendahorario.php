@@ -41,6 +41,8 @@ if ($tipoUsuario === 'profissional' || $tipoUsuario === 'admin') {
     exit;
 }
 
+
+
 $id_cliente = $_SESSION['user_id'];
 $nome_cliente = $_SESSION['user_name'];
 
@@ -65,21 +67,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
         }
     }
 
-    $novoAgendamento = [
-        'id_cliente' => $_POST['id_cliente'],
-        'id_profissional' => $_POST['id_profissional'],
-        'data_agenda' => $_POST['data_agenda'],
-        'horario' => $_POST['horario'],
-        'preco' => $preco_real,
-        'id_orcamento' => $id_orcamento_selecionado,
-        'tipo_responsavel' => $_POST['tipo_responsavel'],
-        'nome_responsavel' => $_POST['nome_responsavel'] ?? '',
-        'contato_responsavel' => $_POST['contato_responsavel'] ?? '',
-        'cpf_responsavel' => $_POST['cpf_responsavel'] ?? '',
-        'tipo_pagamento' => $_POST['tipo_pagamento'],
-    ];
 
-    create($pdo, 'agendamento', $novoAgendamento);
+    $horario_inicio = $_POST['horario'];
+    $horario_fim = $_POST['horario_fim'];
+
+    $tempo_inicio = new DateTime($horario_inicio);
+    $tempo_fim = new DateTime($horario_fim);
+
+    if ($tempo_inicio >= $tempo_fim) {
+        header('Location: agendahorario.php?erro=horario_invalido&id_profissional=' . $_POST['id_profissional'] . '&data_agenda=' . $_POST['data_agenda']);
+        exit;
+    }
+
+
+    while ($tempo_inicio < $tempo_fim) {
+
+        $horario_atual = $tempo_inicio->format('H:i:s');
+
+        $novoAgendamento = [
+            'id_cliente' => $_POST['id_cliente'],
+            'id_profissional' => $_POST['id_profissional'],
+            'data_agenda' => $_POST['data_agenda'],
+            'horario' => $horario_atual,
+            'horario_fim'=> $horario_fim,
+            'preco' => $preco_real,
+            'id_orcamento' => $id_orcamento_selecionado,
+            'tipo_responsavel' => $_POST['tipo_responsavel'],
+            'nome_responsavel' => $_POST['nome_responsavel'] ?? '',
+            'contato_responsavel' => $_POST['contato_responsavel'] ?? '',
+            'cpf_responsavel' => $_POST['cpf_responsavel'] ?? '',
+            'tipo_pagamento' => $_POST['tipo_pagamento'],
+        ];
+
+        create($pdo, 'agendamento', $novoAgendamento);
+
+        $tempo_inicio->modify('+1 hour');
+
+    }
 
     header('Location: agendahorario.php?sucesso=1&id_profissional=' . $_POST['id_profissional'] . '&data_agenda=' . $_POST['data_agenda']);
     exit;
@@ -91,9 +115,11 @@ $orcamentos_ocupados = [];
 if (!empty($id_profissional_selecionado)) {
     $stmt = $pdo->prepare('SELECT horario FROM agendamento WHERE data_agenda = ? AND id_profissional = ?');
     $stmt->execute([$data_selecionada, $id_profissional_selecionado]);
+
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $agenda) {
-        if (isset($agenda['horario']))
+        if (isset($agenda['horario'])) {
             $horario_ocupado[] = trim($agenda['horario']);
+        }
     }
 
     $stmtOrcamento = $pdo->prepare('SELECT id_orcamento FROM agendamento WHERE id_cliente = ? AND id_orcamento IS NOT NULL');
@@ -113,7 +139,10 @@ $horario_sistema = [
     '17:00:00' => '17:00',
     '19:00:00' => '19:00',
     '20:00:00' => '20:00',
+    '21:00:00' => '21:00',
+    '22:00:00' => '22:00',
 ];
+
 ?>
 
 <!DOCTYPE html>
@@ -141,7 +170,7 @@ $horario_sistema = [
             <div class="alerta-sucesso">🎉 Agendamento realizado com sucesso!</div>
         <?php endif; ?>
 
-       
+
         <div class="card-secao">
             <h3> Data do Agendamento</h3>
             <form action="agendahorario.php" method="GET" class="form-filtro">
@@ -162,7 +191,7 @@ $horario_sistema = [
 
             <?php if (empty($usuarios)): ?>
                 <div class="alerta-aviso">
-                     <a href="orcamento.php">Realize um orçamento antes de agendar</a>
+                    <a href="orcamento.php">Realize um orçamento antes de agendar</a>
                 </div>
             <?php endif; ?>
 
@@ -171,7 +200,7 @@ $horario_sistema = [
                 <input type="hidden" name="id_profissional" value="<?php echo $id_profissional_selecionado; ?>">
                 <input type="hidden" name="data_agenda" value="<?php echo $data_selecionada; ?>">
 
-               
+
                 <div class="card-secao">
                     <h3>📋 Serviço e Horário</h3>
 
@@ -189,18 +218,39 @@ $horario_sistema = [
                                     ?>
                                     <option value="<?php echo $usuario['id_orcamento']; ?>" <?php echo $desativado; ?>>
                                         <?php echo htmlspecialchars($usuario['titulo']); ?> — R$
-                                        <?php echo $usuario['preco']; ?>        <?php echo $texto_status; ?>
+                                        <?php echo $usuario['preco']; ?>         <?php echo $texto_status; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="campo">
-                            <label for="horario">Horário</label>
+                            <label for="horario">Horário de Início</label>
                             <select name="horario" id="horario" required>
-                                <option value="">Selecione um horário</option>
+                                <option value="">Selecione o início</option>
                                 <?php foreach ($horario_sistema as $horario => $texto_tela):
+                                    if ($horario === '22:00:00')
+                                        continue;
                                     $ocupado = in_array($horario, $horario_ocupado);
+                                    ?>
+                                    <option value="<?php echo $horario; ?>" <?php echo $ocupado ? 'disabled' : ''; ?>>
+                                        <?php echo $texto_tela . ($ocupado ? ' (Ocupado)' : ' (Disponível)'); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="horario_fim">Horário de Término</label>
+                            <select name="horario_fim" id="horario_fim" required>
+                                <option value="">Selecione o término</option>
+                                <?php foreach ($horario_sistema as $horario => $texto_tela):
+                                    if ($horario === '10:00:00')
+                                        continue; 
+                                    $tempo_opcao = new DateTime($horario);
+                                    $tempo_opcao->modify('-1 hour');
+                                    $hora_anterior = $tempo_opcao->format('H:i:s');
+                                    $ocupado = in_array($hora_anterior, $horario_ocupado);
                                     ?>
                                     <option value="<?php echo $horario; ?>" <?php echo $ocupado ? 'disabled' : ''; ?>>
                                         <?php echo $texto_tela . ($ocupado ? ' (Ocupado)' : ' (Disponível)'); ?>
@@ -211,7 +261,7 @@ $horario_sistema = [
                     </div>
                 </div>
 
-                
+
                 <div class="card-secao">
                     <h3>Quem vai receber o profissional?</h3>
                     <div class="grupo-radio">
@@ -249,7 +299,7 @@ $horario_sistema = [
                     </div>
                 </div>
 
-                
+
                 <div class="card-secao">
                     <h3>Forma de Pagamento</h3>
                     <div class="grupo-radio">
