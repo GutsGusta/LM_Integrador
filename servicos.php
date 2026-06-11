@@ -1,6 +1,6 @@
 
 <?php
-    require_once 'data/crud.php';
+    require_once './data/crud.php';
     
     $servicos = readAll($pdo, 'servicos');
 ?>

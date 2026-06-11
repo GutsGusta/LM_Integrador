@@ -32,34 +32,40 @@ if (!$profissional) {
     ?>
 
     <h1 class="titulo">Editar Funcionário</h1>
-    <div class="orcamento">
-        <form class="formulario-orcamento" action="updatefuncionario.php" method="POST">
-            <h2>Funcionário</h2>
+<div class="orcamento">
+    <form class="formulario-orcamento" action="updatefuncionario.php" method="POST">
+        <h2>Funcionário</h2>
 
-            <input type="hidden" id="id" name="id" value="<?= $profissional['id_profissional'] ?>">
+        <input type="hidden" id="id_profissional" name="id_profissional"
+            value="<?= $profissional['id_profissional'] ?>">
 
-            <input type="text" id="nome" name="Nome" placeholder="Nome Completo" >
-            <value="<?= htmlspecialchars($profissional['nome_profissional']) ?>" >
-                </value>
+        <input type="text" id="nome_profissional" name="nome_profissional"
+            placeholder="Nome Completo"
+            value="<?= htmlspecialchars($profissional['nome_profissional']) ?>">
 
-                <input type="email" id="email" name="email" placeholder="Email" >
-                <value="<?= htmlspecialchars($profissional['email']) ?>" >
-        </value>
-        <br>
+        <input type="email" id="email" name="email"
+            value="<?= htmlspecialchars($profissional['email']) ?>">
 
-        <input type="text" id="telefone" name="Telefone" placeholder="Telefone">
-        <value="<?= htmlspecialchars($profissional['telefone']) ?>" ></value>
+        <input type="text" id="telefone" name="telefone"
+            placeholder="Telefone"
+            value="<?= htmlspecialchars($profissional['telefone']) ?>">
 
-            <br>
-            <input type="text" id="endereco" name="Endereco" placeholder="Endereço">
-            <value="<?= htmlspecialchars($profissional['cidade_estado']) ?>" ></value>
+        <input type="text" id="cidade_estado" name="cidade_estado"
+            placeholder="Cidade/Estado"
+            value="<?= htmlspecialchars($profissional['cidade_estado']) ?>">
 
-                <br>
+            <input type="text" id="experiencia" name="experiencia"
+            placeholder="Experiência"
+            value="<?= htmlspecialchars($profissional['experiencia']) ?>">
 
+            <input type="text" id="disponibilidade" name="disponibilidade"
+            placeholder="Disponibilidade"
+            value="<?= htmlspecialchars($profissional['disponibilidade']) ?>">
 
-                <button type="submit">Enviar</button>
-                </form>
-    </div>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
 </body>
 
 </html>
+

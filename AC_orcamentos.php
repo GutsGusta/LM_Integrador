@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
             <form method="POST" action="AC_orcamentos.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
                 </button>
             </form>

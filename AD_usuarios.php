@@ -57,9 +57,10 @@ $clientes = readAll($pdo, 'cliente');
             </a>
 
 
-            <form method="POST" action="AD_usuarios.php">
+            <form method="POST" action="AC_agenda.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
                 </button>
             </form>
         </div>
@@ -82,7 +83,6 @@ $clientes = readAll($pdo, 'cliente');
                             <th>Telefone</th>
                             <th>Endereço</th>
                             <th>CPF</th>
-                            <th>Disponibilidade</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,7 +126,7 @@ $clientes = readAll($pdo, 'cliente');
 
                             <tr>
                                 <td colspan="7">
-                                    Nenhum profissional encontrado.
+                                    Nenhum cliente encontrado.
                                 </td>
                             </tr>
 

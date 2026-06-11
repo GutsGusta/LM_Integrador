@@ -206,8 +206,15 @@ body {
 }
 
 .nav-sair {
-    margin-top: auto;
+    margin-top: 500px;
     color: rgba(255, 255, 255, 0.4);
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
 }
 
 .nav-sair:hover {
@@ -220,6 +227,11 @@ body {
     flex: 1;
     margin-left: 240px;
     padding: 40px 48px;
+}
+
+.destaque {
+    color: #ffd767; 
+    font-weight: 700;
 }
 
 .content-titulo {
