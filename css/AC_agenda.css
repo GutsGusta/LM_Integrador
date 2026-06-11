@@ -198,8 +198,15 @@ body {
 }
 
 .nav-sair {
-    margin-top: auto;
-    color: rgba(255,255,255,0.4);
+    margin-top: 500px;
+    color: rgba(255, 255, 255, 0.4);
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
 }
 
 .nav-sair:hover {

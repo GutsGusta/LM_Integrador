@@ -173,6 +173,7 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     border-left: 3px solid transparent;
+    border: none;
     text-decoration: none;
 }
 
@@ -199,8 +200,15 @@ body {
 }
 
 .nav-sair {
-    margin-top: auto;
+    margin-top: 500px;
     color: rgba(255, 255, 255, 0.4);
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
 }
 
 .nav-sair:hover {

@@ -57,9 +57,10 @@ $clientes = readAll($pdo, 'cliente');
             </a>
 
 
-            <form method="POST" action="AD_usuarios.php">
+            <form method="POST" action="AC_agenda.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
                 </button>
             </form>
         </div>

@@ -33,6 +33,7 @@ if (!$profissional) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/AP.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Área de Trabalho</title>
 </head>
 
@@ -58,7 +59,7 @@ if (!$profissional) {
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashbord.php" class="nav-item ativo">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
@@ -68,7 +69,7 @@ if (!$profissional) {
                     Meus Serviços
                 </a>
 
-                <a href="AP-agenda.php" class="nav-item ativo">
+                <a href="AP-agenda.php" class="nav-item">
                     <i class="fa-solid fa-calendar"></i>
                     Meus Agendamentos
                 </a>
@@ -80,8 +81,9 @@ if (!$profissional) {
 
                 <form method="POST" action="AP-dashbord.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
-                </button>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                    </button>
             </form>
             </div>        
           

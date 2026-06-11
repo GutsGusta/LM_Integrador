@@ -34,6 +34,7 @@ if (!$profissional) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/AP-dados.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Meus Dados</title>
 </head>
 
@@ -65,21 +66,21 @@ if (!$profissional) {
                     Meus Serviços
                 </a>
 
-                <a href="AP-agenda.php" class="nav-item ativo">
+                <a href="AP-agenda.php" class="nav-item">
                     <i class="fa-solid fa-calendar"></i>
                     Meus Agendamentos
                 </a>
 
-                <a href="AP-dados.php" class="nav-item">
+                <a href="AP-dados.php" class="nav-item ativo">
                     <i class="fa-solid fa-user"></i>
                     Meus Dados
                 </a>
 
                 <form method="POST" action="AP-dados.php">
                     <button type="submit" name="logout" class="nav-item nav-sair">
-                        <i class="fa-solid fa-right-from-bracket">Sair</i>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
-                    </button>
+                        </button>
                 </form>
             </div>
             <?php

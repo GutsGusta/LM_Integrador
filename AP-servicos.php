@@ -34,18 +34,16 @@ SELECT
     a.status,
     c.nome_cliente,
     c.telefone_cliente,
-    CONCAT(
-        c.rua, ', ',
-        c.numero, ' - ',
-        c.cidade, '/',
-        c.estado
-    ) AS endereco,
+    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
     ON a.id_cliente = c.id_cliente
-INNER JOIN servicos s
-    ON a.id_servico = s.id_servico
+LEFT JOIN orcamentos o
+    ON a.id_orcamento = o.id_orcamento
+LEFT JOIN servicos s
+    ON o.id_profissional = s.id_profissional
+    AND o.id_cliente = s.id_cliente
 WHERE a.id_profissional = ?
 AND a.status = 'Em andamento'
 ";
@@ -56,6 +54,7 @@ $stmt->execute([$_SESSION['user_id']]);
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* Serviços pendentes */
+/* Serviços pendentes */
 $sqlPendentes = "
 SELECT
     a.id,
@@ -65,18 +64,16 @@ SELECT
     a.status,
     c.nome_cliente,
     c.telefone_cliente,
-    CONCAT(
-        c.rua, ', ',
-        c.numero, ' - ',
-        c.cidade, '/',
-        c.estado
-    ) AS endereco,
+    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
     ON a.id_cliente = c.id_cliente
-INNER JOIN servicos s
-    ON a.id_servico = s.id_servico
+LEFT JOIN orcamentos o
+    ON a.id_orcamento = o.id_orcamento
+LEFT JOIN servicos s
+    ON o.id_profissional = s.id_profissional
+    AND o.id_cliente = s.id_cliente
 WHERE a.id_profissional = ?
 AND a.status = 'Pendente'
 ";
@@ -96,6 +93,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/AP-servicos.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Serviços Requeridos</title>
 </head>
 
@@ -123,12 +121,12 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                     Meu Dashboard
                 </a>
 
-                <a href="AP-servicos.php" class="nav-item">
+                <a href="AP-servicos.php" class="nav-item ativo">
                     <i class="fa-solid fa-file-lines"></i>
                     Meus Serviços
                 </a>
 
-                <a href="AP-agenda.php" class="nav-item ativo">
+                <a href="AP-agenda.php" class="nav-item">
                     <i class="fa-solid fa-calendar"></i>
                     Meus Agendamentos
                 </a>
@@ -140,7 +138,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 
                 <form method="POST" action="" class="form-sair">
                     <button type="submit" name="logout" class="nav-sair">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>
                 </form>

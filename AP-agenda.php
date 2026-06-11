@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 $profissional = read(
     $pdo,
     'profissional',
-    'id_profissional = ' . (int) $_SESSION['user_id']
+    $id_profissional = $_SESSION['user_id']
 );
 
 if (!$profissional) {
@@ -65,7 +65,8 @@ $data_fim_busca = "$ano-$mes_formatado-$total_dias_mes";
 $sql = "SELECT a.data_agenda, a.horario, a.status, c.nome_cliente, s.nome_servico 
         FROM agendamento a 
         JOIN cliente c ON a.id_cliente = c.id_cliente
-        JOIN servicos s ON a.id_servico = s.id_servico
+        LEFT JOIN orcamentos o ON a.id_orcamento = o.id_orcamento
+        LEFT JOIN servicos s   ON o.id_servico   = s.id_servico
         WHERE a.id_profissional = :id_prof 
           AND a.data_agenda BETWEEN :data_ini AND :data_fim
         ORDER BY a.horario ASC";
@@ -95,6 +96,7 @@ foreach ($agendamentos as $agendamento) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/AP-agenda.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Agenda</title>
 </head>
 
@@ -137,7 +139,7 @@ foreach ($agendamentos as $agendamento) {
 
                 <form method="POST" action="AP-agenda.php">
                     <button type="submit" name="logout" class="nav-item nav-sair">
-                        <i class="fa-solid fa-right-from-bracket">Sair</i>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>
                 </form>

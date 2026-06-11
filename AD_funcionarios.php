@@ -53,9 +53,10 @@ $profissionais = readAll($pdo, 'profissional');
             </a>
 
 
-            <form method="POST" action="AD_funcionarios.php" class="nav-item nav-sair">
-                <button type="submit" name="logout" >
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+             <form method="POST" action="AC_agenda.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
                 </button>
             </form>
         </div>

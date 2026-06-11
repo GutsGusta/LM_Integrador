@@ -63,6 +63,13 @@ $servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         Funcionários
     </a>
 
+     <form method="POST" action="AC_agenda.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                </button>
+            </form>
+
 </div>
 
 <div class="admin-content">

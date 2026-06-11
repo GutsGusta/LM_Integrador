@@ -1,5 +1,5 @@
 <?php
-require_once 'crud.php';
+require_once './data/crud.php';
 
 $clientes = readAll($pdo, 'cliente');
 $profissionais = readAll($pdo, 'profissional');

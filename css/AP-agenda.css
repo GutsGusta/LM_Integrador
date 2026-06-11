@@ -211,19 +211,15 @@ main {
 }
 
 .nav-sair {
-    border: none;
+    margin-top: 500px;
+    color: rgba(255, 255, 255, 0.4);
     background: none;
+    border: none;
+    width: 100%;
     font-family: 'Poppins', arial, sans-serif;
     font-size: 13px;
     cursor: pointer;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 13px 20px; 
-    width: 100%;
-    color: rgba(255, 255, 255, 0.4);
+    text-align: left;
 }
 
 .nav-sair:hover {

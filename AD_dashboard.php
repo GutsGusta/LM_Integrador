@@ -12,19 +12,19 @@ $totalClientes = $pdo->query("
 ")->fetchColumn();
 
 $totalOrcamentos = $pdo->query("
-    SELECT COUNT(*) FROM orcamento
+    SELECT COUNT(*) FROM orcamentos
 ")->fetchColumn();
 
 $orcamentosPendentes = $pdo->query("
     SELECT COUNT(*)
-    FROM orcamento
+    FROM orcamentos
     WHERE status = 'Pendente'
 ")->fetchColumn();
 
 
 $ultimosOrcamentos = $pdo->query("
     SELECT *
-    FROM orcamento
+    FROM orcamentos
     ORDER BY id_orcamento DESC
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
@@ -87,10 +87,12 @@ $melhoresProfissionais = $pdo->query("
                 Funcionários
             </a>
 
-            <a href="logout.php" class="nav-item nav-sair">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sair
-            </a>
+             <form method="POST" action="AC_agenda.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                </button>
+            </form>
 
         </div>
 

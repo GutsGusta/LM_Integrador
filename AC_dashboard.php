@@ -118,7 +118,7 @@ if (is_array($servicos)) {
 
             <form method="POST" action="AC_dashboard.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
                 </button>
             </form>
