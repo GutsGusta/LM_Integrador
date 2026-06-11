@@ -86,6 +86,7 @@ $melhoresProfissionais = $pdo->query("
                 <i class="fa-solid fa-helmet-safety"></i>
                 Funcionários
             </a>
+<<<<<<< HEAD
 
              <form method="POST" action="AC_agenda.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
@@ -93,6 +94,15 @@ $melhoresProfissionais = $pdo->query("
                     Sair
                 </button>
             </form>
+=======
+            
+            <form method="POST" action="AD_usuarios.php">
+                <button type="submit" name="logout" class="nav-item nav-sair">
+                    <i class="fa-solid fa-right-from-bracket">Sair</i>
+                </button>
+            </form>
+        </div>
+>>>>>>> 90948bb68782dbbbe59e5368151c2273fe1359ae
 
         </div>
 

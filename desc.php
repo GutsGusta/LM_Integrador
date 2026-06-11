@@ -12,6 +12,7 @@ if (empty($id_profissional)) {
     exit;
 }
 
+
 $stmt = $pdo->prepare('SELECT * FROM profissional WHERE id_profissional = ?');
 $stmt->execute([$id_profissional]);
 $profissional = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,6 +27,15 @@ $categorias = [
     'pedreiro'       => 'Pedreiro',
     'servente'       => 'Servente'
 ];
+
+
+$servicos = [
+    'Projetos' => 'Projetos',
+    'Colocação de Pisos e Azulejos' => 'Colocação de Pisos e Azulejos',
+    'Preparação de massa e auxílio geral' => 'Preparação de massa e auxílio geral',
+    'Gestão e leitura de projetos' => 'Gestão e leitura de projetos',
+];
+
 
 $avalia = "id_profissional = '" . $profissional['id_profissional'] . "'";
 $avaliacao_filtrada = readAll($pdo, 'avaliacoes', $avalia);
@@ -111,10 +121,12 @@ elseif ($mediaArredondada == 5)
                     <div class="stat-item">
                         <span class="stat-label">Disponibilidade</span>
                         <span class="stat-valor disponivel">
-                            <?php if ($profissional['disponibilidade'] == 1): ?>
+                            <?php if ($profissional['disponibilidade'] == 'Disponivel'): ?>
                                 <p style="color: green;">Disponível</p>
-                            <?php else: ?>
+                            <?php elseif ($profissional['disponibilidade'] == 'Indisponivel'): ?>
                                 <p style="color: red;">Indisponível</p>
+                            <?php elseif ($profissional['disponibilidade'] == 'Alocado'): ?>
+                                <p style="color: orange;">Alocado</p>
                             <?php endif; ?>
                         </span>
                     </div>

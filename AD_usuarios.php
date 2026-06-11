@@ -83,7 +83,6 @@ $clientes = readAll($pdo, 'cliente');
                             <th>Telefone</th>
                             <th>Endereço</th>
                             <th>CPF</th>
-                            <th>Disponibilidade</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,7 +126,7 @@ $clientes = readAll($pdo, 'cliente');
 
                             <tr>
                                 <td colspan="7">
-                                    Nenhum profissional encontrado.
+                                    Nenhum cliente encontrado.
                                 </td>
                             </tr>
 

@@ -23,7 +23,8 @@ require 'data/crud.php';
                 'email' => trim($_POST['email']),
                 'telefone' => trim($_POST['telefone']),
                 'cidade_estado' => trim($_POST['cidade_estado']),
-
+                'experiencia' => trim($_POST['experiencia']),
+                'disponibilidade' => trim($_POST['disponibilidade'])
             ];
 
             $linhas = update($pdo, 'profissional', $dadosAtualizados, "id_profissional = $id");
