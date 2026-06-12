@@ -11,7 +11,7 @@
         </div>
 
         <div class="nav__right">
-            <a class="nav_link" href="orcamento.php"></a><button class="btn-orcamento">Solicitar Orçamento</button></a>
+            <a class="nav_link" href="orcamento.php"><button class="btn-orcamento">Solicitar Orçamento</button></a>
             <a href="login.php"><button class="icon-btn"><img src="uploads/image (1).png" width="30" height="30"></button></a>
         </div>
     </nav>

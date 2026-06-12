@@ -61,7 +61,6 @@ $servicos = $pdo->query("SELECT * FROM servicos ORDER BY nome_servico")->fetchAl
                 </button>
             </form>
         </div>
-<<<<<<< HEAD
     </div>
 
     <a href="AD_dashboard.php" class="nav-item">
@@ -138,8 +137,6 @@ $servicos = $pdo->query("SELECT * FROM servicos ORDER BY nome_servico")->fetchAl
 </tbody>
 
         </table>
-=======
->>>>>>> 90948bb68782dbbbe59e5368151c2273fe1359ae
 
     </div>
 
