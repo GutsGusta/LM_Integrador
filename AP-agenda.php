@@ -1,5 +1,5 @@
 <?php
-require_once('crud.php');
+require_once './data/crud.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -14,10 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit;
 }
 
+$id_profissional = (int) $_SESSION['user_id'];
+
 $profissional = read(
     $pdo,
     'profissional',
-    $id_profissional = $_SESSION['user_id']
+    'id_profissional = ' . $id_profissional
 );
 
 if (!$profissional) {

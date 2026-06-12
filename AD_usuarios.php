@@ -96,25 +96,25 @@ $clientes = readAll($pdo, 'cliente');
                                     <td>
                                         <div class="func-nome">
                                             <img src="uploads/icone_usuario.png" alt="">
-                                            <?= $cliente['nome_cliente'] ?>
+                                            <?= htmlspecialchars($cliente['nome_cliente']) ?>
                                         </div>
                                     </td>
                                     <td>
-                                        <?= $cliente['email'] ?>
+                                        <?= htmlspecialchars($cliente['email']) ?>
                                     </td>
 
                                     <td>
-                                        <?= $cliente['telefone'] ?>
+                                        <?= htmlspecialchars($cliente['telefone_cliente']) ?>
                                     </td>
 
                                     <td>
-                                        <?= $cliente['endereco'] ?>
+                                        <?= htmlspecialchars($cliente['endereco']) ?>
                                     </td>
 
 
 
                                     <td>
-                                        <?= $cliente['cpf'] ?>
+                                        <?= htmlspecialchars($cliente['cpf']) ?>
                                     </td>
 
 

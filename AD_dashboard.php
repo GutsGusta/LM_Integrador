@@ -2,41 +2,41 @@
 session_start();
 require_once 'data/crud.php';
 
-/* CARDS */
-$totalProfissionais = $pdo->query("
-    SELECT COUNT(*) FROM profissional
-")->fetchColumn();
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
 
-$totalClientes = $pdo->query("
-    SELECT COUNT(*) FROM cliente
-")->fetchColumn();
+$totalProfissionais = $pdo->query("SELECT COUNT(*) FROM profissional")->fetchColumn();
+$totalClientes      = $pdo->query("SELECT COUNT(*) FROM cliente")->fetchColumn();
+$totalOrcamentos    = $pdo->query("SELECT COUNT(*) FROM orcamentos")->fetchColumn();
+$orcamentosPendentes = $pdo->query("SELECT COUNT(*) FROM orcamentos WHERE status = 'Pendente'")->fetchColumn();
 
-$totalOrcamentos = $pdo->query("
-    SELECT COUNT(*) FROM orcamentos
-")->fetchColumn();
-
-$orcamentosPendentes = $pdo->query("
-    SELECT COUNT(*)
-    FROM orcamentos
-    WHERE status = 'Pendente'
-")->fetchColumn();
-
-
+// Últimos orçamentos com nome do cliente via JOIN (orcamentos não tem nome_profissional diretamente)
 $ultimosOrcamentos = $pdo->query("
-    SELECT *
-    FROM orcamentos
-    ORDER BY id_orcamento DESC
+    SELECT o.*, c.nome_cliente,
+           p.nome_profissional
+    FROM orcamentos o
+    INNER JOIN cliente      c ON o.id_cliente           = c.id_cliente
+    LEFT JOIN  agendamento  a ON a.id_orcamento          = o.id_orcamento
+    LEFT JOIN  profissional p ON p.id_profissional       = a.id_profissional
+    ORDER BY o.id_orcamento DESC
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-
 $melhoresProfissionais = $pdo->query("
-    SELECT *
-    FROM profissional
+    SELECT * FROM profissional
     ORDER BY projetos_concluidos DESC
     LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 
+$categorias = [
+    'mestre_de_obra' => 'Mestre de Obra',
+    'pedreiro'       => 'Pedreiro',
+    'servente'       => 'Servente'
+];
 ?>
 
 <!DOCTYPE html>
@@ -58,11 +58,10 @@ $melhoresProfissionais = $pdo->query("
     <div style="display:flex;">
 
         <div class="sidebar">
-
             <div class="sidebar-perfil">
-                <img src="uploads/ricardo_almeida.png" alt="Cliente">
+                <img src="uploads/icone_usuario.png" alt="Admin">
                 <div class="sidebar-perfil-info">
-                    <strong><?php echo $_SESSION['user_name']; ?></strong>
+                    <strong><?php echo $_SESSION['user_name'] ?? 'Admin'; ?></strong>
                     <span>Admin</span>
                 </div>
             </div>
@@ -71,50 +70,32 @@ $melhoresProfissionais = $pdo->query("
                 <i class="fa-solid fa-house"></i>
                 Meu Dashboard
             </a>
-
             <a href="AD_usuarios.php" class="nav-item">
                 <i class="fa-solid fa-users"></i>
                 Usuários
             </a>
-
             <a href="AD_servicos.php" class="nav-item">
                 <i class="fa-solid fa-briefcase"></i>
                 Serviços
             </a>
-
             <a href="AD_funcionarios.php" class="nav-item">
                 <i class="fa-solid fa-helmet-safety"></i>
                 Funcionários
             </a>
-<<<<<<< HEAD
 
-             <form method="POST" action="AC_agenda.php">
+            <!-- CORRIGIDO: action era AC_agenda.php (errado) → AD_dashboard.php -->
+            <form method="POST" action="AD_dashboard.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
                 </button>
             </form>
-=======
-            
-            <form method="POST" action="AD_usuarios.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
-                </button>
-            </form>
-        </div>
->>>>>>> 90948bb68782dbbbe59e5368151c2273fe1359ae
-
         </div>
 
         <div class="admin-content">
-
             <div class="dashboard-content">
-
                 <h2 class="content-titulo">Dashboard</h2>
-
-                <p class="boas-vindas">
-                    Visão geral da plataforma LM hoje.
-                </p>
+                <p class="boas-vindas">Visão geral da plataforma LM hoje.</p>
 
                 <div class="dashboard-grid">
 
@@ -155,92 +136,53 @@ $melhoresProfissionais = $pdo->query("
                 <div class="cards-baixo">
 
                     <div class="orcamento-card">
-
-                        <h3 class="card-titulo">
-                            Últimos Orçamentos
-                        </h3>
+                        <h3 class="card-titulo">Últimos Orçamentos</h3>
 
                         <?php foreach ($ultimosOrcamentos as $orcamento): ?>
-
                             <div class="orcamento-linha">
-
                                 <div class="orcamento-info">
-
-                                    <strong>
-                                        <?= htmlspecialchars($orcamento['nome']) ?>
-                                    </strong>
-
-                                    <span>
-                                        <?= htmlspecialchars($orcamento['email']) ?>
-                                    </span>
+                                    <strong><?= htmlspecialchars($orcamento['nome']) ?></strong>
+                                    <span><?= htmlspecialchars($orcamento['email']) ?></span>
                                     <span>
                                         <?= htmlspecialchars($orcamento['nome_cliente'] ?? 'Cliente') ?>
                                         ·
                                         <?= htmlspecialchars($orcamento['nome_profissional'] ?? 'Sem profissional') ?>
                                     </span>
-
                                 </div>
-
                                 <span class="orcamento-status">
                                     <?= htmlspecialchars($orcamento['status']) ?>
                                 </span>
-
                             </div>
-
                         <?php endforeach; ?>
-
                     </div>
 
                     <div class="orcamento-card">
-
-                        <h3 class="card-titulo">
-                            Melhores Profissionais
-                        </h3>
+                        <h3 class="card-titulo">Melhores Profissionais</h3>
 
                         <div class="profs-lista">
-
                             <?php foreach ($melhoresProfissionais as $prof): ?>
-
                                 <div class="prof-linha">
-
                                     <div class="prof-info">
-
                                         <img src="uploads/icone_usuario.png" alt="">
-
                                         <div>
-
-                                            <strong>
-                                                <?= htmlspecialchars($prof['nome_profissional']) ?>
-                                            </strong>
-
-                                            <span>
-                                                <?= htmlspecialchars($prof['funcao']) ?>
-                                            </span>
-
+                                            <strong><?= htmlspecialchars($prof['nome_profissional']) ?></strong>
+                                            <!-- CORRIGIDO: exibe categoria legível -->
+                                            <span><?= htmlspecialchars($categorias[$prof['funcao']] ?? $prof['funcao']) ?></span>
                                         </div>
-
                                     </div>
-
                                     <span class="estrelas-mini">
                                         <?= $prof['projetos_concluidos'] ?> serviços
                                     </span>
-
                                 </div>
-
                             <?php endforeach; ?>
-
                         </div>
-
                     </div>
 
                 </div>
-
             </div>
-
         </div>
 
     </div>
 
 </body>
-
 </html>

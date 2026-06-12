@@ -4,14 +4,11 @@ require_once('data/crud.php');
 session_start();
 
 if (isset($_POST['logout'])) {
-
     session_unset();
-
     session_destroy();
     header('Location: ./login.php');
     exit();
 }
-
 
 if (isset($_SESSION['user_tipo'])) {
     $usuarioLogado = $_SESSION['user_tipo'];
@@ -24,6 +21,51 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$id_cliente = $_SESSION['user_id'] ?? 0;
+
+// Navegação do calendário
+$mes = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
+$ano = isset($_GET['ano']) ? (int)$_GET['ano'] : (int)date('Y');
+
+$antes_mes = ($mes == 1) ? 12 : $mes - 1;
+$antes_ano = ($mes == 1) ? $ano - 1 : $ano;
+$prox_mes  = ($mes == 12) ? 1  : $mes + 1;
+$prox_ano  = ($mes == 12) ? $ano + 1 : $ano;
+
+$meses_nomes = [
+    1=>'Janeiro', 2=>'Fevereiro', 3=>'Março', 4=>'Abril',
+    5=>'Maio', 6=>'Junho', 7=>'Julho', 8=>'Agosto',
+    9=>'Setembro', 10=>'Outubro', 11=>'Novembro', 12=>'Dezembro'
+];
+
+$primeiro_dia_ts       = mktime(0, 0, 0, $mes, 1, $ano);
+$total_dias_mes        = date('t', $primeiro_dia_ts);
+$dia_semana_inicio     = (int)date('w', $primeiro_dia_ts);
+$total_dias_mes_ant    = date('t', mktime(0, 0, 0, $antes_mes, 1, $antes_ano));
+
+// Buscar agendamentos do cliente neste mês
+$mes_fmt    = str_pad($mes, 2, "0", STR_PAD_LEFT);
+$data_ini   = "$ano-$mes_fmt-01";
+$data_fim   = "$ano-$mes_fmt-$total_dias_mes";
+
+$sql = "SELECT a.data_agenda, a.horario, a.status, s.nome_servico
+        FROM agendamento a
+        LEFT JOIN orcamentos o ON a.id_orcamento = o.id_orcamento
+        LEFT JOIN servicos   s ON o.id_servico   = s.id_servico
+        WHERE a.id_cliente = ?
+          AND a.data_agenda BETWEEN ? AND ?
+        ORDER BY a.horario ASC";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id_cliente, $data_ini, $data_fim]);
+$agendamentos_raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Organizar por dia
+$agenda_organizada = [];
+foreach ($agendamentos_raw as $ag) {
+    $dia = (int)date('d', strtotime($ag['data_agenda']));
+    $agenda_organizada[$dia][] = $ag;
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,9 +81,7 @@ if (isset($_SESSION['user_tipo'])) {
 </head>
 
 <body>
-    <?php
-    require_once "partials/header.php";
-    ?>
+    <?php require_once "partials/header.php"; ?>
 
     <div class="cliente-wrapper">
 
@@ -58,17 +98,14 @@ if (isset($_SESSION['user_tipo'])) {
                 <i class="fa-solid fa-house"></i>
                 Meu Dashboard
             </a>
-
             <a href="AC_orcamentos.php" class="nav-item">
                 <i class="fa-solid fa-file-lines"></i>
                 Meus Orçamentos
             </a>
-
             <a href="AC_agenda.php" class="nav-item ativo">
                 <i class="fa-solid fa-calendar"></i>
                 Meus Agendamentos
             </a>
-
             <a href="AC_dados.php" class="nav-item">
                 <i class="fa-solid fa-user"></i>
                 Meus Dados
@@ -84,166 +121,57 @@ if (isset($_SESSION['user_tipo'])) {
 
         <div class="cliente-content">
             <h2 class="agenda-titulo">Minha Agenda</h2>
-            <div class="agenda">
 
+            <div class="agenda">
                 <div class="agenda-txt">
-                    <button class="btn-nav">
-                        < Mês Anterior</button>
-                            <h2>Maio de 2026</h2>
-                            <button class="btn-nav">Próximo Mês ></button>
+                    <a href="?mes=<?= $antes_mes ?>&ano=<?= $antes_ano ?>" class="btn-nav">&lt; Mês Anterior</a>
+                    <h2><?= $meses_nomes[$mes] ?> de <?= $ano ?></h2>
+                    <a href="?mes=<?= $prox_mes ?>&ano=<?= $prox_ano ?>" class="btn-nav">Próximo Mês &gt;</a>
                 </div>
 
                 <div class="dias-semana">
-                    <p>Dom</p>
-                    <p>Seg</p>
-                    <p>Ter</p>
-                    <p>Qua</p>
-                    <p>Qui</p>
-                    <p>Sex</p>
-                    <p>Sáb</p>
+                    <p>Dom</p><p>Seg</p><p>Ter</p><p>Qua</p><p>Qui</p><p>Sex</p><p>Sáb</p>
                 </div>
 
                 <div class="calendario">
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">26</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">27</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">28</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">29</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">30</p>
-                    </div>
+                    <?php
+                    // Dias do mês anterior
+                    for ($i = $dia_semana_inicio - 1; $i >= 0; $i--) {
+                        $num = $total_dias_mes_ant - $i;
+                        echo "<div class='dia fora-do-mes'><p class='numero-dia'>$num</p></div>";
+                    }
 
-                    <div class="dia">
-                        <p class="numero-dia">1</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">2</p>
-                    </div>
+                    // Dias do mês atual
+                    for ($dia = 1; $dia <= $total_dias_mes; $dia++) {
+                        $hoje = ($dia == (int)date('d') && $mes == (int)date('m') && $ano == (int)date('Y'));
+                        $tem_servico = isset($agenda_organizada[$dia]);
+                        $classes = 'dia' . ($hoje ? ' dia-hoje' : '') . ($tem_servico ? ' tem-servico' : '');
 
-                    <div class="dia tem-servico">
-                        <p class="numero-dia">3</p>
-                        <p class="servico primeiro-servico">08:00 - Contrapiso</p>
-                    </div>
+                        echo "<div class='$classes'>";
+                        echo "<p class='numero-dia'>$dia</p>";
 
-                    <div class="dia">
-                        <p class="numero-dia">4</p>
-                    </div>
+                        if ($tem_servico) {
+                            foreach ($agenda_organizada[$dia] as $ag) {
+                                $hora = date('H:i', strtotime($ag['horario']));
+                                $servico_nome = htmlspecialchars($ag['nome_servico'] ?? 'Agendamento');
+                                echo "<p class='servico-aviso'><strong>$hora</strong> - $servico_nome</p>";
+                            }
+                        }
+                        echo "</div>";
+                    }
 
-                    <div class="dia dia-hoje">
-                        <p class="numero-dia">5</p>
-                    </div>
-
-                    <div class="dia">
-                        <p class="numero-dia">6</p>
-                    </div>
-
-                    <div class="dia tem-servico">
-                        <p class="numero-dia">7</p>
-                        <p class="servico primeiro-servico">07:30 - Reboco Muro</p>
-                        <p class="servico segundo-servico">14:00 - Orçamento</p>
-                    </div>
-
-                    <div class="dia">
-                        <p class="numero-dia">8</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">9</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">10</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">11</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">12</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">13</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">14</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">15</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">16</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">17</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">18</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">19</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">20</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">21</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">22</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">23</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">24</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">25</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">26</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">27</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">28</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">29</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">30</p>
-                    </div>
-                    <div class="dia">
-                        <p class="numero-dia">31</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">1</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">2</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">3</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">4</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">5</p>
-                    </div>
-                    <div class="dia fora-do-mes">
-                        <p class="numero-dia">6</p>
-                    </div>
+                    // Completar com dias do próximo mês
+                    $total_cal = $dia_semana_inicio + $total_dias_mes;
+                    $resto = 42 - $total_cal;
+                    if ($resto >= 7) $resto -= 7;
+                    for ($prox = 1; $prox <= $resto; $prox++) {
+                        echo "<div class='dia fora-do-mes'><p class='numero-dia'>$prox</p></div>";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
+    </div>
 
 </body>
-
 </html>

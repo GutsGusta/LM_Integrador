@@ -1,5 +1,5 @@
 <?php
-require_once('crud.php');
+require_once './data/crud.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -37,10 +37,6 @@ if (!$profissional) {
     <title>Área de Trabalho</title>
 </head>
 
-
-                <div class="pessoal">
-                    
-                </div>
 <body>
 
     <?php require_once 'partials/header.php'; ?>
@@ -52,9 +48,9 @@ if (!$profissional) {
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
                     <div class="sidebar-perfil-info">
-                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
-                        <span><?php echo $profissional['cidade_estado']; ?></span>
-                        <span><?php echo $profissional['funcao']; ?></span>
+                        <strong><?php echo htmlspecialchars($profissional['nome_profissional']); ?></strong>
+                        <span><?php echo htmlspecialchars($profissional['cidade_estado']); ?></span>
+                        <span><?php echo htmlspecialchars($profissional['funcao']); ?></span>
                     </div>
 
                 </div>
@@ -96,7 +92,7 @@ if (!$profissional) {
 
                         <div class="estatisticas-txt">
                             <h4>Experiência</h4>
-                            <h1><?php echo $profissional['experiencia']; ?></h1>
+                            <h1><?php echo htmlspecialchars($profissional['experiencia']); ?></h1>
                             <p>Tempo de atuação</p>
                         </div>
                     </div>
@@ -122,7 +118,7 @@ if (!$profissional) {
 
                         <div class="estatisticas-txt">
                             <h4>Projetos</h4>
-                            <h1><?php echo $profissional['projetos_concluidos']; ?></h1>
+                            <h1><?php echo htmlspecialchars($profissional['projetos_concluidos']); ?></h1>
                             <p>Projetos concluídos</p>
                         </div>
                     </div>
@@ -139,21 +135,21 @@ if (!$profissional) {
                         <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Serviço</h4>
-                                <p><?php echo $profissional['servico']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['servico']); ?></p>
                             </div>
                         </div>
 
                         <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Função</h4>
-                                <p><?php echo $profissional['funcao']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['funcao']); ?></p>
                             </div>
                         </div>
 
                         <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Sobre</h4>
-                                <p><?php echo $profissional['sobre']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['sobre']); ?></p>
                             </div>
                         </div>
                     </div>
@@ -166,21 +162,21 @@ if (!$profissional) {
                         <div class="campo-servico">
                             <div class="info">
                                 <h4>Email</h4>
-                                <p><?php echo $profissional['email']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['email']); ?></p>
                             </div>
                         </div>
 
                         <div class="campo-servico">
                             <div class="info">
                                 <h4>Telefone</h4>
-                                <p><?php echo $profissional['telefone']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['telefone']); ?></p>
                             </div>
                         </div>
 
                         <div class="campo-servico">
                             <div class="info">
                                 <h4>Cidade</h4>
-                                <p><?php echo $profissional['cidade_estado']; ?></p>
+                                <p><?php echo htmlspecialchars($profissional['cidade_estado']); ?></p>
                             </div>
                         </div>
                     </div>

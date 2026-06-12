@@ -44,10 +44,40 @@ $profissionalag = readAll($pdo, 'profissional');
 $data_selecionada = $_GET['data_agenda'] ?? $_POST['data_agenda'] ?? date('Y-m-d');
 $id_profissional_selecionado = $_GET['id_profissional'] ?? $_POST['id_profissional'] ?? '';
 
-$tabelaJoin = "orcamentos INNER JOIN profissional ON orcamentos.id_profissional = profissional.id_profissional";
-$condicaoJoin = "orcamentos.id_cliente = '" . $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
+// O vínculo entre orçamento e profissional passa pela tabela "servicos"
+// (orcamentos.id_servico -> servicos.id_servico -> servicos.id_profissional).
+// O join é montado com "orcamentos" por último para que, no SELECT *, as
+// colunas duplicadas (status, valor_servente, valor_pedreiro, valor_mestre,
+// id_cliente) sejam preenchidas com os valores de "orcamentos" e não de "servicos".
+$tabelaJoin = "profissional
+    INNER JOIN servicos ON servicos.id_profissional = profissional.id_profissional
+    INNER JOIN orcamentos ON orcamentos.id_servico = servicos.id_servico";
+
+$condicaoJoin = "orcamentos.id_cliente = " . (int) $_SESSION['user_id'];
+
+if (!empty($id_profissional_selecionado)) {
+    $condicaoJoin .= " AND profissional.id_profissional = " . (int) $id_profissional_selecionado;
+}
+
+$condicaoJoin .= " ORDER BY orcamentos.id_orcamento DESC";
+
 $buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
 $usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
+
+// Calcula o valor do orçamento de acordo com a função do profissional
+function valorPorFuncao(array $usuario): float
+{
+    switch ($usuario['funcao']) {
+        case 'servente':
+            return (float) $usuario['valor_servente'];
+        case 'pedreiro':
+            return (float) $usuario['valor_pedreiro'];
+        case 'mestre_de_obra':
+            return (float) $usuario['valor_mestre'];
+        default:
+            return 0.0;
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $id_orcamento_selecionado = $_POST['id_orcamento'];
@@ -55,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 
     foreach ($usuarios as $usuario) {
         if ($usuario['id_orcamento'] == $id_orcamento_selecionado) {
-            $preco_real = $usuario['preco'];
+            $preco_real = valorPorFuncao($usuario);
             break;
         }
     }
@@ -79,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
             'id_profissional' => $_POST['id_profissional'],
             'data_agenda' => $_POST['data_agenda'],
             'horario' => $horario_atual,
-            'horario_fim' => $horario_fim,
             'preco' => $preco_real,
             'id_orcamento' => $id_orcamento_selecionado,
             'tipo_responsavel' => $_POST['tipo_responsavel'],
@@ -183,18 +212,19 @@ $horario_sistema = [
                     <h3>📋 Serviço e Horário</h3>
                     <div class="campos-grid">
                         <div class="campo">
-                            <label for="id_orcamento">Orçamento</label>
+                            <label for="id_orcamento">Serviço</label>
                             <select name="id_orcamento" id="id_orcamento" required>
-                                <option value="">Selecione um orçamento</option>
+                                <option value="">Selecione um serviço</option>
                                 <?php foreach ($usuarios as $usuario):
                                     $ja_agendado = in_array(intval($usuario['id_orcamento']), $orcamentos_ocupados);
                                     $cancelado = ($usuario['status'] === 'Cancelado');
                                     $pendente = ($usuario['status'] === 'Pendente');
                                     $desativado = ($cancelado || $ja_agendado || $pendente) ? 'disabled' : '';
                                     $texto_status = $ja_agendado ? ' (Já Agendado)' : ($cancelado ? ' (Cancelado)' : ($pendente ? ' (Pendente)' : ''));
+                                    $valor_exibido = valorPorFuncao($usuario);
                                     ?>
                                     <option value="<?php echo $usuario['id_orcamento']; ?>" <?php echo $desativado; ?>>
-                                        <?php echo htmlspecialchars($usuario['titulo']); ?> — R$ <?php echo $usuario['preco']; ?> <?php echo $texto_status; ?>
+                                        <?php echo htmlspecialchars($usuario['nome_servico']); ?> — R$ <?php echo number_format($valor_exibido, 2, ',', '.'); ?> <?php echo $texto_status; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

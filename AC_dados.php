@@ -4,14 +4,11 @@ require_once('data/crud.php');
 session_start();
 
 if (isset($_POST['logout'])) {
-
     session_unset();
-
     session_destroy();
     header('Location: ./login.php');
     exit();
 }
-
 
 if (isset($_SESSION['user_tipo'])) {
     $usuarioLogado = $_SESSION['user_tipo'];
@@ -24,14 +21,37 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
-$cliente = read(
-    $pdo,
-    'cliente',
-    'id_cliente = ' . (int) $_SESSION['user_id']
-);
+// Processar atualização ANTES de buscar os dados (para exibir os dados atualizados)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
+    $nome_cliente = trim($_POST['nome_cliente']);
+    $email        = trim($_POST['email']);
+    // CORRIGIDO: nome do campo é telefone_cliente no banco
+    $telefone     = trim($_POST['telefone_cliente']);
+    $endereco     = trim($_POST['endereco']);
+    $cpf          = trim($_POST['cpf']);
+    $senha        = trim($_POST['senha']);
 
+    $dados = [
+        'nome_cliente'    => $nome_cliente,
+        'email'           => $email,
+        'telefone_cliente'=> $telefone,
+        'endereco'        => $endereco,
+        'cpf'             => $cpf,
+    ];
 
+    // Só atualiza senha se foi preenchida
+    if (!empty($senha)) {
+        $dados['senha'] = $senha;
+    }
 
+    update($pdo, 'cliente', $dados, 'id_cliente = ' . (int)$_SESSION['user_id']);
+    $_SESSION['user_name'] = $nome_cliente;
+
+    header('Location: AC_dados.php');
+    exit;
+}
+
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +68,7 @@ $cliente = read(
 
 <body>
 
-    <?php
-    require_once "partials/header.php";
-    ?>
+    <?php require_once "partials/header.php"; ?>
 
     <div class="cliente-wrapper">
 
@@ -67,17 +85,14 @@ $cliente = read(
                 <i class="fa-solid fa-house"></i>
                 Meu Dashboard
             </a>
-
             <a href="AC_orcamentos.php" class="nav-item">
                 <i class="fa-solid fa-file-lines"></i>
                 Meus Orçamentos
             </a>
-
             <a href="AC_agenda.php" class="nav-item">
                 <i class="fa-solid fa-calendar"></i>
                 Meus Agendamentos
             </a>
-
             <a href="AC_dados.php" class="nav-item ativo">
                 <i class="fa-solid fa-user"></i>
                 Meus Dados
@@ -89,40 +104,7 @@ $cliente = read(
                     Sair
                 </button>
             </form>
-
-            </a>
         </div>
-
-
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nome_cliente = $_POST['nome_cliente'];
-            $email = $_POST['email'];
-            $telefone = $_POST['telefone'];
-            $endereco = $_POST['endereco'];
-            $cpf = $_POST['cpf'];
-            $senha = $_POST['senha'];
-
-            update(
-                $pdo,
-                'cliente',
-                [
-                    'nome_cliente' => $nome_cliente,
-                    'email' => $email,
-                    'telefone' => $telefone,
-                    'endereco' => $endereco,
-                    'cpf' => $cpf,
-                    'senha' => $senha
-                ],
-                'id_cliente = ' . (int) $_SESSION['user_id']
-            );
-
-            $_SESSION['user_name'] = $nome_cliente;
-
-            header('Location: AC_dados.php');
-            exit;
-        }
-        ?>
 
         <div class="cliente-content">
             <p class="content-titulo">Meus Dados</p>
@@ -132,47 +114,51 @@ $cliente = read(
 
                     <div class="campo">
                         <label>Nome Completo</label>
-                        <input type="text" name="nome_cliente" value="<?= ($cliente['nome_cliente']) ?>" required>
+                        <input type="text" name="nome_cliente"
+                               value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
                     </div>
 
                     <div class="campo">
                         <label>E-mail</label>
-                        <input type="email" name="email" value="<?= ($cliente['email']) ?>" required>
+                        <input type="email" name="email"
+                               value="<?= htmlspecialchars($cliente['email']) ?>" required>
                     </div>
 
                     <div class="campo">
                         <label>Telefone</label>
-                        <input type="text" name="telefone" value="<?= ($cliente['telefone']) ?>" required>
+                        <!-- CORRIGIDO: name e value usando telefone_cliente -->
+                        <input type="text" name="telefone_cliente"
+                               value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
                     </div>
 
                     <div class="campo">
                         <label>Endereço</label>
-                        <input type="text" name="endereco" value="<?= ($cliente['endereco']) ?>" required>
+                        <input type="text" name="endereco"
+                               value="<?= htmlspecialchars($cliente['endereco']) ?>" required>
                     </div>
 
                     <div class="campo">
                         <label>CPF</label>
-                        <input type="text" name="cpf" value="<?= ($cliente['cpf']) ?>" required>
+                        <input type="text" name="cpf"
+                               value="<?= htmlspecialchars($cliente['cpf']) ?>" required>
                     </div>
 
                     <div class="campo">
                         <label>Nova Senha</label>
-                        <input type="password" name="senha" value="<?= ($cliente['senha']) ?>"  placeholder="Digite para alterar">
+                        <input type="password" name="senha" placeholder="Digite para alterar">
                     </div>
-
 
                 </div>
 
-                <button type="submit" onclick="return confirm('Tem certeza que deseja salvar as alterações?')"
-                    name="salvar_dados" class="btn-salvar">Salvar</button>
-
-
+                <button type="submit"
+                        onclick="return confirm('Tem certeza que deseja salvar as alterações?')"
+                        name="salvar_dados" class="btn-salvar">
+                    Salvar
+                </button>
             </form>
         </div>
-    </div>
 
     </div>
 
 </body>
-
 </html>

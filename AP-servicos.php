@@ -42,8 +42,7 @@ INNER JOIN cliente c
 LEFT JOIN orcamentos o
     ON a.id_orcamento = o.id_orcamento
 LEFT JOIN servicos s
-    ON o.id_profissional = s.id_profissional
-    AND o.id_cliente = s.id_cliente
+    ON o.id_servico = s.id_servico
 WHERE a.id_profissional = ?
 AND a.status = 'Em andamento'
 ";
@@ -53,7 +52,6 @@ $stmt->execute([$_SESSION['user_id']]);
 
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* Serviços pendentes */
 /* Serviços pendentes */
 $sqlPendentes = "
 SELECT
@@ -72,8 +70,7 @@ INNER JOIN cliente c
 LEFT JOIN orcamentos o
     ON a.id_orcamento = o.id_orcamento
 LEFT JOIN servicos s
-    ON o.id_profissional = s.id_profissional
-    AND o.id_cliente = s.id_cliente
+    ON o.id_servico = s.id_servico
 WHERE a.id_profissional = ?
 AND a.status = 'Pendente'
 ";
@@ -109,9 +106,9 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
                     <div class="sidebar-perfil-info">
-                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
-                        <span><?php echo $profissional['cidade_estado']; ?></span>
-                        <span><?php echo $profissional['funcao']; ?></span>
+                        <strong><?php echo htmlspecialchars($profissional['nome_profissional']); ?></strong>
+                        <span><?php echo htmlspecialchars($profissional['cidade_estado']); ?></span>
+                        <span><?php echo htmlspecialchars($profissional['funcao']); ?></span>
                     </div>
 
                 </div>
@@ -163,12 +160,12 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                             <?php foreach ($agendamentos as $agendamento): ?>
 
                                 <tr>
-                                    <td><?= $agendamento['nome_cliente'] ?></td>
-                                    <td><?= $agendamento['telefone_cliente'] ?></td>
-                                    <td><?= $agendamento['nome_servico'] ?></td>
-                                    <td><?= $agendamento['endereco'] ?></td>
+                                    <td><?= htmlspecialchars($agendamento['nome_cliente']) ?></td>
+                                    <td><?= htmlspecialchars($agendamento['telefone_cliente']) ?></td>
+                                    <td><?= htmlspecialchars($agendamento['nome_servico'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($agendamento['endereco']) ?></td>
                                     <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
-                                    <td><?= $agendamento['status'] ?></td>
+                                    <td><?= htmlspecialchars($agendamento['status']) ?></td>
                                 </tr>
 
                             <?php endforeach; ?>
@@ -182,8 +179,8 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                         <?php endif; ?>
 
                     </table>
-                    </table>
                 </div>
+
                 <div class="servicos">
                     <h3>Respostas Pendentes:</h3>
 
@@ -202,10 +199,10 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                             <?php foreach ($pendentes as $item): ?>
 
                                 <tr>
-                                    <td><?= $item['nome_cliente'] ?></td>
-                                    <td><?= $item['telefone_cliente'] ?></td>
-                                    <td><?= $item['nome_servico'] ?></td>
-                                    <td><?= $item['endereco'] ?></td>
+                                    <td><?= htmlspecialchars($item['nome_cliente']) ?></td>
+                                    <td><?= htmlspecialchars($item['telefone_cliente']) ?></td>
+                                    <td><?= htmlspecialchars($item['nome_servico'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($item['endereco']) ?></td>
                                     <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
 
                                     <td>
@@ -231,6 +228,8 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 
                     </table>
                 </div>
+            </div>
+        </div>
     </main>
 </body>
 

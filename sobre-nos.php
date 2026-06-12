@@ -60,8 +60,8 @@
             <div class="nossos-servicos-botoes">
                 <h1>Gostou da LM?</h1>
                 <p>Conheça nossos Profissionais e Serviços!</p>
-                <a href="">Nossos Serviços</a>
-                <a href="">Nossos Profissionais</a>
+                <a href="servicos.php">Nossos Serviços</a>
+                <a href="funcionarios.php">Nossos Profissionais</a>
             </div>
         </div>
     </main>

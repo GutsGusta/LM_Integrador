@@ -2,6 +2,19 @@
 session_start();
 require_once './data/crud.php';
 
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+$categorias = [
+    'mestre_de_obra' => 'Mestre de Obra',
+    'pedreiro'       => 'Pedreiro',
+    'servente'       => 'Servente'
+];
+
 $profissionais = readAll($pdo, 'profissional');
 ?>
 
@@ -21,13 +34,13 @@ $profissionais = readAll($pdo, 'profissional');
 
     <?php require_once "partials/header.php"; ?>
 
-    <div>
+    <div style="display:flex;">
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/ricardo_almeida.png" alt="Cliente">
+                <img src="uploads/icone_usuario.png" alt="Admin">
                 <div class="sidebar-perfil-info">
-                    <strong>Ricardo Almeida</strong>
+                    <strong><?= $_SESSION['user_name'] ?? 'Admin' ?></strong>
                     <span>Admin</span>
                 </div>
             </div>
@@ -36,49 +49,37 @@ $profissionais = readAll($pdo, 'profissional');
                 <i class="fa-solid fa-house"></i>
                 Meu Dashboard
             </a>
-
             <a href="AD_usuarios.php" class="nav-item">
                 <i class="fa-solid fa-users"></i>
-                Usuarios
+                Usuários
             </a>
-
             <a href="AD_servicos.php" class="nav-item">
                 <i class="fa-solid fa-briefcase"></i>
                 Serviços
             </a>
-
             <a href="AD_funcionarios.php" class="nav-item ativo">
                 <i class="fa-solid fa-helmet-safety"></i>
                 Funcionários
             </a>
 
-<<<<<<< HEAD
-
-             <form method="POST" action="AC_agenda.php">
+            <!-- CORRIGIDO: action era AC_agenda.php (errado) → AD_funcionarios.php -->
+            <form method="POST" action="AD_funcionarios.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
-=======
-            <form method="POST" action="AD_usuarios.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket">Sair</i>
->>>>>>> 90948bb68782dbbbe59e5368151c2273fe1359ae
                 </button>
             </form>
-
         </div>
-        <div class="admin-content">
 
+        <div class="admin-content">
             <h2 class="content-titulo">Gerenciar Funcionários</h2>
 
             <div class="tabela-card">
-
                 <div class="tabela-header">
                     <h3>Tabela de Funcionários</h3>
                 </div>
 
                 <table>
-
                     <thead>
                         <tr>
                             <th>Funcionário</th>
@@ -90,77 +91,49 @@ $profissionais = readAll($pdo, 'profissional');
                             <th>Ações</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
                         <?php if (!empty($profissionais)): ?>
-
                             <?php foreach ($profissionais as $profissional): ?>
-
                                 <tr>
-
                                     <td>
                                         <div class="func-nome">
                                             <img src="uploads/icone_usuario.png" alt="">
-                                            <?= $profissional['nome_profissional'] ?>
+                                            <?= htmlspecialchars($profissional['nome_profissional']) ?>
                                         </div>
                                     </td>
-
                                     <td>
-                                        <?= $profissional['funcao'] ?>
+                                        <!-- CORRIGIDO: exibe categoria legível -->
+                                        <?= htmlspecialchars($categorias[$profissional['funcao']] ?? $profissional['funcao']) ?>
                                     </td>
-
+                                    <td><?= htmlspecialchars($profissional['telefone']) ?></td>
+                                    <td><?= htmlspecialchars($profissional['cidade_estado']) ?></td>
+                                    <td><?= htmlspecialchars($profissional['experiencia']) ?></td>
                                     <td>
-                                        <?= $profissional['telefone'] ?>
-                                    </td>
-
-                                    <td>
-                                        <?= $profissional['cidade_estado'] ?>
-                                    </td>
-
-
-
-                                    <td>
-                                        <?= $profissional['experiencia'] ?>
-                                    </td>
-                                    <td>
-
-
-                                        <?= $profissional['disponibilidade'] ?>
+                                        <!-- CORRIGIDO: exibe Sim/Não em vez de 0/1 -->
+                                        <?= $profissional['disponibilidade'] ? 'Sim' : 'Não' ?>
                                     </td>
                                     <td>
                                         <div class="acoes">
-                                            <button class="btn-acao btn-editar"><a
-                                                    href="alterarfuncionario.php?id=<?= $profissional['id_profissional'] ?>">Editar</a></button>
-                                            <button class="btn-acao btn-excluir"><a
-                                                    href="deleteprof.php?id=<?= $profissional['id_profissional'] ?>"
-                                                    onclick="return confirm('Deseja excluir este funcionário?')">Excluir</a></button>
+                                            <a href="alterarfuncionario.php?id=<?= $profissional['id_profissional'] ?>"
+                                               class="btn-acao btn-editar">Editar</a>
+                                            <a href="deleteprof.php?id=<?= $profissional['id_profissional'] ?>"
+                                               class="btn-acao btn-excluir"
+                                               onclick="return confirm('Deseja excluir este funcionário?')">Excluir</a>
+                                        </div>
                                     </td>
-                    </div>
-                    </tr>
-
-                <?php endforeach; ?>
-
-            <?php else: ?>
-
-                <tr>
-                    <td colspan="7">
-                        Nenhum profissional encontrado.
-                    </td>
-                </tr>
-
-            <?php endif; ?>
-
-            </tbody>
-
-            </table>
-
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7">Nenhum profissional encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
 
-    </div>
-
 </body>
-
 </html>
