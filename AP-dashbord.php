@@ -14,6 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit;
 }
 
+
+$id_profissional = $_GET['id'] ?? '';
+
+$stmt = $pdo->prepare('SELECT * FROM profissional WHERE id_profissional = ?');
+$stmt->execute([$id_profissional]);
+$profissional = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+
 $profissional = read(
     $pdo,
     'profissional',
@@ -127,57 +135,109 @@ if (!$profissional) {
 
                 <div class="quadrados">
 
+                <?php
+
+$orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
+
+
+
+
+    if ($avaliacao_filtrada) {
+    foreach ($avaliacao_filtrada as $avaliacoes) {
+        $dataHora = new DateTime($avaliacoes['data_avaliacao']);
+
+    echo '
+    <p>ID:' . $avaliacoes['id'] . '</p>
+    <p>Título:' . $avaliacoes['titulo'] . '</p>';
+
+        echo '
+    <p>Data da Avaliação: ' . $dataHora->format('d/m/Y à\s H:i') . '</p>
+    
+    <p>Nota:' . $avaliacoes['nota'] . '</p>
+    <p>Texto da Avaliação:<br>' . $avaliacoes['texto_avaliacao'] . '</p>
+    <p>Profissional avaliado: ' . $avaliacoes['nome_profissional'] . '</p>';
+    }
+     
+    } else {
+        echo '<p>Não há avaliações para este profissional.</p>';
+    };
+
+?>
                     <div class="quadrados-indv">
-                        <h2>Informações Profissionais</h2>
-
+                        <h2>Últimos Ganhos</h2>
                         <div class="linha"></div>
-
-                        <div class="campo-servico">
+                        <div class="campo-servico">                           
                             <div class="ganhos">
-                                <h4>Serviço</h4>
-                                <p><?php echo htmlspecialchars($profissional['servico']); ?></p>
+                                <h4>Revestimento</h4>
+                                <p>Quarto 10m²</p>
                             </div>
+                            <div class="ganhos">
+                                <h4>R$6700,69</h4>
+                                <p>18/05/2026</p>
+                            </div>
+                            <h4>Alguma Coisa</h4>           
                         </div>
-
-                        <div class="campo-servico">
+                        <div class="campo-servico">                           
                             <div class="ganhos">
-                                <h4>Função</h4>
-                                <p><?php echo htmlspecialchars($profissional['funcao']); ?></p>
+                                <h4>Revestimento</h4>
+                                <p>Quarto 10m²</p>
                             </div>
+                            <div class="ganhos">
+                                <h4>R$6700,69</h4>
+                                <p>18/05/2026</p>
+                            </div>
+                            <h4>Alguma Coisa</h4>           
                         </div>
-
-                        <div class="campo-servico">
+                        <div class="campo-servico">                           
                             <div class="ganhos">
-                                <h4>Sobre</h4>
-                                <p><?php echo htmlspecialchars($profissional['sobre']); ?></p>
+                                <h4>Revestimento</h4>
+                                <p>Quarto 10m²</p>
                             </div>
+                            <div class="ganhos">
+                                <h4>R$6700,69</h4>
+                                <p>18/05/2026</p>
+                            </div>
+                            <h4>Alguma Coisa</h4>           
                         </div>
                     </div>
-
                     <div class="quadrados-indv">
-                        <h2>Dados de Contato</h2>
-
+                        <h2>Próximos Serviços</h2>
                         <div class="linha"></div>
-
                         <div class="campo-servico">
-                            <div class="info">
-                                <h4>Email</h4>
-                                <p><?php echo htmlspecialchars($profissional['email']); ?></p>
+                            <div class="data">
+                                <h4>18</h4>
+                                <h4>Maio</h4>
                             </div>
+                            <div class="info">
+                                <h4>Levantamento de Casa</h4>
+                                <p>06:00-07:00</p>
+                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                            </div>
+                            <p class="status-confirmado">Confirmado</p>
                         </div>
-
                         <div class="campo-servico">
-                            <div class="info">
-                                <h4>Telefone</h4>
-                                <p><?php echo htmlspecialchars($profissional['telefone']); ?></p>
+                            <div class="data">
+                                <h4>18</h4>
+                                <h4>Maio</h4>
                             </div>
+                            <div class="info">
+                                <h4>Levantamento de Casa</h4>
+                                <p>06:00-07:00</p>
+                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                            </div>
+                            <p class="status-aguardo">Aguardando</p>
                         </div>
-
                         <div class="campo-servico">
-                            <div class="info">
-                                <h4>Cidade</h4>
-                                <p><?php echo htmlspecialchars($profissional['cidade_estado']); ?></p>
+                            <div class="data">
+                                <h4>18</h4>
+                                <h4>Maio</h4>
                             </div>
+                            <div class="info">
+                                <h4>Levantamento de Casa</h4>
+                                <p>06:00-07:00</p>
+                                <h5>R. Boa Vista, 67 - São Caetano</h5>
+                            </div>
+                            <p class="status-confirmado">Confirmado</p>
                         </div>
                     </div>
 

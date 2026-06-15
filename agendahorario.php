@@ -1,4 +1,3 @@
-
 <?php
 require_once('data/crud.php');
 
@@ -74,9 +73,10 @@ function valorPorFuncao(array $servico, string $funcao = ''): float
     }
 }
 
+// PROCESSAMENTO DO FORMULÁRIO DE AGENDAMENTO
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $id_servico_selecionado = (int) $_POST['id_servico'];
-    $preco_real = 0;
+    $preco_por_hora = 0;
 
     $stmt_preco = $pdo->prepare('
         SELECT s.*, p.funcao
@@ -88,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $servico_selecionado = $stmt_preco->fetch(PDO::FETCH_ASSOC);
 
     if ($servico_selecionado) {
-        $preco_real = valorPorFuncao($servico_selecionado, $servico_selecionado['funcao']);
+        // Captura o valor da hora baseada na função do profissional
+        $preco_por_hora = valorPorFuncao($servico_selecionado, $servico_selecionado['funcao']);
     }
 
     $horario_inicio = $_POST['horario'];
@@ -97,21 +98,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $tempo_inicio = new DateTime($horario_inicio);
     $tempo_fim    = new DateTime($horario_fim);
 
+    // Validação básica se a hora final é maior que a inicial
     if ($tempo_inicio >= $tempo_fim) {
         header('Location: agendahorario.php?erro=horario_invalido&id_profissional=' . $id_profissional_selecionado . '&data_agenda=' . $data_selecionada);
         exit;
     }
 
+    // --- CÁLCULO DAS HORAS TRABALHADAS ---
+    $intervalo = $tempo_inicio->diff($tempo_fim);
+    // Transforma a diferença total em horas absolutas
+    $total_horas = $intervalo->h + ($intervalo->days * 24); 
+    
+    // Calcula o valor total multiplicando a quantidade de horas pelo preço/hora
+    $valor_total_final = $total_horas * $preco_por_hora;
+
+    // Salvamos cada bloco de 1 hora no banco mantendo o valor unitário por hora preenchido
     while ($tempo_inicio < $tempo_fim) {
         $horario_atual = $tempo_inicio->format('H:i:s');
 
         $novoAgendamento = [
             'id_cliente'          => $_POST['id_cliente'],
             'id_profissional'     => $id_profissional_selecionado,
+            'id_orcamento'        => null,
+            'id_servico'          => $id_servico_selecionado, // Adicionado para manter o vínculo correto do banco
             'data_agenda'         => $data_selecionada,
             'horario'             => $horario_atual,
-            'preco'               => $preco_real,
-            'id_orcamento'        => null,
+            'preco'               => $preco_por_hora, // Salva o valor de 1 hora correspondente a este slot
             'tipo_responsavel'    => $_POST['tipo_responsavel'],
             'nome_responsavel'    => $_POST['nome_responsavel']    ?? '',
             'contato_responsavel' => $_POST['contato_responsavel'] ?? '',
@@ -123,7 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
         $tempo_inicio->modify('+1 hour');
     }
 
-    header('Location: agendahorario.php?sucesso=1&id_profissional=' . $id_profissional_selecionado . '&data_agenda=' . $data_selecionada);
+    // Redireciona passando o total de horas e o valor final calculado para se quiser exibir um alerta customizado na tela
+    header('Location: agendahorario.php?sucesso=1&horas=' . $total_horas . '&total=' . $valor_total_final . '&id_profissional=' . $id_profissional_selecionado . '&data_agenda=' . $data_selecionada);
     exit;
 }
 
@@ -173,7 +186,11 @@ $horario_sistema = [
         <p class="agenda-subtitulo">Olá, <?php echo htmlspecialchars($nome_cliente); ?>! Escolha a data e o horário disponível.</p>
 
         <?php if (isset($_GET['sucesso'])): ?>
-            <div class="alerta-sucesso">🎉 Agendamento realizado com sucesso!</div>
+            <div class="alerta-sucesso">
+                🎉 Agendamento realizado com sucesso! <br>
+                <strong>Total de Horas:</strong> <?php echo (int)$_GET['horas']; ?>h | 
+                <strong>Valor Total:</strong> R$ <?php echo number_format((float)$_GET['total'], 2, ',', '.'); ?>
+            </div>
         <?php endif; ?>
 
         <?php if (isset($_GET['erro']) && $_GET['erro'] === 'horario_invalido'): ?>
@@ -210,7 +227,7 @@ $horario_sistema = [
                     <h3>📋 Serviço e Horário</h3>
                     <div class="campos-grid">
                         <div class="campo">
-                            <label for="id_servico">Serviço</label>
+                            <label for="id_servico">Serviço (Preço por Hora)</label>
                             <select name="id_servico" id="id_servico" required>
                                 <option value="">Selecione um serviço</option>
                                 <?php foreach ($todos_servicos as $servico):
@@ -220,7 +237,7 @@ $horario_sistema = [
                                     $valor_exibido = (float) $servico['preco'];
                                 ?>
                                     <option value="<?php echo $servico['id_servico']; ?>" <?php echo $desativado; ?>>
-                                        <?php echo htmlspecialchars($servico['nome_servico']); ?> — R$ <?php echo number_format($valor_exibido, 2, ',', '.'); ?><?php echo $texto_status; ?>
+                                        <?php echo htmlspecialchars($servico['nome_servico']); ?> — R$ <?php echo number_format($valor_exibido, 2, ',', '.'); ?>/h<?php echo $texto_status; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

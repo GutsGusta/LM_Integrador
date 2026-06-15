@@ -23,8 +23,8 @@ if (isset($_SESSION['user_tipo'])) {
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro'       => 'Pedreiro',
-    'servente'       => 'Servente'
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
 ];
 
 $id_cliente = $_SESSION['user_id'] ?? 0;
@@ -193,8 +193,14 @@ if (is_array($servicos)) {
                             <div class="orcamento-valores">
                                 <!-- CORRIGIDO: campo era 'preco' (não existe em orcamentos) → valor_pedreiro -->
                                 <strong class="destaque">
-                                    R$ <?= number_format($usuario['valor_pedreiro'] ?? 0, 2, ',', '.') ?>
-                                </strong>
+                                    R$ <?= number_format(
+                                        $usuario['valor_servente'] ??
+                                        $usuario['valor_mestre'] ??
+                                        $usuario['valor_pedreiro'] ?? 0,
+                                        2,
+                                        ',',
+                                        '.'
+                                    ) ?> </strong>
                                 <!-- CORRIGIDO: campo era 'data' (não existe) → data_envio -->
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
@@ -216,4 +222,5 @@ if (is_array($servicos)) {
     </div>
 
 </body>
+
 </html>

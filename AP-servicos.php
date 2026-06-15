@@ -27,7 +27,7 @@ if (!$profissional) {
 /* Serviços em andamento */
 $sql = "
 SELECT
-    a.id,
+    a.id_agendamento,
     a.data_agenda,
     a.horario,
     a.preco,
@@ -55,7 +55,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 /* Serviços pendentes */
 $sqlPendentes = "
 SELECT
-    a.id,
+    a.id_agendamento,
     a.data_agenda,
     a.horario,
     a.preco,
@@ -133,12 +133,13 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                     Meus Dados
                 </a>
 
-                <form method="POST" action="" class="form-sair">
-                    <button type="submit" name="logout" class="nav-sair">
+                <form method="POST" action="">
+                    <button type="submit" name="logout" class="nav-item nav-sair"
+                        style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>
-                </form>
+                </form>>
             </div>
 
             <div class="pagina-servicos">

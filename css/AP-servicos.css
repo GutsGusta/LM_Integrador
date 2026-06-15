@@ -170,12 +170,13 @@ main {
     font-size: 11px;
 }
 
+
 .nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 13px 20px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255,255,255,0.55);
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
@@ -185,12 +186,12 @@ main {
 
 .nav-item:hover {
     color: white;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
 }
 
 .nav-item.ativo {
     color: white;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255,255,255,0.06);
     border-left-color: #800020;
 }
 
@@ -204,6 +205,24 @@ main {
 .nav-item.ativo i {
     opacity: 1;
 }
+
+.nav-sair {
+    margin-top: 500px;
+    color: rgba(255, 255, 255, 0.4);
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.nav-sair:hover {
+    color: #e57373;
+    background: rgba(229, 115, 115, 0.05);
+}
+
 
 .form-sair {
     margin-top: auto;

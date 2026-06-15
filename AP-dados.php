@@ -23,7 +23,9 @@ $profissional = read(
 if (!$profissional) {
     die('Profissional não encontrado.');
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,31 +33,31 @@ if (!$profissional) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/AP.css">
+    <link rel="stylesheet" href="css/AP-dados.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Área de Trabalho</title>
+    <title>Meus Dados</title>
 </head>
 
 <body>
-
-    <?php require_once 'partials/header.php'; ?>
+    <?php
+    require_once 'partials/header.php';
+    ?>
 
     <main>
         <div class="pagina-principal">
-
             <div class="sidebar">
                 <div class="sidebar-perfil">
                     <img src="uploads/<?php echo $profissional['foto']; ?>" alt="Foto">
                     <div class="sidebar-perfil-info">
-                        <strong><?php echo htmlspecialchars($profissional['nome_profissional']); ?></strong>
-                        <span><?php echo htmlspecialchars($profissional['cidade_estado']); ?></span>
-                        <span><?php echo htmlspecialchars($profissional['funcao']); ?></span>
+                        <strong><?php echo $profissional['nome_profissional']; ?></strong>
+                        <span><?php echo $profissional['cidade_estado']; ?></span>
+                        <span><?php echo $profissional['funcao']; ?></span>
                     </div>
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item ativo">
+                <a href="AP-dashbord.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
@@ -70,124 +72,156 @@ if (!$profissional) {
                     Meus Agendamentos
                 </a>
 
-                <a href="AP-dados.php" class="nav-item">
+                <a href="AP-dados.php" class="nav-item ativo">
                     <i class="fa-solid fa-user"></i>
                     Meus Dados
                 </a>
 
-                <form method="POST" action="AP-dashbord.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Sair
+                <form method="POST" action="AP-dados.php">
+                    <button type="submit" name="logout" class="nav-item nav-sair">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
                     </button>
-            </form>
-            </div>        
-          
-            <div class="dashbord">
-
-                <div class="estatisticas">
-
-                    <div class="estatisticas-indv">
-                        <img src="uploads/fatura.png">
-
-                        <div class="estatisticas-txt">
-                            <h4>Experiência</h4>
-                            <h1><?php echo htmlspecialchars($profissional['experiencia']); ?></h1>
-                            <p>Tempo de atuação</p>
-                        </div>
-                    </div>
-
-                    <div class="estatisticas-indv">
-                        <img src="uploads/relogio.png">
-
-                        <div class="estatisticas-txt">
-                            <h4>Disponibilidade</h4>
-                            <h1>
-                                <?php
-                                echo $profissional['disponibilidade']
-                                    ? 'Sim'
-                                    : 'Não';
-                                ?>
-                            </h1>
-                            <p>Status atual</p>
-                        </div>
-                    </div>
-
-                    <div class="estatisticas-indv">
-                        <img src="uploads/Certo.png">
-
-                        <div class="estatisticas-txt">
-                            <h4>Projetos</h4>
-                            <h1><?php echo htmlspecialchars($profissional['projetos_concluidos']); ?></h1>
-                            <p>Projetos concluídos</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="quadrados">
-
-                    <div class="quadrados-indv">
-                        <h2>Informações Profissionais</h2>
-
-                        <div class="linha"></div>
-
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Serviço</h4>
-                                <p><?php echo htmlspecialchars($profissional['servico']); ?></p>
-                            </div>
-                        </div>
-
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Função</h4>
-                                <p><?php echo htmlspecialchars($profissional['funcao']); ?></p>
-                            </div>
-                        </div>
-
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Sobre</h4>
-                                <p><?php echo htmlspecialchars($profissional['sobre']); ?></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="quadrados-indv">
-                        <h2>Dados de Contato</h2>
-
-                        <div class="linha"></div>
-
-                        <div class="campo-servico">
-                            <div class="info">
-                                <h4>Email</h4>
-                                <p><?php echo htmlspecialchars($profissional['email']); ?></p>
-                            </div>
-                        </div>
-
-                        <div class="campo-servico">
-                            <div class="info">
-                                <h4>Telefone</h4>
-                                <p><?php echo htmlspecialchars($profissional['telefone']); ?></p>
-                            </div>
-                        </div>
-
-                        <div class="campo-servico">
-                            <div class="info">
-                                <h4>Cidade</h4>
-                                <p><?php echo htmlspecialchars($profissional['cidade_estado']); ?></p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                </form>
             </div>
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_dados'])) {
+                $nome_profissional = $_POST['nome_profissional'] ?? '';
+                $email = $_POST['email'] ?? '';
+                $telefone = $_POST['telefone'] ?? '';
+                $cidade_estado = $_POST['cidade_estado'] ?? '';
 
+                $funcao = !empty($_POST['funcao']) ? $_POST['funcao'] : $profissional['funcao'];
+
+                update(
+                    $pdo,
+                    'profissional',
+                    [
+                        'nome_profissional' => $nome_profissional,
+                        'email' => $email,
+                        'telefone' => $telefone,
+                        'cidade_estado' => $cidade_estado,
+                        'funcao' => $funcao
+                    ],
+                    'id_profissional = ' . (int) $_SESSION['user_id']
+                );
+
+                header('Location: AP-dados.php?sucesso=1');
+                exit;
+            }
+            ?>
+            <div class="dados-principais">
+                <h4>Meus Dados:</h4>
+                <form action="" method="POST" class="dados">
+                    <div class="campo-horizontal">
+                        <div class="campo">
+
+                            <p>Nome Completo:</p>
+                            <input type="text" name="nome_profissional"
+                                value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
+                        </div>
+                        <div class="campo">
+                            <p>E-mail:</p>
+                            <input type="email" name="email"
+                                value="<?php echo htmlspecialchars($profissional['email']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="campo-horizontal">
+                        <div class="campo">
+                            <p>Telefone:</p>
+                            <input type="text" name="telefone"
+                                value="<?php echo htmlspecialchars($profissional['telefone']); ?>" required>
+                        </div>
+                        <div class="campo">
+                            <p>Cidade de Residência:</p>
+                            <input type="text" name="cidade_estado"
+                                value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
+
+                        </div>
+                    </div>
+                    <div class="campo-horizontal">
+                        <div class="campo">
+                            <p>Função</p>
+                            <select name="funcao" required>
+                                <option value="Servente" <?php echo ($profissional['funcao'] == 'Servente') ? 'selected' : ''; ?>>Servente</option>
+                                <option value="Pedreiro" <?php echo ($profissional['funcao'] == 'Pedreiro') ? 'selected' : ''; ?>>Pedreiro</option>
+                                <option value="Mestre de Obras" <?php echo ($profissional['funcao'] == 'Mestre de Obras') ? 'selected' : ''; ?>>Mestre de Obras</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botoes">
+                        <button type="submit">Salvar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="dados-principais">
+                <h4>Serviços Qualificados:</h4>
+                <form action="" method="POST" class="servicos">
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <div class="check">
+                        <p>Serviço</p>
+                        <input type="checkbox">
+                    </div>
+                    <button type="submit">Salvar</button>
+                </form>
+            </div>
         </div>
     </main>
-
 </body>
 
 </html>
