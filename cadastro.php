@@ -6,6 +6,7 @@
     <title>Cadastro</title>
     <link rel="stylesheet" href="css/cadastro.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
 </head>
 <body>
  <?php
@@ -26,7 +27,7 @@
         <label for="foto" class="select-foto">
             <i  class="fa-solid fa-cloud-arrow-up"></i> Escolha uma foto
         </label>
-        <input type="file">
+        <input type="file" id="foto">
         </div>
         <button type="submit">Criar conta</button>
     </form>
