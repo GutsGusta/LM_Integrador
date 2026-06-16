@@ -56,7 +56,7 @@ if (!$profissional) {
 
                 </div>
 
-                <a href="AP-dashboard.php" class="nav-item">
+                <a href="AP-dashbord.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
