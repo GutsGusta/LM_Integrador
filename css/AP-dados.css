@@ -119,6 +119,9 @@ body {
 
 main {
     margin-top: 77px;
+    min-height: calc(100vh - 77px);
+    display: flex;
+    align-items: center;
 }
 
 .pagina-principal {
@@ -127,8 +130,8 @@ main {
     justify-content: center;
     flex-direction: row;
     gap: 70px;
-    margin-top: 300px;
-    margin-left: 200px;
+    margin-left: 240px;
+    width: calc(100% - 240px);
 }
 
 .sidebar {
@@ -228,6 +231,7 @@ main {
 .dados-principais {
     display: flex;
     flex-direction: column;
+    gap: 30px;
 }
 
 .dados {

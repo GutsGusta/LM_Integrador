@@ -132,6 +132,7 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="estatisticas-indv">
                         <img src="uploads/fatura.png" alt="Experiência">
+                        <img src="uploads/fatura.png" alt="Experiência">
                         <div class="estatisticas-txt">
                             <h4>Experiência</h4>
                             <h1><?php echo htmlspecialchars($profissional['experiencia']); ?></h1>
@@ -188,6 +189,9 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                         <?php endif; ?>
                     </div>
 
+                    <div class="quadrados-indv">
+                        <h2>Próximos Serviços</h2>
+                        <div class="linha"></div>
                     <div class="quadrados-indv">
                         <h2>Próximos Serviços</h2>
                         <div class="linha"></div>
