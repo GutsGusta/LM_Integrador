@@ -21,6 +21,12 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
+
+if (!$cliente) {
+    die('Cliente não encontrado.');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
     $nome_cliente = trim($_POST['nome_cliente']);
     $email        = trim($_POST['email']);
@@ -47,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
 }
 
 $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
+
+$foto_perfil = 'default.png';
+if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
+    $foto_perfil = $cliente['foto'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +80,7 @@ $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/default.png" alt="Cliente">
+                <img src="uploads/<?php echo $foto_perfil; ?>" alt="Cliente">
                 <div class="sidebar-perfil-info">
                     <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>

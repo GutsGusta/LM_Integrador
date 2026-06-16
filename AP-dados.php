@@ -26,7 +26,6 @@ if (!$profissional) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -90,8 +89,8 @@ if (!$profissional) {
                 $email = $_POST['email'] ?? '';
                 $telefone = $_POST['telefone'] ?? '';
                 $cidade_estado = $_POST['cidade_estado'] ?? '';
-
                 $funcao = !empty($_POST['funcao']) ? $_POST['funcao'] : $profissional['funcao'];
+                $senha = $_POST['senha'] ?? '';
 
                 update(
                     $pdo,
@@ -101,7 +100,8 @@ if (!$profissional) {
                         'email' => $email,
                         'telefone' => $telefone,
                         'cidade_estado' => $cidade_estado,
-                        'funcao' => $funcao
+                        'funcao' => $funcao,
+                        'senha' => $senha
                     ],
                     'id_profissional = ' . (int) $_SESSION['user_id']
                 );
@@ -115,7 +115,6 @@ if (!$profissional) {
                 <form action="" method="POST" class="dados">
                     <div class="campo-horizontal">
                         <div class="campo">
-
                             <p>Nome Completo:</p>
                             <input type="text" name="nome_profissional"
                                 value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
@@ -136,7 +135,6 @@ if (!$profissional) {
                             <p>Cidade de Residência:</p>
                             <input type="text" name="cidade_estado"
                                 value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
-
                         </div>
                     </div>
                     <div class="campo-horizontal">
@@ -147,6 +145,11 @@ if (!$profissional) {
                                 <option value="Pedreiro" <?php echo ($profissional['funcao'] == 'Pedreiro') ? 'selected' : ''; ?>>Pedreiro</option>
                                 <option value="Mestre de Obras" <?php echo ($profissional['funcao'] == 'Mestre de Obras') ? 'selected' : ''; ?>>Mestre de Obras</option>
                             </select>
+                        </div>
+                        <div class="campo">
+                            <p>Alterar Senha</p>
+                            <input type="password" name="senha"
+                                value="<?php echo htmlspecialchars($profissional['senha']); ?>" required>
                         </div>
                     </div>
                     <div class="botoes">

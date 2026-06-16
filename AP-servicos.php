@@ -24,7 +24,6 @@ if (!$profissional) {
     die('Profissional não encontrado.');
 }
 
-/* Serviços em andamento */
 $sql = "
 SELECT
     a.id_agendamento,
@@ -52,7 +51,6 @@ $stmt->execute([$_SESSION['user_id']]);
 
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* Serviços pendentes */
 $sqlPendentes = "
 SELECT
     a.id_agendamento,
@@ -134,8 +132,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                 </a>
 
                 <form method="POST" action="">
-                    <button type="submit" name="logout" class="nav-item nav-sair"
-                        style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
+                    <button type="submit" name="logout" class="nav-item nav-sair">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>

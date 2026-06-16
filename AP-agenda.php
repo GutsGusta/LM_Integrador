@@ -59,12 +59,10 @@ $mes_anterior = ($mes == 1) ? 12 : $mes - 1;
 $ano_anterior = ($mes == 1) ? $ano - 1 : $ano;
 $total_dias_mes_anterior = date('t', mktime(0, 0, 0, $mes_anterior, 1, $ano_anterior));
 
-// AQUI BUSCA OS AGENDAMENTOS
 $mes_formatado = str_pad($mes, 2, "0", STR_PAD_LEFT);
 $data_inicio_busca = "$ano-$mes_formatado-01";
 $data_fim_busca = "$ano-$mes_formatado-$total_dias_mes";
 
-// MUDANÇA: Atualizei de 'a.horario' para 'a.horario_inicial, a.horario_final' e ordenei pelo inicial.
 $sql = "SELECT a.data_agenda, a.horario_inicial, a.horario_final, a.status, c.nome_cliente, s.nome_servico 
         FROM agendamento a 
         JOIN cliente c ON a.id_cliente = c.id_cliente
@@ -166,11 +164,9 @@ foreach ($agendamentos as $agendamento) {
 
                         if (isset($agenda_organizada[$dia_atual])) {
                             foreach ($agenda_organizada[$dia_atual] as $key => $servico) {
-                                // MUDANÇA: Formata tanto a hora inicial quanto a final
                                 $hora_ini = date('H:i', strtotime($servico['horario_inicial']));
                                 $hora_fim = date('H:i', strtotime($servico['horario_final']));
 
-                                // MUDANÇA: Exibe os dois horários juntos
                                 echo "<p class='servico-aviso'><strong>{$hora_ini} às {$hora_fim}</strong> - {$servico['nome_servico']}</p>";
                             }
                         }

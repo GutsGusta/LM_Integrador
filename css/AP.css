@@ -234,7 +234,7 @@ main {
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
-    margin-left: 390px;
+    margin-left: 600px;
     height: 850px;
 }
 
@@ -286,6 +286,12 @@ main {
 
 .quadrados-indv h2 {
     margin-top: 10px;
+}
+
+.nenhum-servico {
+    color: black;
+    padding: 15px;
+    font-size: 14px;
 }
 
 .campo-servico {

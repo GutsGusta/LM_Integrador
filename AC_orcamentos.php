@@ -21,13 +21,23 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
+
+if (!$cliente) {
+    die('Cliente não encontrado.');
+}
+
+$foto_perfil = 'default.png'; 
+if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
+    $foto_perfil = $cliente['foto'];
+}
+
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
     'pedreiro'       => 'Pedreiro',
     'servente'       => 'Servente'
 ];
 
-// CORRIGIDO: orcamentos não tem id_profissional — profissional vem via agendamento
 $tabelaJoin = "orcamentos
     LEFT JOIN agendamento  ON agendamento.id_orcamento     = orcamentos.id_orcamento
     LEFT JOIN profissional ON profissional.id_profissional = agendamento.id_profissional
@@ -38,7 +48,6 @@ $condicaoJoin = "orcamentos.id_cliente = '" . (int)$_SESSION['user_id'] . "' ORD
 $buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
 $usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
 
-// Processar cancelamento
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
     $id_orcamento = (int) $_POST['id_orcamento'];
     $dadosAtualizados = ['status' => trim($_POST['status'])];
@@ -68,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/default.png" alt="Cliente">
+                <img src="uploads/<?php echo $foto_perfil; ?>" alt="Cliente">
                 <div class="sidebar-perfil-info">
                     <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
@@ -112,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                         <div class="orcamento-linha">
 
                             <div class="orcamento-info">
-                                <!-- CORRIGIDO: 'titulo' não existe → nome_servico ou mensagem -->
                                 <strong class="destaque">
                                     <?= htmlspecialchars($usuario['nome_servico'] ?? $usuario['mensagem'] ?? 'Serviço') ?>
                                 </strong>
@@ -125,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                             </div>
 
                             <div class="orcamento-valores">
-                                <!-- CORRIGIDO: 'preco' não existe em orcamentos → valor_pedreiro -->
                                 <strong class="destaque">
                                     R$ <?= number_format($usuario['valor_pedreiro'] ?? 0, 2, ',', '.') ?>
                                 </strong>
@@ -137,7 +144,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                                 <?= htmlspecialchars($usuario['status']) ?>
                             </div>
 
-                            <!-- CORRIGIDO: form fechada no lugar certo -->
                             <form method="POST" action="AC_orcamentos.php">
                                 <input type="hidden" name="id_orcamento" value="<?= $usuario['id_orcamento'] ?>">
                                 <select class="orcamento-status" name="status">

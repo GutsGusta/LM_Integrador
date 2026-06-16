@@ -241,6 +241,29 @@ main {
     width: 650px;
 }
 
+.dados input {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    font-family: 'Poppins', arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.dados select {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ffffff26;
+    font-family: 'Poppins', arial, sans-serif;
+    width: 300px;
+    outline: none;
+}
+
+.dados option {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ffffff26;
+    font-family: 'Poppins', arial, sans-serif;
+    outline: none;
+}
+
 .dados button {
     background-color: #800020;
     color: white;
