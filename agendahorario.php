@@ -27,7 +27,7 @@ if ($tipoUsuario === 'profissional' || $tipoUsuario === 'admin') {
     <body>
         <?php require_once 'partials/header.php'; ?>
         <div class="pagina-agenda">
-            <p class="alerta-aviso">⚠️ Acesso negado. Esta área é exclusiva para clientes.</p>
+            <p class="alerta-aviso"> Acesso negado. Esta área é exclusiva para clientes.</p>
             <p style="color: rgba(255,255,255,0.6); font-size:14px;"><a href="login.php" style="color:#e79128;">Voltar para o Login</a></p>
         </div>
     </body>
@@ -88,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $servico_selecionado = $stmt_preco->fetch(PDO::FETCH_ASSOC);
 
     if ($servico_selecionado) {
-        // Captura o valor da hora baseada na função do profissional
         $preco_por_hora = valorPorFuncao($servico_selecionado, $servico_selecionado['funcao']);
     }
 
@@ -98,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $tempo_inicio = new DateTime($horario_inicio);
     $tempo_fim    = new DateTime($horario_fim);
 
-    // Validação básica se a hora final é maior que a inicial
     if ($tempo_inicio >= $tempo_fim) {
         header('Location: agendahorario.php?erro=horario_invalido&id_profissional=' . $id_profissional_selecionado . '&data_agenda=' . $data_selecionada);
         exit;
@@ -106,36 +104,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 
     // --- CÁLCULO DAS HORAS TRABALHADAS ---
     $intervalo = $tempo_inicio->diff($tempo_fim);
-    // Transforma a diferença total em horas absolutas
     $total_horas = $intervalo->h + ($intervalo->days * 24); 
-    
-    // Calcula o valor total multiplicando a quantidade de horas pelo preço/hora
     $valor_total_final = $total_horas * $preco_por_hora;
 
-    // Salvamos cada bloco de 1 hora no banco mantendo o valor unitário por hora preenchido
-    while ($tempo_inicio < $tempo_fim) {
-        $horario_atual = $tempo_inicio->format('H:i:s');
+    $novoAgendamento = [
+        'id_cliente'          => $_POST['id_cliente'],
+        'id_profissional'     => $id_profissional_selecionado,
+        'id_orcamento'        => null,
+        'id_servico'          => $id_servico_selecionado, 
+        'data_agenda'         => $data_selecionada,
+        'horario_inicial'     => $tempo_inicio->format('H:i:s'), 
+        'horario_final'       => $tempo_fim->format('H:i:s'),    
+        'preco'               => $valor_total_final,             
+        'endereco'            => $_POST['endereco'] ?? '',       // MUDANÇA: Salvando o endereço enviado pelo formulário
+        'tipo_responsavel'    => $_POST['tipo_responsavel'],
+        'nome_responsavel'    => $_POST['nome_responsavel']    ?? '',
+        'contato_responsavel' => $_POST['contato_responsavel'] ?? '',
+        'cpf_responsavel'     => $_POST['cpf_responsavel']     ?? '',
+        'tipo_pagamento'      => $_POST['tipo_pagamento'],
+    ];
 
-        $novoAgendamento = [
-            'id_cliente'          => $_POST['id_cliente'],
-            'id_profissional'     => $id_profissional_selecionado,
-            'id_orcamento'        => null,
-            'id_servico'          => $id_servico_selecionado, // Adicionado para manter o vínculo correto do banco
-            'data_agenda'         => $data_selecionada,
-            'horario'             => $horario_atual,
-            'preco'               => $preco_por_hora, // Salva o valor de 1 hora correspondente a este slot
-            'tipo_responsavel'    => $_POST['tipo_responsavel'],
-            'nome_responsavel'    => $_POST['nome_responsavel']    ?? '',
-            'contato_responsavel' => $_POST['contato_responsavel'] ?? '',
-            'cpf_responsavel'     => $_POST['cpf_responsavel']     ?? '',
-            'tipo_pagamento'      => $_POST['tipo_pagamento'],
-        ];
+    create($pdo, 'agendamento', $novoAgendamento);
 
-        create($pdo, 'agendamento', $novoAgendamento);
-        $tempo_inicio->modify('+1 hour');
-    }
-
-    // Redireciona passando o total de horas e o valor final calculado para se quiser exibir um alerta customizado na tela
     header('Location: agendahorario.php?sucesso=1&horas=' . $total_horas . '&total=' . $valor_total_final . '&id_profissional=' . $id_profissional_selecionado . '&data_agenda=' . $data_selecionada);
     exit;
 }
@@ -143,17 +133,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 $horario_ocupado = [];
 
 if (!empty($id_profissional_selecionado)) {
-    $stmt = $pdo->prepare('SELECT horario FROM agendamento WHERE data_agenda = ? AND id_profissional = ?');
+    $stmt = $pdo->prepare('SELECT horario_inicial, horario_final FROM agendamento WHERE data_agenda = ? AND id_profissional = ?');
     $stmt->execute([$data_selecionada, $id_profissional_selecionado]);
 
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $agenda) {
-        if (isset($agenda['horario'])) {
-            $horario_ocupado[] = trim($agenda['horario']);
+        if (isset($agenda['horario_inicial']) && isset($agenda['horario_final'])) {
+            $h_ini = new DateTime($agenda['horario_inicial']);
+            $h_fim = new DateTime($agenda['horario_final']);
+            
+            while ($h_ini < $h_fim) {
+                $horario_ocupado[] = $h_ini->format('H:i:s');
+                $h_ini->modify('+1 hour');
+            }
         }
     }
 }
 
 $horario_sistema = [
+    '08:00:00' => '08:00',
+    '09:00:00' => '09:00',
     '10:00:00' => '10:00',
     '11:00:00' => '11:00',
     '13:00:00' => '13:00',
@@ -164,7 +162,6 @@ $horario_sistema = [
     '19:00:00' => '19:00',
     '20:00:00' => '20:00',
     '21:00:00' => '21:00',
-    '22:00:00' => '22:00',
 ];
 ?>
 
@@ -187,14 +184,14 @@ $horario_sistema = [
 
         <?php if (isset($_GET['sucesso'])): ?>
             <div class="alerta-sucesso">
-                🎉 Agendamento realizado com sucesso! <br>
+                 Agendamento realizado com sucesso! <br>
                 <strong>Total de Horas:</strong> <?php echo (int)$_GET['horas']; ?>h | 
                 <strong>Valor Total:</strong> R$ <?php echo number_format((float)$_GET['total'], 2, ',', '.'); ?>
             </div>
         <?php endif; ?>
 
         <?php if (isset($_GET['erro']) && $_GET['erro'] === 'horario_invalido'): ?>
-            <div class="alerta-aviso">⚠️ Horário inválido. O término deve ser após o início.</div>
+            <div class="alerta-aviso"> Horário inválido. O término deve ser após o início.</div>
         <?php endif; ?>
 
         <div class="card-secao">
@@ -248,7 +245,7 @@ $horario_sistema = [
                             <select name="horario" id="horario" required>
                                 <option value="">Selecione o início</option>
                                 <?php foreach ($horario_sistema as $horario => $texto_tela):
-                                    if ($horario === '22:00:00') continue;
+                                    if ($horario === '21:00:00') continue;
                                     $ocupado = in_array($horario, $horario_ocupado);
                                 ?>
                                     <option value="<?php echo $horario; ?>" <?php echo $ocupado ? 'disabled' : ''; ?>>
@@ -263,7 +260,7 @@ $horario_sistema = [
                             <select name="horario_fim" id="horario_fim" required>
                                 <option value="">Selecione o término</option>
                                 <?php foreach ($horario_sistema as $horario => $texto_tela):
-                                    if ($horario === '10:00:00') continue;
+                                    if ($horario === '08:00:00') continue;
                                     $tempo_opcao = new DateTime($horario);
                                     $tempo_opcao->modify('-1 hour');
                                     $hora_anterior = $tempo_opcao->format('H:i:s');
@@ -275,6 +272,12 @@ $horario_sistema = [
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                    </div>
+
+                    <!-- MUDANÇA: Adicionado o campo de endereço para onde o serviço será prestado -->
+                    <div class="campo" style="margin-top: 20px;">
+                        <label for="endereco">Endereço de Atendimento</label>
+                        <input type="text" name="endereco" id="endereco" placeholder="Ex: Rua das Flores, 123 - Bairro Centro" required style="width: 100%; box-sizing: border-box;">
                     </div>
                 </div>
 
@@ -355,7 +358,6 @@ $horario_sistema = [
             </form>
         <?php else: ?>
             <div class="card-secao aviso-vazio">
-                <span>⚠️</span>
                 Nenhum profissional selecionado. Volte à página anterior e escolha um profissional.
             </div>
         <?php endif; ?>
@@ -364,3 +366,4 @@ $horario_sistema = [
     <?php require_once "partials/footer.php"; ?>
 </body>
 </html>
+

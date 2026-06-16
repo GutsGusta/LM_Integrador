@@ -81,7 +81,6 @@ $clientes = readAll($pdo, 'cliente');
                             <th>Nome do Cliente</th>
                             <th>Email</th>
                             <th>Telefone</th>
-                            <th>Endereço</th>
                             <th>CPF</th>
                         </tr>
                     </thead>
@@ -108,15 +107,8 @@ $clientes = readAll($pdo, 'cliente');
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($cliente['endereco']) ?>
-                                    </td>
-
-
-
-                                    <td>
                                         <?= htmlspecialchars($cliente['cpf']) ?>
                                     </td>
-
 
                                 </tr>
 

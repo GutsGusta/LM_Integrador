@@ -60,7 +60,7 @@ $sql_prox = "SELECT a.*, s.nome_servico
              WHERE a.id_cliente = ?
                AND a.status = 'Em andamento'
                AND a.data_agenda >= CURDATE()
-             ORDER BY a.data_agenda ASC, a.horario ASC
+             ORDER BY a.data_agenda ASC, a.horario_inicial ASC
              LIMIT 1";
 $stmt = $pdo->prepare($sql_prox);
 $stmt->execute([$id_cliente]);

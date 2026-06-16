@@ -29,7 +29,7 @@ $sql = "
 SELECT
     a.id_agendamento,
     a.data_agenda,
-    a.horario,
+    a.horario_inicial,
     a.preco,
     a.status,
     a.endereco,
@@ -57,7 +57,7 @@ $sqlPendentes = "
 SELECT
     a.id_agendamento,
     a.data_agenda,
-    a.horario,
+    a.horario_inicial,
     a.preco,
     a.status,
     a.endereco,

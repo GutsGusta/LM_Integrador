@@ -48,13 +48,14 @@ $mes_fmt    = str_pad($mes, 2, "0", STR_PAD_LEFT);
 $data_ini   = "$ano-$mes_fmt-01";
 $data_fim   = "$ano-$mes_fmt-$total_dias_mes";
 
-$sql = "SELECT a.data_agenda, a.horario, a.status, s.nome_servico
+// MUDANÇA: Adicionado a.horario_final no SELECT para podermos exibir o intervalo completo na tela
+$sql = "SELECT a.data_agenda, a.horario_inicial, a.horario_final, a.status, s.nome_servico
         FROM agendamento a
         LEFT JOIN orcamentos o ON a.id_orcamento = o.id_orcamento
         LEFT JOIN servicos   s ON o.id_servico   = s.id_servico
         WHERE a.id_cliente = ?
           AND a.data_agenda BETWEEN ? AND ?
-        ORDER BY a.horario ASC";
+        ORDER BY a.horario_inicial ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$id_cliente, $data_ini, $data_fim]);
@@ -152,9 +153,14 @@ foreach ($agendamentos_raw as $ag) {
 
                         if ($tem_servico) {
                             foreach ($agenda_organizada[$dia] as $ag) {
-                                $hora = date('H:i', strtotime($ag['horario']));
+                                // MUDANÇA: Captura e formata os horários inicial e final das novas colunas
+                                $hora_inicio = date('H:i', strtotime($ag['horario_inicial']));
+                                $hora_final  = date('H:i', strtotime($ag['horario_final']));
+                                
                                 $servico_nome = htmlspecialchars($ag['nome_servico'] ?? 'Agendamento');
-                                echo "<p class='servico-aviso'><strong>$hora</strong> - $servico_nome</p>";
+                                
+                                // MUDANÇA: Exibe o intervalo no padrão "Início às Fim" para o cliente
+                                echo "<p class='servico-aviso'><strong>{$hora_inicio} às {$hora_final}</strong> - $servico_nome</p>";
                             }
                         }
                         echo "</div>";

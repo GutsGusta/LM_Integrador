@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_name'] = $usuarioencontrado['nome_profissional'];
             $_SESSION['user_tipo'] = 'profissional';
 
-            header('Location: AP-dashbord.php');
+            header('Location: AP-dashboard.php');
             exit;
 
         } elseif ($tipoUsuario === 'cliente') {
