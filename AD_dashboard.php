@@ -10,8 +10,8 @@ if (isset($_POST['logout'])) {
 }
 
 $totalProfissionais = $pdo->query("SELECT COUNT(*) FROM profissional")->fetchColumn();
-$totalClientes      = $pdo->query("SELECT COUNT(*) FROM cliente")->fetchColumn();
-$totalOrcamentos    = $pdo->query("SELECT COUNT(*) FROM orcamentos")->fetchColumn();
+$totalClientes = $pdo->query("SELECT COUNT(*) FROM cliente")->fetchColumn();
+$totalOrcamentos = $pdo->query("SELECT COUNT(*) FROM orcamentos")->fetchColumn();
 $orcamentosPendentes = $pdo->query("SELECT COUNT(*) FROM orcamentos WHERE status = 'Pendente'")->fetchColumn();
 
 // Últimos orçamentos com nome do cliente via JOIN (orcamentos não tem nome_profissional diretamente)
@@ -34,8 +34,8 @@ $melhoresProfissionais = $pdo->query("
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro'       => 'Pedreiro',
-    'servente'       => 'Servente'
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
 ];
 ?>
 
@@ -148,7 +148,19 @@ $categorias = [
                                         <?= htmlspecialchars($orcamento['nome_profissional'] ?? 'Sem profissional') ?>
                                     </span>
                                 </div>
-                                <span class="orcamento-status">
+
+                                <?php
+                                $statusClasses = [
+                                    'Pendente' => 'status-pendente',
+                                    'Aprovado' => 'status-aprovado',
+                                    'Concluído' => 'status-concluido',
+                                    'Cancelado' => 'status-cancelado',
+                                ];
+
+                                $statusClass = $statusClasses[$orcamento['status']] ?? '';
+                                ?>
+
+                                <span class="orcamento-status <?= $statusClass ?>">
                                     <?= htmlspecialchars($orcamento['status']) ?>
                                 </span>
                             </div>
@@ -165,8 +177,7 @@ $categorias = [
                                         <img src="uploads/icone_usuario.png" alt="">
                                         <div>
                                             <strong><?= htmlspecialchars($prof['nome_profissional']) ?></strong>
-                                            <!-- CORRIGIDO: exibe categoria legível -->
-                                            <span><?= htmlspecialchars($categorias[$prof['funcao']] ?? $prof['funcao']) ?></span>
+                                            <span class="funcao"><?= htmlspecialchars($categorias[$prof['funcao']] ?? $prof['funcao']) ?></span>
                                         </div>
                                     </div>
                                     <span class="estrelas-mini">
@@ -184,4 +195,5 @@ $categorias = [
     </div>
 
 </body>
+
 </html>
