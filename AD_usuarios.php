@@ -94,7 +94,12 @@ $clientes = readAll($pdo, 'cliente');
 
                                     <td>
                                         <div class="func-nome">
-                                            <img src="uploads/icone_usuario.png" alt="">
+                                            <?php
+                                            $fotoCliente = !empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])
+                                                ? 'uploads/' . $cliente['foto']
+                                                : 'uploads/icone_usuario.png';
+                                            ?>
+                                            <img src="<?= htmlspecialchars($fotoCliente) ?>" alt="">
                                             <?= htmlspecialchars($cliente['nome_cliente']) ?>
                                         </div>
                                     </td>

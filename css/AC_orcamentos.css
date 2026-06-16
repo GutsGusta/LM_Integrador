@@ -275,6 +275,39 @@ body {
     flex-direction: column;
 }
 
+.select-status {
+    background-color: #2a2a2a;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 9px 32px 9px 14px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e79128' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    transition: border-color 0.2s ease;
+}
+
+.select-status:hover {
+    border-color: rgba(231, 145, 40, 0.5);
+}
+
+.select-status:focus {
+    outline: none;
+    border-color: #e79128;
+}
+
+.select-status option {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
 .orcamento-valores {
     text-align: center;
 }
