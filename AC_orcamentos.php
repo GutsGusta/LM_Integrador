@@ -39,17 +39,12 @@ $categorias = [
 ];
 
 $tabelaJoin = "orcamentos
-    LEFT JOIN agendamento  ON agendamento.id_orcamento  = orcamentos.id_orcamento AND agendamento.id_cliente = orcamentos.id_cliente
+    LEFT JOIN agendamento  ON agendamento.id_orcamento     = orcamentos.id_orcamento
     LEFT JOIN profissional ON profissional.id_profissional = agendamento.id_profissional
-<<<<<<< HEAD
     LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico";
 
 $condicaoJoin = "orcamentos.id_cliente = '" . (int) $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
-=======
-    LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico AND servicos.id_cliente = orcamentos.id_cliente";
->>>>>>> 3fe02bd5fba1bb48b65366c103c73b4b620b2e5f
 
-$condicaoJoin = "orcamentos.id_cliente = " . (int) $_SESSION['user_id'] . " GROUP BY orcamentos.id_orcamento ORDER BY orcamentos.id_orcamento DESC";
 $buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
 $usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
 
@@ -139,14 +134,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
                             <div class="orcamento-valores">
                                 <strong class="destaque">
-                                    R$ <?= number_format($usuario['preco_investir'] ?? $usuario['preco'] ?? 0, 2, ',', '.') ?>
+                                    R$ <?= number_format($usuario['valor_pedreiro'] ?? 0, 2, ',', '.') ?>
                                 </strong>
-<<<<<<< HEAD
 
-=======
->>>>>>> 3fe02bd5fba1bb48b65366c103c73b4b620b2e5f
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
+
                             <div class="orcamento-status status-pendente">
                                 <?= htmlspecialchars($usuario['status']) ?>
                             </div>
