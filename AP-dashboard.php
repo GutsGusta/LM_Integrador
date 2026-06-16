@@ -20,7 +20,7 @@ $id_profissional = $_GET['id'] ?? '';
 $stmt = $pdo->prepare('SELECT * FROM profissional WHERE id_profissional = ?');
 $stmt->execute([$id_profissional]);
 $profissional = $stmt->fetch(PDO::FETCH_ASSOC);
- 
+
 
 $profissional = read(
     $pdo,
@@ -32,9 +32,32 @@ if (!$profissional) {
     die('Profissional não encontrado.');
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar_disponibilidade'])) {
+    $nova_disponibilidade = trim($_POST['disponibilidade']);
+
+    $valores_permitidos = ['Disponível', 'Alocado', 'Em serviço', 'Indisponível'];
+
+    if (in_array($nova_disponibilidade, $valores_permitidos)) {
+        update($pdo, 'profissional', ['disponibilidade' => $nova_disponibilidade], "id_profissional = " . (int) $_SESSION['user_id']);
+
+        header('Location: AP-dashboard.php');
+        exit;
+    }
+}
+
 $meses_nomes_curtos = [
-    1=>'Jan', 2=>'Fev', 3=>'Mar', 4=>'Abr', 5=>'Mai', 6=>'Jun',
-    7=>'Jul', 8=>'Ago', 9=>'Set', 10=>'Out', 11=>'Nov', 12=>'Dez'
+    1 => 'Jan',
+    2 => 'Fev',
+    3 => 'Mar',
+    4 => 'Abr',
+    5 => 'Mai',
+    6 => 'Jun',
+    7 => 'Jul',
+    8 => 'Ago',
+    9 => 'Set',
+    10 => 'Out',
+    11 => 'Nov',
+    12 => 'Dez'
 ];
 
 $sql_ganhos = "SELECT a.data_agenda, a.preco, s.nome_servico 
@@ -112,13 +135,13 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                 </a>
 
                 <form method="POST" action="AP-dashboard.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Sair
+                    <button type="submit" name="logout" class="nav-item nav-sair">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
                     </button>
-            </form>
-            </div>        
-          
+                </form>
+            </div>
+
             <div class="dashbord">
 
                 <div class="estatisticas">
@@ -134,97 +157,115 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <div class="estatisticas-indv">
-                        <img src="uploads/relogio.png">
+                        <div class="estatisticas-indv">
+                            <img src="uploads/relogio.png" alt="Relógio">
 
-                        <div class="estatisticas-txt">
-                            <h4>Disponibilidade</h4>
-                            <h1>
-                                <?php
-                                echo $profissional['disponibilidade']
-                                    ? 'Sim'
-                                    : 'Não';
-                                ?>
-                            </h1>
-                            <p>Status atual</p>
+                            <div class="estatisticas-txt">
+                                <h4>Disponibilidade</h4>
+
+                                <form method="POST" action="AP-dashboard.php" style="margin-top: 5px;">
+                                    <input type="hidden" name="atualizar_disponibilidade" value="1">
+
+                                    <select name="disponibilidade" onchange="this.form.submit()"
+                                        style="font-size: 1.5rem; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; padding: 4px 8px; background: #fff; cursor: pointer; color: #1a1a1a;">
+
+                                        <option value="Disponível" <?= ($profissional['disponibilidade'] === 'Disponível' ? 'selected' : '') ?>>
+                                            Disponível
+                                        </option>
+
+                                        <option value="Alocado" <?= ($profissional['disponibilidade'] === 'Alocado' ? 'selected' : '') ?>>
+                                            Alocado
+                                        </option>
+
+                                        <option value="Em serviço" <?= ($profissional['disponibilidade'] === 'Em serviço' ? 'selected' : '') ?>>
+                                            Em serviço
+                                        </option>
+
+                                         <option value="Indisponível" <?= ($profissional['disponibilidade'] === 'Indisponível' ? 'selected' : '') ?>>
+                                            Indisponível
+                                        </option>
+                                    </select>
+                                </form>
+
+                                <p style="margin-top: 5px;">Status atual</p>
+                            </div>
                         </div>
-                    </div>
+                        <div class="estatisticas-indv">
+                            <img src="uploads/Certo.png">
 
-                    <div class="estatisticas-indv">
-                        <img src="uploads/Certo.png">
-
-                        <div class="estatisticas-txt">
-                            <h4>Projetos</h4>
-                            <h1><?php echo htmlspecialchars($profissional['projetos_concluidos']); ?></h1>
-                            <p>Projetos concluídos</p>
+                            <div class="estatisticas-txt">
+                                <h4>Projetos</h4>
+                                <h1><?php echo htmlspecialchars($profissional['projetos_concluidos']); ?></h1>
+                                <p>Projetos concluídos</p>
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
+                    <div class="quadrados">
 
-                <div class="quadrados">
+                        <div class="quadrados-indv">
+                            <h2>Últimos Ganhos</h2>
+                            <div class="linha"></div>
 
-                    <div class="quadrados-indv">
-                        <h2>Últimos Ganhos</h2>
-                        <div class="linha"></div>
-                        
-                        <?php if (empty($ultimos_ganhos)): ?>
-                            <p class="nenhum-servico">Nenhum serviço concluído até o momento.</p>
-                        <?php else: ?>
-                            <?php foreach ($ultimos_ganhos as $ganho): ?>
-                                <div class="campo-servico">                          
-                                    <div class="ganhos">
-                                        <h4><?php echo htmlspecialchars($ganho['nome_servico']); ?></h4>
+                            <?php if (empty($ultimos_ganhos)): ?>
+                                <p class="nenhum-servico">Nenhum serviço concluído até o momento.</p>
+                            <?php else: ?>
+                                <?php foreach ($ultimos_ganhos as $ganho): ?>
+                                    <div class="campo-servico">
+                                        <div class="ganhos">
+                                            <h4><?php echo htmlspecialchars($ganho['nome_servico']); ?></h4>
+                                        </div>
+                                        <div class="ganhos">
+                                            <h4>R$ <?php echo number_format((float) $ganho['preco'], 2, ',', '.'); ?></h4>
+                                            <p><?php echo date('d/m/Y', strtotime($ganho['data_agenda'])); ?></p>
+                                        </div>
                                     </div>
-                                    <div class="ganhos">
-                                        <h4>R$ <?php echo number_format((float)$ganho['preco'], 2, ',', '.'); ?></h4>
-                                        <p><?php echo date('d/m/Y', strtotime($ganho['data_agenda'])); ?></p>
-                                    </div>                                     
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
 
-                    <div class="quadrados-indv">
-                        <h2>Próximos Serviços</h2>
-                        <div class="linha"></div>
+                        <div class="quadrados-indv">
+                            <h2>Próximos Serviços</h2>
+                            <div class="linha"></div>
 
-                        <?php if (empty($proximos_servicos)): ?>
-                            <p class="nenhum-servico">Sem serviços agendados para os próximos dias.</p>
-                        <?php else: ?>
-                            <?php foreach ($proximos_servicos as $servico): 
-                                $dia_num = date('d', strtotime($servico['data_agenda']));
-                                $mes_num = (int)date('m', strtotime($servico['data_agenda']));
-                                $mes_nome = $meses_nomes_curtos[$mes_num] ?? '';
+                            <?php if (empty($proximos_servicos)): ?>
+                                <p class="nenhum-servico">Sem serviços agendados para os próximos dias.</p>
+                            <?php else: ?>
+                                <?php foreach ($proximos_servicos as $servico):
+                                    $dia_num = date('d', strtotime($servico['data_agenda']));
+                                    $mes_num = (int) date('m', strtotime($servico['data_agenda']));
+                                    $mes_nome = $meses_nomes_curtos[$mes_num] ?? '';
 
-                                $hora_i = date('H:i', strtotime($servico['horario_inicial']));
-                                $hora_f = date('H:i', strtotime($servico['horario_final']));
-                            ?>
-                                <div class="campo-servico">
-                                    <div class="data">
-                                        <h4><?php echo $dia_num; ?></h4>
-                                        <h4><?php echo $mes_nome; ?></h4>
+                                    $hora_i = date('H:i', strtotime($servico['horario_inicial']));
+                                    $hora_f = date('H:i', strtotime($servico['horario_final']));
+                                    ?>
+                                    <div class="campo-servico">
+                                        <div class="data">
+                                            <h4><?php echo $dia_num; ?></h4>
+                                            <h4><?php echo $mes_nome; ?></h4>
+                                        </div>
+                                        <div class="info">
+                                            <h4><?php echo htmlspecialchars($servico['nome_servico']); ?></h4>
+                                            <p><?php echo "{$hora_i} - {$hora_f}"; ?></p>
+                                            <h5><?php echo htmlspecialchars($servico['endereco']); ?></h5>
+                                        </div>
+
+                                        <?php if ($servico['status'] === 'Em andamento'): ?>
+                                            <p class="status-confirmado">Confirmado</p>
+                                        <?php else: ?>
+                                            <p class="status-aguardo">Aguardando</p>
+                                        <?php endif; ?>
                                     </div>
-                                    <div class="info">
-                                        <h4><?php echo htmlspecialchars($servico['nome_servico']); ?></h4>
-                                        <p><?php echo "{$hora_i} - {$hora_f}"; ?></p>
-                                        <h5><?php echo htmlspecialchars($servico['endereco']); ?></h5>
-                                    </div>
-                                    
-                                    <?php if ($servico['status'] === 'Em andamento'): ?>
-                                        <p class="status-confirmado">Confirmado</p>
-                                    <?php else: ?>
-                                        <p class="status-aguardo">Aguardando</p>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
-
-        </div>
     </main>
 
 </body>

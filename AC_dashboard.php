@@ -20,7 +20,7 @@ if (isset($_SESSION['user_tipo'])) {
     header('Location: login.php');
     exit();
 }
- 
+
 $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
 
 if (!$cliente) {
@@ -38,15 +38,15 @@ $categorias = [
     'servente' => 'Servente'
 ];
 
-$id_cliente = $_SESSION['user_id'] ?? 0;
+$id_cliente = (int) ($_SESSION['user_id'] ?? 0);
 
 $usuarios = readAll(
     $pdo,
     "orcamentos
-     LEFT JOIN agendamento  ON agendamento.id_orcamento     = orcamentos.id_orcamento
+     LEFT JOIN agendamento  ON agendamento.id_orcamento  = orcamentos.id_orcamento AND agendamento.id_cliente = orcamentos.id_cliente
      LEFT JOIN profissional ON profissional.id_profissional = agendamento.id_profissional
-     LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico",
-    "orcamentos.id_cliente = '$id_cliente' ORDER BY orcamentos.data_envio DESC LIMIT 1"
+     LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico AND servicos.id_cliente = orcamentos.id_cliente",
+    "orcamentos.id_cliente = '$id_cliente' GROUP BY orcamentos.id_orcamento ORDER BY orcamentos.data_envio DESC LIMIT 1"
 );
 
 $orcamentos = readAll($pdo, 'orcamentos', "id_cliente = '$id_cliente'");
@@ -156,7 +156,6 @@ if (is_array($servicos)) {
                     <div class="dash-info">
                         <h3 class="destaque">
                             <?php
-                            
                             if ($proximo_agendamento) {
                                 echo date('d/m/Y', strtotime($proximo_agendamento['data_agenda']));
                             } else {
@@ -199,13 +198,14 @@ if (is_array($servicos)) {
                             <div class="orcamento-valores">
                                 <strong class="destaque">
                                     R$ <?= number_format(
-                                        $usuario['valor_servente'] ??
-                                        $usuario['valor_mestre'] ??
-                                        $usuario['valor_pedreiro'] ?? 0,
+                                        $usuario['preco_investir'] ??
+                                        $usuario['preco'] ??
+                                        ($usuario['valor_pedreiro'] + $usuario['valor_servente'] + $usuario['valor_mestre']) ?? 0,
                                         2,
                                         ',',
                                         '.'
-                                    ) ?> </strong>
+                                    ) ?>
+                                </strong>
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
 

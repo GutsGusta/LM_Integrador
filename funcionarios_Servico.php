@@ -6,6 +6,8 @@ $profissional = readAll($pdo, 'profissional');
 $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
 
 $categorias = [
+    'Auxilio em Construção' => 'Auxilio em Construção',
+    'Reforma Residencial' => 'Reforma Residencial',
     'Projetos' => 'Projetos',
     'Colocação de Pisos e Azulejos' => 'Colocação de Pisos e Azulejos',
     'Preparação de massa e auxílio geral' => 'Preparação de massa e auxílio geral',
