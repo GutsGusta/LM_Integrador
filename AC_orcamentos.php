@@ -27,15 +27,15 @@ if (!$cliente) {
     die('Cliente não encontrado.');
 }
 
-$foto_perfil = 'default.png'; 
+$foto_perfil = 'default.png';
 if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
     $foto_perfil = $cliente['foto'];
 }
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro'       => 'Pedreiro',
-    'servente'       => 'Servente'
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
 ];
 
 $tabelaJoin = "orcamentos
@@ -43,7 +43,7 @@ $tabelaJoin = "orcamentos
     LEFT JOIN profissional ON profissional.id_profissional = agendamento.id_profissional
     LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico";
 
-$condicaoJoin = "orcamentos.id_cliente = '" . (int)$_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
+$condicaoJoin = "orcamentos.id_cliente = '" . (int) $_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
 
 $buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
 $usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
                                 <strong class="destaque">
                                     R$ <?= number_format($usuario['valor_pedreiro'] ?? 0, 2, ',', '.') ?>
                                 </strong>
-                                <!-- CORRIGIDO: 'data' não existe → data_envio -->
+
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
 
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
                             <form method="POST" action="AC_orcamentos.php">
                                 <input type="hidden" name="id_orcamento" value="<?= $usuario['id_orcamento'] ?>">
-                                <select class="orcamento-status" name="status">
+                                <select class="select-status" name="status">
                                     <option value="">Selecione uma ação</option>
                                     <option value="cancelado" <?= ($usuario['status'] === 'cancelado' ? 'selected' : '') ?>>
                                         Cancelar
@@ -171,4 +171,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
     </div>
 
 </body>
+
 </html>

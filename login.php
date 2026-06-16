@@ -6,7 +6,7 @@ session_start();
 
 if (isset($_SESSION['user_tipo'])) {
     if ($_SESSION['user_tipo'] === 'profissional') {
-        header('Location: AP-dashbord.php');
+        header('Location: AP-dashboard.php');
         exit;
     } elseif ($_SESSION['user_tipo'] === 'cliente') {
         header('Location: AC_dashbord.php');

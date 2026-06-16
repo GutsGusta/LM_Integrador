@@ -14,7 +14,6 @@ $totalClientes = $pdo->query("SELECT COUNT(*) FROM cliente")->fetchColumn();
 $totalOrcamentos = $pdo->query("SELECT COUNT(*) FROM orcamentos")->fetchColumn();
 $orcamentosPendentes = $pdo->query("SELECT COUNT(*) FROM orcamentos WHERE status = 'Pendente'")->fetchColumn();
 
-// Últimos orçamentos com nome do cliente via JOIN (orcamentos não tem nome_profissional diretamente)
 $ultimosOrcamentos = $pdo->query("
     SELECT o.*, c.nome_cliente,
            p.nome_profissional

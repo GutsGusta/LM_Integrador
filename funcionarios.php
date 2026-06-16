@@ -9,8 +9,6 @@ $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
     'pedreiro'       => 'Pedreiro',
     'servente'       => 'Servente',
-    'eletricista'    => 'Eletricista',
-    'pintor'         => 'Pintor',
 ];
 
 
