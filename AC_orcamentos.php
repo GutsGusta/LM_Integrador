@@ -27,24 +27,23 @@ if (!$cliente) {
     die('Cliente não encontrado.');
 }
 
-$foto_perfil = 'default.png'; 
+$foto_perfil = 'default.png';
 if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
     $foto_perfil = $cliente['foto'];
 }
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro'       => 'Pedreiro',
-    'servente'       => 'Servente'
+    'pedreiro' => 'Pedreiro',
+    'servente' => 'Servente'
 ];
 
 $tabelaJoin = "orcamentos
-    LEFT JOIN agendamento  ON agendamento.id_orcamento     = orcamentos.id_orcamento
+    LEFT JOIN agendamento  ON agendamento.id_orcamento  = orcamentos.id_orcamento AND agendamento.id_cliente = orcamentos.id_cliente
     LEFT JOIN profissional ON profissional.id_profissional = agendamento.id_profissional
-    LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico";
+    LEFT JOIN servicos     ON servicos.id_servico          = orcamentos.id_servico AND servicos.id_cliente = orcamentos.id_cliente";
 
-$condicaoJoin = "orcamentos.id_cliente = '" . (int)$_SESSION['user_id'] . "' ORDER BY orcamentos.id_orcamento DESC";
-
+$condicaoJoin = "orcamentos.id_cliente = " . (int) $_SESSION['user_id'] . " GROUP BY orcamentos.id_orcamento ORDER BY orcamentos.id_orcamento DESC";
 $buscaUsuarios = readAll($pdo, $tabelaJoin, $condicaoJoin);
 $usuarios = is_array($buscaUsuarios) ? $buscaUsuarios : [];
 
@@ -134,12 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
 
                             <div class="orcamento-valores">
                                 <strong class="destaque">
-                                    R$ <?= number_format($usuario['valor_pedreiro'] ?? 0, 2, ',', '.') ?>
+                                    R$ <?= number_format($usuario['preco_investir'] ?? $usuario['preco'] ?? 0, 2, ',', '.') ?>
                                 </strong>
-                                <!-- CORRIGIDO: 'data' não existe → data_envio -->
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
-
                             <div class="orcamento-status status-pendente">
                                 <?= htmlspecialchars($usuario['status']) ?>
                             </div>
@@ -171,4 +168,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_orcamento'])) {
     </div>
 
 </body>
+
 </html>

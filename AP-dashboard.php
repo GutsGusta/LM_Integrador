@@ -111,17 +111,10 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                     Meus Dados
                 </a>
 
-<<<<<<< HEAD:AP-dashbord.php
-                <form method="POST" action="AP-dashbord.php">
-                    <button type="submit" name="logout" class="nav-item nav-sair">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Sair
-=======
                 <form method="POST" action="AP-dashboard.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Sair
->>>>>>> 2b8b6bcfba7ad72960d0d3541208b518d88a22cf:AP-dashboard.php
                     </button>
                 </form>
             </div>
@@ -170,73 +163,6 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="quadrados">
 
-<<<<<<< HEAD:AP-dashbord.php
-                    <?php
-
-                    $orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
-
-
-
-
-                    if ($avaliacao_filtrada) {
-                        foreach ($avaliacao_filtrada as $avaliacoes) {
-                            $dataHora = new DateTime($avaliacoes['data_avaliacao']);
-
-                            echo '
-    <p>ID:' . $avaliacoes['id'] . '</p>
-    <p>Título:' . $avaliacoes['titulo'] . '</p>';
-
-                            echo '
-    <p>Data da Avaliação: ' . $dataHora->format('d/m/Y à\s H:i') . '</p>
-    
-    <p>Nota:' . $avaliacoes['nota'] . '</p>
-    <p>Texto da Avaliação:<br>' . $avaliacoes['texto_avaliacao'] . '</p>
-    <p>Profissional avaliado: ' . $avaliacoes['nome_profissional'] . '</p>';
-                        }
-
-                    } else {
-                        echo '<p>Não há avaliações para este profissional.</p>';
-                    }
-                    ;
-
-                    ?>
-                    <div class="quadrados-indv">
-                        <h2>Últimos Ganhos</h2>
-                        <div class="linha"></div>
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
-                            </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>
-                        </div>
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
-                            </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>
-                        </div>
-                        <div class="campo-servico">
-                            <div class="ganhos">
-                                <h4>Revestimento</h4>
-                                <p>Quarto 10m²</p>
-                            </div>
-                            <div class="ganhos">
-                                <h4>R$6700,69</h4>
-                                <p>18/05/2026</p>
-                            </div>
-                            <h4>Alguma Coisa</h4>
-                        </div>
-=======
                     <div class="quadrados-indv">
                         <h2>Últimos Ganhos</h2>
                         <div class="linha"></div>
@@ -256,7 +182,6 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
->>>>>>> 2b8b6bcfba7ad72960d0d3541208b518d88a22cf:AP-dashboard.php
                     </div>
 
                     <div class="quadrados-indv">
