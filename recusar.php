@@ -1,16 +1,15 @@
 <?php
-require_once './data/crud.php';
+require_once 'data/crud.php';
 
-if (isset($_GET['id'])) {
+$id = $_GET['id'];
 
-    $stmt = $pdo->prepare("
-       UPDATE agendamento
-SET status = 'Recusado'
-WHERE id = ?
-    ");
+$sql = "UPDATE agendamento
+        SET status = 'Recusado'
+        WHERE id_agendamento = ?";
 
-    $stmt->execute([$_GET['id']]);
-}
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id]);
 
 header('Location: AP-servicos.php');
 exit;
+?>

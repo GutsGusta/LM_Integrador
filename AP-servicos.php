@@ -2,6 +2,7 @@
 require_once './data/crud.php';
 session_start();
 
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -23,29 +24,37 @@ $profissional = read(
 if (!$profissional) {
     die('Profissional não encontrado.');
 }
+$idProfissional = $_SESSION['user_id'];
 
 $sql = "
 SELECT
     a.id_agendamento,
-    a.data_agenda,
-    a.horario_inicial,
     a.preco,
-    a.status,
     a.endereco,
+    a.status,
     c.nome_cliente,
     c.telefone_cliente,
     s.nome_servico
 FROM agendamento a
-INNER JOIN cliente c
+JOIN cliente c
     ON a.id_cliente = c.id_cliente
-LEFT JOIN orcamentos o
-    ON a.id_orcamento = o.id_orcamento
 LEFT JOIN servicos s
-    ON o.id_servico = s.id_servico
+    ON a.id_servico = s.id_servico
 WHERE a.id_profissional = ?
 AND a.status = 'Em andamento'
 ";
 
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$idProfissional]);
+$agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$_SESSION['user_id']]);
+$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$_SESSION['user_id']]);
+$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_SESSION['user_id']]);
 
@@ -54,24 +63,25 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $sqlPendentes = "
 SELECT
     a.id_agendamento,
-    a.data_agenda,
-    a.horario_inicial,
     a.preco,
-    a.status,
     a.endereco,
+    a.status,
     c.nome_cliente,
     c.telefone_cliente,
     s.nome_servico
 FROM agendamento a
-INNER JOIN cliente c
+JOIN cliente c
     ON a.id_cliente = c.id_cliente
-LEFT JOIN orcamentos o
-    ON a.id_orcamento = o.id_orcamento
 LEFT JOIN servicos s
-    ON o.id_servico = s.id_servico
+    ON a.id_servico = s.id_servico
 WHERE a.id_profissional = ?
 AND a.status = 'Pendente'
 ";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$idProfissional]);
+$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 $stmtPendentes = $pdo->prepare($sqlPendentes);
 $stmtPendentes->execute([$_SESSION['user_id']]);
@@ -142,7 +152,8 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
             <div class="pagina-servicos">
 
                 <div class="servicos">
-                    <h3>Serviços em Andamento:</h3>
+                    <h3>Serviços em Andamento</h3>
+
                     <table class="servicos-tabela">
                         <tr>
                             <th>Nome do Cliente</th>
@@ -180,7 +191,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="servicos">
-                    <h3>Respostas Pendentes:</h3>
+                    <h3>Respostas Pendentes</h3>
 
                     <table class="servicos-tabela">
                         <tr>
@@ -204,11 +215,11 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                                     <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
 
                                     <td>
-                                        <a href="aprovar.php?id=<?= $item['id'] ?>">
+                                        <a href="aprovar.php?id=<?= $item['id_agendamento'] ?>">
                                             <img src="uploads/certo-botao.png" alt="Aprovar">
                                         </a>
 
-                                        <a href="recusar.php?id=<?= $item['id'] ?>">
+                                        <a href="recusar.php?id=<?= $item['id_agendamento'] ?>">
                                             <img src="uploads/errado.png" alt="Recusar">
                                         </a>
                                     </td>
