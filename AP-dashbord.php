@@ -20,7 +20,7 @@ $id_profissional = $_GET['id'] ?? '';
 $stmt = $pdo->prepare('SELECT * FROM profissional WHERE id_profissional = ?');
 $stmt->execute([$id_profissional]);
 $profissional = $stmt->fetch(PDO::FETCH_ASSOC);
- 
+
 
 $profissional = read(
     $pdo,
@@ -84,13 +84,13 @@ if (!$profissional) {
                 </a>
 
                 <form method="POST" action="AP-dashbord.php">
-                <button type="submit" name="logout" class="nav-item nav-sair">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Sair
+                    <button type="submit" name="logout" class="nav-item nav-sair">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
                     </button>
-            </form>
-            </div>        
-          
+                </form>
+            </div>
+
             <div class="dashbord">
 
                 <div class="estatisticas">
@@ -135,38 +135,39 @@ if (!$profissional) {
 
                 <div class="quadrados">
 
-                <?php
+                    <?php
 
-$orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
-
-
+                    $orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
 
 
-    if ($avaliacao_filtrada) {
-    foreach ($avaliacao_filtrada as $avaliacoes) {
-        $dataHora = new DateTime($avaliacoes['data_avaliacao']);
 
-    echo '
+
+                    if ($avaliacao_filtrada) {
+                        foreach ($avaliacao_filtrada as $avaliacoes) {
+                            $dataHora = new DateTime($avaliacoes['data_avaliacao']);
+
+                            echo '
     <p>ID:' . $avaliacoes['id'] . '</p>
     <p>Título:' . $avaliacoes['titulo'] . '</p>';
 
-        echo '
+                            echo '
     <p>Data da Avaliação: ' . $dataHora->format('d/m/Y à\s H:i') . '</p>
     
     <p>Nota:' . $avaliacoes['nota'] . '</p>
     <p>Texto da Avaliação:<br>' . $avaliacoes['texto_avaliacao'] . '</p>
     <p>Profissional avaliado: ' . $avaliacoes['nome_profissional'] . '</p>';
-    }
-     
-    } else {
-        echo '<p>Não há avaliações para este profissional.</p>';
-    };
+                        }
 
-?>
+                    } else {
+                        echo '<p>Não há avaliações para este profissional.</p>';
+                    }
+                    ;
+
+                    ?>
                     <div class="quadrados-indv">
                         <h2>Últimos Ganhos</h2>
                         <div class="linha"></div>
-                        <div class="campo-servico">                           
+                        <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Revestimento</h4>
                                 <p>Quarto 10m²</p>
@@ -175,9 +176,9 @@ $orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
                                 <h4>R$6700,69</h4>
                                 <p>18/05/2026</p>
                             </div>
-                            <h4>Alguma Coisa</h4>           
+                            <h4>Alguma Coisa</h4>
                         </div>
-                        <div class="campo-servico">                           
+                        <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Revestimento</h4>
                                 <p>Quarto 10m²</p>
@@ -186,9 +187,9 @@ $orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
                                 <h4>R$6700,69</h4>
                                 <p>18/05/2026</p>
                             </div>
-                            <h4>Alguma Coisa</h4>           
+                            <h4>Alguma Coisa</h4>
                         </div>
-                        <div class="campo-servico">                           
+                        <div class="campo-servico">
                             <div class="ganhos">
                                 <h4>Revestimento</h4>
                                 <p>Quarto 10m²</p>
@@ -197,7 +198,7 @@ $orcamento_filtrado = readAll($pdo, 'orcamento', $orcament);
                                 <h4>R$6700,69</h4>
                                 <p>18/05/2026</p>
                             </div>
-                            <h4>Alguma Coisa</h4>           
+                            <h4>Alguma Coisa</h4>
                         </div>
                     </div>
                     <div class="quadrados-indv">
