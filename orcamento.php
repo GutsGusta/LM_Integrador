@@ -25,6 +25,8 @@
 
     <input type="text" id="endereco" name="Endereco" placeholder="Endereço">
 
+    <input type="text" id="preco" name="preco" placeholder="Quanto você pretende investir?">
+
     <textarea class="mensagem" name="mensagem" placeholder="Mensagem"></textarea>
 
     <button type="submit">Enviar</button>

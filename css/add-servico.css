@@ -120,11 +120,11 @@ body {
 
 /* Formulario cadastro */
 
-.cadastro{
-  background-color: #800020ff;
+.cadastro-servico{
+  background-color: #800020;
   padding: 60px;
   border-radius: 15px;
-  width:380px;
+  width: 380px;
   position:absolute ;
   top: 24% ;
   left: 40% ;
@@ -137,7 +137,7 @@ body {
   height: 90px;
 }
 
-.formulario-cadastro {
+.formulario-servico {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +145,7 @@ body {
   gap: 20px;
 }
 
-.formulario-cadastro input{
+.formulario-servico input{
   background-color: rgba(255, 255, 255, 0.08);
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.15);
@@ -161,18 +161,12 @@ input::placeholder {
   font-family: 'Poppins', arial, sans-serif;
 }
 
-.formulario-cadastro input:focus{
+.formulario-servico input:focus{
   background-color: rgba(255, 255, 255, 0.15);
   border: 2px #e79128 solid ;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.formulario-cadastro select{
+.formulario-servico select{
   background-color: rgba(255, 255, 255, 0.08);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.15);
@@ -183,17 +177,17 @@ input::-webkit-inner-spin-button {
   appearance: none;
 }
 
-.formulario-cadastro select:hover{
+.formulario-servico select:hover{
   border: 2px solid #E79128;
 }
 
-.formulario-cadastro option{
+.formulario-servico option{
   background-color: #800020;
   color: white;
   font-family: 'Poppins', arial, sans-serif;
 }
 
-.formulario-cadastro button{
+.formulario-servico button{
   background-color: #e79128;
   color: black;
   font-family: 'Poppins', arial, sans-serif;
@@ -206,11 +200,11 @@ input::-webkit-inner-spin-button {
   transition: transform 0.3s ease;
 }
 
-.formulario-cadastro button:hover{
+.formulario-servico button:hover{
   transform: scale(1.05);
 }
 
-.formulario-cadastro a{
+.formulario-servico a{
   color: #fff;
   text-decoration: none;
   font-size: 9.8px;
@@ -221,15 +215,15 @@ input::-webkit-inner-spin-button {
   font-size: 55px;
 }
 
-.formulario-cadastro p{
+.formulario-servico p{
   color: #e79128;
 }
 
-.formulario-cadastro h2{
+.formulario-servico h2{
   color: #e79128;
 }
 
-.formulario-cadastro select {
+.formulario-servico select {
   padding: 5px;
   border-radius: 10px;
   width:300px;
@@ -270,4 +264,25 @@ input::-webkit-inner-spin-button {
   background: rgba(255, 255, 255, 0.2);
   border-color: #e79128;
   color: #e79128;
+}
+
+.descricao{
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'Poppins', arial, sans-serif;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  height: 120px;
+  width: 300px;
+  resize: none;
+  border-radius: 12px; 
+  padding: 5px;
+}
+
+.descricao:focus {
+  border: 2px solid #E79128;
+}
+
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); 
+  font-family: 'Poppins', arial, sans-serif;
 }

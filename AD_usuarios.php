@@ -29,9 +29,9 @@ $clientes = readAll($pdo, 'cliente');
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/ricardo_almeida.png" alt="Cliente">
+                <img src="uploads/icone_usuario.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Ricardo Almeida</strong>
+                    <strong><?= $_SESSION['user_name'] ?? 'Admin' ?></strong>
                     <span>Admin</span>
                 </div>
             </div>

@@ -32,9 +32,9 @@ SELECT
     a.horario,
     a.preco,
     a.status,
+    a.endereco,
     c.nome_cliente,
     c.telefone_cliente,
-    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
@@ -60,9 +60,9 @@ SELECT
     a.horario,
     a.preco,
     a.status,
+    a.endereco,
     c.nome_cliente,
     c.telefone_cliente,
-    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
@@ -113,7 +113,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashboard.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>

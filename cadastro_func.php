@@ -28,6 +28,7 @@
             <option value="text">Pedreiro</option>
             <option value="text">Mestre de Obra</option>
         </select>
+        <input type="number" name="experiencia" placeholder="Tempo de Experiência (Em anos)">
         <input type="password" id="Senha" name="Senha" placeholder="Senha">
         <div class="enviar-foto">
         <p>Escolha sua Foto de Perfil:</p>

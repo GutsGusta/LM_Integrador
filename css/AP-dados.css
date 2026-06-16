@@ -308,7 +308,9 @@ main {
     width: 400px;
     height: 35px;
     border-radius: 5px;
-    margin: 25px;
+    margin: 25px 0px;
+    grid-column: 1 / -1; 
+    justify-self: center;
 }
 
 .check {
