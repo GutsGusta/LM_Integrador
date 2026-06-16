@@ -59,19 +59,18 @@ $mes_anterior = ($mes == 1) ? 12 : $mes - 1;
 $ano_anterior = ($mes == 1) ? $ano - 1 : $ano;
 $total_dias_mes_anterior = date('t', mktime(0, 0, 0, $mes_anterior, 1, $ano_anterior));
 
-// AQUI BUSCA OS AGENDAMENTOS
 $mes_formatado = str_pad($mes, 2, "0", STR_PAD_LEFT);
 $data_inicio_busca = "$ano-$mes_formatado-01";
 $data_fim_busca = "$ano-$mes_formatado-$total_dias_mes";
 
-$sql = "SELECT a.data_agenda, a.horario, a.status, c.nome_cliente, s.nome_servico 
+$sql = "SELECT a.data_agenda, a.horario_inicial, a.horario_final, a.status, c.nome_cliente, s.nome_servico 
         FROM agendamento a 
         JOIN cliente c ON a.id_cliente = c.id_cliente
         LEFT JOIN orcamentos o ON a.id_orcamento = o.id_orcamento
         LEFT JOIN servicos s   ON o.id_servico   = s.id_servico
         WHERE a.id_profissional = :id_prof 
           AND a.data_agenda BETWEEN :data_ini AND :data_fim
-        ORDER BY a.horario ASC";
+        ORDER BY a.horario_inicial ASC"; 
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
@@ -88,8 +87,6 @@ foreach ($agendamentos as $agendamento) {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -103,9 +100,7 @@ foreach ($agendamentos as $agendamento) {
 </head>
 
 <body>
-    <?php
-    require_once 'partials/header.php';
-    ?>
+    <?php require_once 'partials/header.php'; ?>
     <main>
         <div class="pagina-principal">
             <div class="sidebar">
@@ -116,24 +111,20 @@ foreach ($agendamentos as $agendamento) {
                         <span><?php echo $profissional['cidade_estado']; ?></span>
                         <span><?php echo $profissional['funcao']; ?></span>
                     </div>
-
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashboard.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
-
                 <a href="AP-servicos.php" class="nav-item">
                     <i class="fa-solid fa-file-lines"></i>
                     Meus Serviços
                 </a>
-
                 <a href="AP-agenda.php" class="nav-item ativo">
                     <i class="fa-solid fa-calendar"></i>
                     Meus Agendamentos
                 </a>
-
                 <a href="AP-dados.php" class="nav-item">
                     <i class="fa-solid fa-user"></i>
                     Meus Dados
@@ -148,22 +139,14 @@ foreach ($agendamentos as $agendamento) {
             </div>
 
             <div class="agenda">
-
                 <div class="agenda-txt">
-                    <a href="?mes=<?= $antes_mes ?>&ano=<?= $antes_ano ?>" class="btn-nav">
-                        < Mês Anterior</a>
-                            <h2><?= $meses_nomes[$mes] ?> de <?= $ano ?></h2>
-                            <a href="?mes=<?= $prox_mes ?>&ano=<?= $prox_ano ?>" class="btn-nav">Próximo Mês ></a>
+                    <a href="?mes=<?= $antes_mes ?>&ano=<?= $antes_ano ?>" class="btn-nav">< Mês Anterior</a>
+                    <h2><?= $meses_nomes[$mes] ?> de <?= $ano ?></h2>
+                    <a href="?mes=<?= $prox_mes ?>&ano=<?= $prox_ano ?>" class="btn-nav">Próximo Mês ></a>
                 </div>
 
                 <div class="dias-semana">
-                    <p>Dom</p>
-                    <p>Seg</p>
-                    <p>Ter</p>
-                    <p>Qua</p>
-                    <p>Qui</p>
-                    <p>Sex</p>
-                    <p>Sáb</p>
+                    <p>Dom</p><p>Seg</p><p>Ter</p><p>Qua</p><p>Qui</p><p>Sex</p><p>Sáb</p>
                 </div>
 
                 <div class="calendario">
@@ -181,9 +164,10 @@ foreach ($agendamentos as $agendamento) {
 
                         if (isset($agenda_organizada[$dia_atual])) {
                             foreach ($agenda_organizada[$dia_atual] as $key => $servico) {
-                                $hora_formatada = date('H:i', strtotime($servico['horario']));
+                                $hora_ini = date('H:i', strtotime($servico['horario_inicial']));
+                                $hora_fim = date('H:i', strtotime($servico['horario_final']));
 
-                                echo "<p class='servico-aviso'><strong>{$hora_formatada}</strong> - {$servico['nome_servico']}</p>";
+                                echo "<p class='servico-aviso'><strong>{$hora_ini} às {$hora_fim}</strong> - {$servico['nome_servico']}</p>";
                             }
                         }
                         echo '</div>';
@@ -204,5 +188,4 @@ foreach ($agendamentos as $agendamento) {
         </div>
     </main>
 </body>
-
 </html>

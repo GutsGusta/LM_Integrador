@@ -21,9 +21,19 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
+
+if (!$cliente) {
+    die('Cliente não encontrado.');
+}
+
+$foto_perfil = 'default.png';
+if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
+    $foto_perfil = $cliente['foto'];
+}
+
 $id_cliente = $_SESSION['user_id'] ?? 0;
 
-// Navegação do calendário
 $mes = isset($_GET['mes']) ? (int)$_GET['mes'] : (int)date('m');
 $ano = isset($_GET['ano']) ? (int)$_GET['ano'] : (int)date('Y');
 
@@ -43,24 +53,22 @@ $total_dias_mes        = date('t', $primeiro_dia_ts);
 $dia_semana_inicio     = (int)date('w', $primeiro_dia_ts);
 $total_dias_mes_ant    = date('t', mktime(0, 0, 0, $antes_mes, 1, $antes_ano));
 
-// Buscar agendamentos do cliente neste mês
 $mes_fmt    = str_pad($mes, 2, "0", STR_PAD_LEFT);
 $data_ini   = "$ano-$mes_fmt-01";
 $data_fim   = "$ano-$mes_fmt-$total_dias_mes";
 
-$sql = "SELECT a.data_agenda, a.horario, a.status, s.nome_servico
+$sql = "SELECT a.data_agenda, a.horario_inicial, a.horario_final, a.status, s.nome_servico
         FROM agendamento a
         LEFT JOIN orcamentos o ON a.id_orcamento = o.id_orcamento
         LEFT JOIN servicos   s ON o.id_servico   = s.id_servico
         WHERE a.id_cliente = ?
           AND a.data_agenda BETWEEN ? AND ?
-        ORDER BY a.horario ASC";
+        ORDER BY a.horario_inicial ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$id_cliente, $data_ini, $data_fim]);
 $agendamentos_raw = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Organizar por dia
 $agenda_organizada = [];
 foreach ($agendamentos_raw as $ag) {
     $dia = (int)date('d', strtotime($ag['data_agenda']));
@@ -87,7 +95,7 @@ foreach ($agendamentos_raw as $ag) {
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/default.png" alt="Cliente">
+                <img src="uploads/<?php echo $foto_perfil; ?>" alt="Cliente">
                 <div class="sidebar-perfil-info">
                     <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
@@ -135,13 +143,11 @@ foreach ($agendamentos_raw as $ag) {
 
                 <div class="calendario">
                     <?php
-                    // Dias do mês anterior
                     for ($i = $dia_semana_inicio - 1; $i >= 0; $i--) {
                         $num = $total_dias_mes_ant - $i;
                         echo "<div class='dia fora-do-mes'><p class='numero-dia'>$num</p></div>";
                     }
 
-                    // Dias do mês atual
                     for ($dia = 1; $dia <= $total_dias_mes; $dia++) {
                         $hoje = ($dia == (int)date('d') && $mes == (int)date('m') && $ano == (int)date('Y'));
                         $tem_servico = isset($agenda_organizada[$dia]);
@@ -152,15 +158,17 @@ foreach ($agendamentos_raw as $ag) {
 
                         if ($tem_servico) {
                             foreach ($agenda_organizada[$dia] as $ag) {
-                                $hora = date('H:i', strtotime($ag['horario']));
+                                $hora_inicio = date('H:i', strtotime($ag['horario_inicial']));
+                                $hora_final  = date('H:i', strtotime($ag['horario_final']));
+                                
                                 $servico_nome = htmlspecialchars($ag['nome_servico'] ?? 'Agendamento');
-                                echo "<p class='servico-aviso'><strong>$hora</strong> - $servico_nome</p>";
+                                
+                                echo "<p class='servico-aviso'><strong>{$hora_inicio} às {$hora_final}</strong> - $servico_nome</p>";
                             }
                         }
                         echo "</div>";
                     }
 
-                    // Completar com dias do próximo mês
                     $total_cal = $dia_semana_inicio + $total_dias_mes;
                     $resto = 42 - $total_cal;
                     if ($resto >= 7) $resto -= 7;

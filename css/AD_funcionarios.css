@@ -403,6 +403,7 @@ tbody td {
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
     transition: opacity 0.2s;
+    text-decoration: none;
 }
  
 .btn-acao:hover {

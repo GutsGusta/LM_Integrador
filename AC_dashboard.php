@@ -20,6 +20,17 @@ if (isset($_SESSION['user_tipo'])) {
     header('Location: login.php');
     exit();
 }
+ 
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
+
+if (!$cliente) {
+    die('Cliente não encontrado.');
+}
+
+$foto_perfil = 'default.png';
+if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
+    $foto_perfil = $cliente['foto'];
+}
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
@@ -29,7 +40,6 @@ $categorias = [
 
 $id_cliente = $_SESSION['user_id'] ?? 0;
 
-// CORRIGIDO: orcamentos não tem id_profissional — profissional vem via agendamento
 $usuarios = readAll(
     $pdo,
     "orcamentos
@@ -41,7 +51,6 @@ $usuarios = readAll(
 
 $orcamentos = readAll($pdo, 'orcamentos', "id_cliente = '$id_cliente'");
 
-// Contar orçamentos pendentes
 $total_orcamentos_pendentes = 0;
 if (is_array($orcamentos)) {
     foreach ($orcamentos as $orcamento) {
@@ -51,7 +60,6 @@ if (is_array($orcamentos)) {
     }
 }
 
-// Buscar próximo agendamento (Em andamento, data futura ou hoje)
 $proximo_agendamento = null;
 $sql_prox = "SELECT a.*, s.nome_servico
              FROM agendamento a
@@ -60,13 +68,12 @@ $sql_prox = "SELECT a.*, s.nome_servico
              WHERE a.id_cliente = ?
                AND a.status = 'Em andamento'
                AND a.data_agenda >= CURDATE()
-             ORDER BY a.data_agenda ASC, a.horario ASC
+             ORDER BY a.data_agenda ASC, a.horario_inicial ASC
              LIMIT 1";
 $stmt = $pdo->prepare($sql_prox);
 $stmt->execute([$id_cliente]);
 $proximo_agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Contar serviços concluídos
 $servicos = readAll($pdo, 'servicos', "id_cliente = '$id_cliente'");
 $total_servicos_concluidos = 0;
 if (is_array($servicos)) {
@@ -98,7 +105,7 @@ if (is_array($servicos)) {
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/default.png" alt="Cliente">
+                <img src="uploads/<?php echo $foto_perfil; ?>" alt="Cliente">
                 <div class="sidebar-perfil-info">
                     <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
@@ -149,7 +156,7 @@ if (is_array($servicos)) {
                     <div class="dash-info">
                         <h3 class="destaque">
                             <?php
-                            // CORRIGIDO: exibe data do próximo agendamento real, não id de orçamento
+                            
                             if ($proximo_agendamento) {
                                 echo date('d/m/Y', strtotime($proximo_agendamento['data_agenda']));
                             } else {
@@ -178,7 +185,6 @@ if (is_array($servicos)) {
                         <div class="orcamento-linha">
 
                             <div class="orcamento-info">
-                                <!-- CORRIGIDO: campo era 'titulo' (não existe) → nome_servico ou mensagem -->
                                 <strong class="destaque">
                                     <?= htmlspecialchars($usuario['nome_servico'] ?? $usuario['mensagem'] ?? 'Serviço') ?>
                                 </strong>
@@ -191,7 +197,6 @@ if (is_array($servicos)) {
                             </div>
 
                             <div class="orcamento-valores">
-                                <!-- CORRIGIDO: campo era 'preco' (não existe em orcamentos) → valor_pedreiro -->
                                 <strong class="destaque">
                                     R$ <?= number_format(
                                         $usuario['valor_servente'] ??
@@ -201,7 +206,6 @@ if (is_array($servicos)) {
                                         ',',
                                         '.'
                                     ) ?> </strong>
-                                <!-- CORRIGIDO: campo era 'data' (não existe) → data_envio -->
                                 <span><?= date('d/m/Y', strtotime($usuario['data_envio'])) ?></span>
                             </div>
 

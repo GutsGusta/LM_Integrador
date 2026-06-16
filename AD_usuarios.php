@@ -29,9 +29,9 @@ $clientes = readAll($pdo, 'cliente');
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/ricardo_almeida.png" alt="Cliente">
+                <img src="uploads/icone_usuario.png" alt="Cliente">
                 <div class="sidebar-perfil-info">
-                    <strong>Ricardo Almeida</strong>
+                    <strong><?= $_SESSION['user_name'] ?? 'Admin' ?></strong>
                     <span>Admin</span>
                 </div>
             </div>
@@ -81,7 +81,6 @@ $clientes = readAll($pdo, 'cliente');
                             <th>Nome do Cliente</th>
                             <th>Email</th>
                             <th>Telefone</th>
-                            <th>Endereço</th>
                             <th>CPF</th>
                         </tr>
                     </thead>
@@ -108,15 +107,8 @@ $clientes = readAll($pdo, 'cliente');
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($cliente['endereco']) ?>
-                                    </td>
-
-
-
-                                    <td>
                                         <?= htmlspecialchars($cliente['cpf']) ?>
                                     </td>
-
 
                                 </tr>
 

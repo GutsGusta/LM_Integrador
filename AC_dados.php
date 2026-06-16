@@ -21,13 +21,16 @@ if (isset($_SESSION['user_tipo'])) {
     exit();
 }
 
-// Processar atualização ANTES de buscar os dados (para exibir os dados atualizados)
+$cliente = read($pdo, 'cliente', 'id_cliente = ' . (int) $_SESSION['user_id']);
+
+if (!$cliente) {
+    die('Cliente não encontrado.');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
     $nome_cliente = trim($_POST['nome_cliente']);
     $email        = trim($_POST['email']);
-    // CORRIGIDO: nome do campo é telefone_cliente no banco
     $telefone     = trim($_POST['telefone_cliente']);
-    $endereco     = trim($_POST['endereco']);
     $cpf          = trim($_POST['cpf']);
     $senha        = trim($_POST['senha']);
 
@@ -35,11 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
         'nome_cliente'    => $nome_cliente,
         'email'           => $email,
         'telefone_cliente'=> $telefone,
-        'endereco'        => $endereco,
         'cpf'             => $cpf,
     ];
 
-    // Só atualiza senha se foi preenchida
     if (!empty($senha)) {
         $dados['senha'] = $senha;
     }
@@ -52,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['logout'])) {
 }
 
 $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
+
+$foto_perfil = 'default.png';
+if (!empty($cliente['foto']) && file_exists('uploads/' . $cliente['foto'])) {
+    $foto_perfil = $cliente['foto'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +80,7 @@ $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
 
         <div class="sidebar">
             <div class="sidebar-perfil">
-                <img src="uploads/default.png" alt="Cliente">
+                <img src="uploads/<?php echo $foto_perfil; ?>" alt="Cliente">
                 <div class="sidebar-perfil-info">
                     <strong><?php echo $_SESSION['user_name']; ?></strong>
                     <span>Cliente</span>
@@ -126,15 +132,8 @@ $cliente = read($pdo, 'cliente', 'id_cliente = ' . (int)$_SESSION['user_id']);
 
                     <div class="campo">
                         <label>Telefone</label>
-                        <!-- CORRIGIDO: name e value usando telefone_cliente -->
                         <input type="text" name="telefone_cliente"
                                value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
-                    </div>
-
-                    <div class="campo">
-                        <label>Endereço</label>
-                        <input type="text" name="endereco"
-                               value="<?= htmlspecialchars($cliente['endereco']) ?>" required>
                     </div>
 
                     <div class="campo">

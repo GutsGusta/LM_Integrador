@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Poppins', arial, sans-serif;
-  background-color: #676767;
+  background-color: #1a1a1a;
   margin-top: 87px;
 }
 /* HEADER */
@@ -119,6 +119,7 @@ body {
 }
 
 /* Formulario cadastro */
+
 .cadastro{
   background-color: #800020ff;
   padding: 60px;
@@ -130,6 +131,7 @@ body {
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
 }
+
 .login img{ 
   width: 90px;
   height: 90px;
@@ -145,38 +147,84 @@ body {
 
 .formulario-cadastro input{
   background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   padding: 5px;
   border-radius: 10px;
-  width:300px;
+  width: 300px;
   font-size: 17px;
-  border: none;
+  outline: none;
 }
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5); 
+  font-family: 'Poppins', arial, sans-serif;
+}
+
 .formulario-cadastro input:focus{
   background-color: rgba(255, 255, 255, 0.15);
-  border: #e79128 solid ;
+  border: 2px #e79128 solid ;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.formulario-cadastro select{
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  font-family: 'Poppins', arial, sans-serif;
+  outline: none;
+  -webkit-appearance: none; 
+  -moz-appearance: none;    
+  appearance: none;
+}
+
+.formulario-cadastro select:hover{
+  border: 2px solid #E79128;
+}
+
+.formulario-cadastro option{
+  background-color: #800020;
+  color: white;
+  font-family: 'Poppins', arial, sans-serif;
+}
+
 .formulario-cadastro button{
   background-color: #e79128;
-  color: #fff;
+  color: black;
+  font-family: 'Poppins', arial, sans-serif;
   padding: 5px;
   border-radius: 10px;
-  width:300px;
+  width: 300px;
   cursor: pointer;
   border: none;
   font-size: 17px;
+  transition: transform 0.3s ease;
 }
+
+.formulario-cadastro button:hover{
+  transform: scale(1.05);
+}
+
 .formulario-cadastro a{
   color: #fff;
   text-decoration: none;
   font-size: 9.8px;
 }
+
 .titulo{
   color:#e79128;
   font-size: 55px;
 }
+
 .formulario-cadastro p{
   color: #e79128;
 }
+
 .formulario-cadastro h2{
   color: #e79128;
 }
@@ -188,30 +236,36 @@ body {
   font-size: 17px;
   border: none;
 }
+
 .enviar-foto{
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 300px;
 }
 
 .enviar-foto p{
-  color: rgba(0, 0, 0, 0.08);
+  color: #E79128;
   font-size:14px;
 }
-.enviar-foto input [type="file"]{
+
+.enviar-foto input[type="file"]{
   display: none;
 }
+
 .select-foto{
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
   display: block;
   text-align: center;
   padding:12px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   cursor: pointer;
-  transition:all 0.3s ease;
+  transition: all 0.3s ease;
   font-size: 15px;
 }
+
 .select-foto:hover{
   background: rgba(255, 255, 255, 0.2);
   border-color: #e79128;

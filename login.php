@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_name'] = $usuarioencontrado['nome_profissional'];
             $_SESSION['user_tipo'] = 'profissional';
 
-            header('Location: AP-dashbord.php');
+            header('Location: AP-dashboard.php');
             exit;
 
         } elseif ($tipoUsuario === 'cliente') {
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login | LM</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="icon" type="image/png" href="uploads/Logo-LM.png">
 </head>

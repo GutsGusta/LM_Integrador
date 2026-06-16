@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Cadastro Funcionário | LM</title>
     <link rel="stylesheet" href="css/cadastro_func.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
@@ -23,18 +23,19 @@
         <input type="text" id="cpf" name="cpf" placeholder="CPF">
         <p>Qual sua Função?</p>
         <select name="" id="">
-            <option value="text">Selecione uma das Opções</option>
-            <option value="text">Pedreiro</option>
+            <option value="text">Selecione uma das Funções</option>
             <option value="text">Servente</option>
+            <option value="text">Pedreiro</option>
             <option value="text">Mestre de Obra</option>
         </select>
+        <input type="number" name="experiencia" placeholder="Tempo de Experiência (Em anos)">
         <input type="password" id="Senha" name="Senha" placeholder="Senha">
         <div class="enviar-foto">
         <p>Escolha sua Foto de Perfil:</p>
         <label for="foto" class="select-foto">
             <i  class="fa-solid fa-cloud-arrow-up"></i> Escolha uma foto
         </label>
-        <input type="file">
+        <input type="file" id="foto">
         </div>
         <button type="submit">Criar conta</button>
     </form>

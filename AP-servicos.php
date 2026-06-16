@@ -24,17 +24,16 @@ if (!$profissional) {
     die('Profissional não encontrado.');
 }
 
-/* Serviços em andamento */
 $sql = "
 SELECT
     a.id_agendamento,
     a.data_agenda,
-    a.horario,
+    a.horario_inicial,
     a.preco,
     a.status,
+    a.endereco,
     c.nome_cliente,
     c.telefone_cliente,
-    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
@@ -52,17 +51,16 @@ $stmt->execute([$_SESSION['user_id']]);
 
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* Serviços pendentes */
 $sqlPendentes = "
 SELECT
     a.id_agendamento,
     a.data_agenda,
-    a.horario,
+    a.horario_inicial,
     a.preco,
     a.status,
+    a.endereco,
     c.nome_cliente,
     c.telefone_cliente,
-    c.endereco,
     s.nome_servico
 FROM agendamento a
 INNER JOIN cliente c
@@ -113,7 +111,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashboard.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
@@ -134,8 +132,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                 </a>
 
                 <form method="POST" action="">
-                    <button type="submit" name="logout" class="nav-item nav-sair"
-                        style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
+                    <button type="submit" name="logout" class="nav-item nav-sair">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>

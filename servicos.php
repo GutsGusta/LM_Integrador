@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/servicos.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
-    <title>Serviços</title>
+    <title>Serviços | LM</title>
 </head>
 <body>
     <?php

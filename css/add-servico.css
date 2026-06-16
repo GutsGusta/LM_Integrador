@@ -12,7 +12,6 @@ body {
   margin-top: 87px;
 }
 /* HEADER */
-
 .titulo {
   font-size: 40px;
   text-align: center;
@@ -119,16 +118,16 @@ body {
   color: white;
 }
 
-/* Formulario login */
+/* Formulario cadastro */
 
-.login{
-  background-color: #800020ff;
+.cadastro-servico{
+  background-color: #800020;
   padding: 60px;
   border-radius: 15px;
-  width:380px;
-  position: absolute;
-  top: 35%;
-  left: 40%;
+  width: 380px;
+  position:absolute ;
+  top: 24% ;
+  left: 40% ;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
 }
@@ -138,7 +137,7 @@ body {
   height: 90px;
 }
 
-.formulario-login {
+.formulario-servico {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,20 +145,15 @@ body {
   gap: 20px;
 }
 
-.formulario-login input{
+.formulario-servico input{
   background-color: rgba(255, 255, 255, 0.08);
   color: #fff;
-  font-family: 'Poppins', arial, sans-serif;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   padding: 5px;
   border-radius: 10px;
   width: 300px;
   font-size: 17px;
-  border: 2px solid rgba(255, 255, 255, 0.15);
   outline: none;
-}
-
-.formulario-login input:focus{
-  border: 2px solid #E79128;
 }
 
 input::placeholder {
@@ -167,29 +161,128 @@ input::placeholder {
   font-family: 'Poppins', arial, sans-serif;
 }
 
-.formulario-login button{
+.formulario-servico input:focus{
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px #e79128 solid ;
+}
+
+.formulario-servico select{
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  font-family: 'Poppins', arial, sans-serif;
+  outline: none;
+  -webkit-appearance: none; 
+  -moz-appearance: none;    
+  appearance: none;
+}
+
+.formulario-servico select:hover{
+  border: 2px solid #E79128;
+}
+
+.formulario-servico option{
+  background-color: #800020;
+  color: white;
+  font-family: 'Poppins', arial, sans-serif;
+}
+
+.formulario-servico button{
   background-color: #e79128;
   color: black;
   font-family: 'Poppins', arial, sans-serif;
   padding: 5px;
   border-radius: 10px;
-  width:300px;
+  width: 300px;
   cursor: pointer;
   border: none;
   font-size: 17px;
-  transition: transform ease 0.3s;
+  transition: transform 0.3s ease;
 }
 
-.formulario-login button:hover {
+.formulario-servico button:hover{
   transform: scale(1.05);
 }
 
-.formulario-login a{
+.formulario-servico a{
   color: #fff;
   text-decoration: none;
   font-size: 9.8px;
 }
+
 .titulo{
   color:#e79128;
   font-size: 55px;
+}
+
+.formulario-servico p{
+  color: #e79128;
+}
+
+.formulario-servico h2{
+  color: #e79128;
+}
+
+.formulario-servico select {
+  padding: 5px;
+  border-radius: 10px;
+  width:300px;
+  font-size: 17px;
+  border: none;
+}
+
+.enviar-foto{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 300px;
+}
+
+.enviar-foto p{
+  color: #E79128;
+  font-size:14px;
+}
+
+.enviar-foto input[type="file"]{
+  display: none;
+}
+
+.select-foto{
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  display: block;
+  text-align: center;
+  padding:12px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.select-foto:hover{
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #e79128;
+  color: #e79128;
+}
+
+.descricao{
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'Poppins', arial, sans-serif;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  height: 120px;
+  width: 300px;
+  resize: none;
+  border-radius: 12px; 
+  padding: 5px;
+}
+
+.descricao:focus {
+  border: 2px solid #E79128;
+}
+
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); 
+  font-family: 'Poppins', arial, sans-serif;
 }
