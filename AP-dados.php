@@ -24,6 +24,24 @@ if (!$profissional) {
     die('Profissional não encontrado.');
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_servicos'])) {
+
+    $servicosSelecionados = $_POST['servicos'] ?? [];
+    $servicosString = implode(',', $servicosSelecionados);
+
+    update(
+        $pdo,
+        'profissional',
+        [
+            'servico' => $servicosString
+        ],
+        'id_profissional = ' . (int) $_SESSION['user_id']
+    );
+
+    header('Location: AP-dados.php?servicos=1');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -153,11 +171,64 @@ if (!$profissional) {
                         </div>
                     </div>
                     <div class="botoes">
-                        <button type="submit">Salvar</button>
+                        <div class="botoes">
+                            <button type="submit" name="salvar_dados">Salvar</button>
+                        </div>
                     </div>
-            </div>
-        </div>
-    </main>
+                </form>
+                <div class="dados-principais">
+                    <h4>Serviços Qualificados:</h4>
+
+                    <?php
+                    $listaServicos = [
+                        'Reforma Residencial',
+                        'Gerenciamento de Obras',
+                        'Colocação de Pisos e Azulejos',
+                        'Preparação de massa e auxílio geral',
+                        'Construção de Muros',
+                        'Instalação de Portas',
+                        'Pintura',
+                        'Assentamento de Blocos',
+                        'Acabamento',
+                        'Reboco',
+                        'Concretagem',
+                        'Leitura de Projetos'
+                    ];
+
+                    $servicosProfissional = [];
+
+                    if (!empty($profissional['servico'])) {
+                        $servicosProfissional = array_map(
+                            'trim',
+                            explode(',', $profissional['servico'])
+                        );
+                    }
+                    ?>
+
+                    <form action="" method="POST" class="servicos">
+
+                        <?php foreach ($listaServicos as $servico): ?>
+
+                            <div class="check">
+                                <p><?= htmlspecialchars($servico) ?></p>
+
+                                <input type="checkbox" name="servicos[]" value="<?= htmlspecialchars($servico) ?>"
+                                    <?= in_array($servico, $servicosProfissional) ? 'checked' : '' ?>>
+                            </div>
+
+                        <?php endforeach; ?>
+
+                        <button type="submit" name="salvar_servicos">
+                            Salvar
+                        </button>
+
+                    </form>
+
+
+</html>
+</div>
+</div>
+</main>
 </body>
 
 </html>
