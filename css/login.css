@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Poppins', arial, sans-serif;
-  background-color: #676767;
+  background-color: #1a1a1a;
   margin-top: 87px;
 }
 /* HEADER */
@@ -148,22 +148,42 @@ body {
 
 .formulario-login input{
   background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'Poppins', arial, sans-serif;
   padding: 5px;
   border-radius: 10px;
   width: 300px;
   font-size: 17px;
-  border: 2px rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  outline: none;
 }
+
+.formulario-login input:focus{
+  border: 2px solid #E79128;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5); 
+  font-family: 'Poppins', arial, sans-serif;
+}
+
 .formulario-login button{
   background-color: #e79128;
-  color: #fff;
+  color: black;
+  font-family: 'Poppins', arial, sans-serif;
   padding: 5px;
   border-radius: 10px;
   width:300px;
   cursor: pointer;
   border: none;
   font-size: 17px;
+  transition: transform ease 0.3s;
 }
+
+.formulario-login button:hover {
+  transform: scale(1.05);
+}
+
 .formulario-login a{
   color: #fff;
   text-decoration: none;

@@ -131,6 +131,7 @@ body {
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
 }
+
 .login img{ 
   width: 90px;
   height: 90px;
@@ -152,44 +153,56 @@ body {
   border-radius: 10px;
   width: 300px;
   font-size: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  outline: none;
 }
 
 .formulario-cadastro input:focus{
   border: 2px solid #E79128;
 }
 
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5); 
+  font-family: 'Poppins', arial, sans-serif;
+}
+
 .formulario-cadastro button{
   background-color: #e79128;
   color: black;
+  font-family: 'Poppins', arial, sans-serif;
   padding: 5px;
   border-radius: 10px;
-  width:300px;
+  width: 300px;
+  margin-top: 10px;
   cursor: pointer;
   border: none;
   font-size: 17px;
   transition: transform 0.3s ease;
 }
 
-.formulario-cadastro button{
-  transform: scale(1.1);
+.formulario-cadastro button:hover{
+  transform: scale(1.05);
 }
 
 .formulario-cadastro a{
   color: #fff;
   text-decoration: none;
-  font-size: 9.8px;
+  font-size: 14px;
 }
+
 .titulo{
   color:#e79128;
   font-size: 55px;
 }
+
 .formulario-cadastro p{
   color: #e79128;
 }
+
 .formulario-cadastro h2{
   color: #e79128;
 }
+
 .enviar-foto{
   display: flex;
   flex-direction: column;
@@ -201,21 +214,24 @@ body {
   color: rgba(255, 255, 255, 1);
   font-size: 14px;
 }
+
 .enviar-foto input[type="file"]{
   display: none;
 }
+
 .select-foto{
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
   display: block;
   text-align: center;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
   border: 2px dashed rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 15px;
 }
+
 .select-foto:hover{
   background: rgba(255, 255, 255, 0.2);
   border-color: #e79128;

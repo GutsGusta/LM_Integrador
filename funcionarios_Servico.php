@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/funcionarios.css">
     <link rel="icon" type="x-icon" href="uploads/Logo-LM.png">
-    <title>LM | Funcionários</title>
+    <title>Funcionários | LM</title>
 </head>
 
 <body>
