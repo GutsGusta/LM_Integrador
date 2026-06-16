@@ -7,9 +7,30 @@ $categoria_get = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
 
 $categorias = [
     'mestre_de_obra' => 'Mestre de Obra',
-    'pedreiro' => 'Pedreiro',
-    'servente' => 'Servente'
+    'pedreiro'       => 'Pedreiro',
+    'servente'       => 'Servente',
+    'eletricista'    => 'Eletricista',
+    'pintor'         => 'Pintor',
 ];
+
+
+function normalizarFuncao(string $funcao): string
+{
+    $funcao = mb_strtolower(trim($funcao), 'UTF-8');
+    $funcao = str_replace(
+        ['á', 'â', 'ã', 'à', 'é', 'ê', 'í', 'ó', 'ô', 'õ', 'ú', 'ç'],
+        ['a', 'a', 'a', 'a', 'e', 'e', 'i', 'o', 'o', 'o', 'u', 'c'],
+        $funcao
+    );
+    $funcao = str_replace(' ', '_', $funcao);
+    return $funcao;
+}
+
+function nomeCategoria(string $funcaoBanco, array $categorias): string
+{
+    $key = normalizarFuncao($funcaoBanco);
+    return $categorias[$key] ?? ucwords(str_replace('_', ' ', $funcaoBanco));
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $novoProfissional = [
@@ -66,7 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php
             foreach ($profissional as $funcionario) {
-                if ($categoria_get === '' || $funcionario['funcao'] === $categoria_get) {
+
+                $funcaoNormalizada = normalizarFuncao($funcionario['funcao']);
+
+                if ($categoria_get === '' || $funcaoNormalizada === $categoria_get) {
 
                     $avalia = "id_profissional = '" . $funcionario['id_profissional'] . "'";
                     $avaliacao_filtrada = readAll($pdo, 'avaliacoes', $avalia);
@@ -102,13 +126,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     ;
 
+                    $nomeFuncaoExibido = nomeCategoria($funcionario['funcao'], $categorias);
+
                     echo '
             <a href="desc.php?id=' . $funcionario['id_profissional'] . '">
                 <div class="card-funcionario">
                 <img src="' . 'uploads/' . $funcionario['foto'] . '" alt="' . $funcionario['nome_profissional'] . '">
                     <h3>' . $funcionario['nome_profissional'] . '</h3>
                     <div class="estrelas">' . $estrelas . '</div>
-                    <span class="especialidade">' . $categorias[$funcionario['funcao']] . '</span>
+                    <span class="especialidade">' . $nomeFuncaoExibido . '</span>
                 </div>
             </a>';
                 }

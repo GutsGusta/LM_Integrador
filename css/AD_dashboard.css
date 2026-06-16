@@ -339,9 +339,10 @@ body {
     font-weight: 600;
 }
 
-.status-pendente { color: #eab308; }
-.status-concluido { color: #22c55e; }
-.status-cancelado { color: #ef4444; }
+.status-pendente   { color: #eab308; }
+.status-aprovado   { color: #3b82f6; }
+.status-concluido  { color: #22c55e; }
+.status-cancelado  { color: #ef4444; }
 
 .profs-lista {
     display: flex;
@@ -376,6 +377,11 @@ body {
 .prof-info strong {
     display: block;
     color: white;
+    font-size: 13px;
+}
+
+.funcao {
+    color: #ffd767;
     font-size: 13px;
 }
 

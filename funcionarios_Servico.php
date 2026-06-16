@@ -12,7 +12,25 @@ $categorias = [
     'Gestão e leitura de projetos' => 'Gestão e leitura de projetos',
 ];
 
+function normalizarTexto(string $texto): string
+{
+    $texto = trim($texto);
+    $texto = mb_strtolower($texto, 'UTF-8');
+    $texto = preg_replace('/\s+/', ' ', $texto);
+    return $texto;
+}
 
+$categoriasNormalizadas = [];
+foreach ($categorias as $chave => $valor) {
+    $categoriasNormalizadas[normalizarTexto($chave)] = $valor;
+}
+
+
+function nomeServico(string $servicoBanco, array $categoriasNormalizadas): string
+{
+    $key = normalizarTexto($servicoBanco);
+    return $categoriasNormalizadas[$key] ?? $servicoBanco;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $novoProfissional = [
@@ -59,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </li>
             <?php
             foreach ($categorias as $kcat => $vcat) {
-                $ativa = $categoria_get === $kcat ? 'ativa' : '';
-                echo '<li class="aba ' . $ativa . '"><a href="funcionarios_Servico.php?categoria=' . $kcat . '">' . $vcat . '</a></li>';
+                $ativa = normalizarTexto($categoria_get) === normalizarTexto($kcat) ? 'ativa' : '';
+                echo '<li class="aba ' . $ativa . '"><a href="funcionarios_Servico.php?categoria=' . urlencode($kcat) . '">' . $vcat . '</a></li>';
             }
             ?>
         </ul>
@@ -69,7 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php
             foreach ($profissional as $funcionario) {
-                if ($categoria_get === '' || $funcionario['servico'] === $categoria_get) {
+
+                $servicoNormalizado = normalizarTexto($funcionario['servico']);
+
+                if ($categoria_get === '' || $servicoNormalizado === normalizarTexto($categoria_get)) {
 
                     $avalia = "id_profissional = '" . $funcionario['id_profissional'] . "'";
                     $avaliacao_filtrada = readAll($pdo, 'avaliacoes', $avalia);
@@ -105,13 +126,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     ;
 
+                    $nomeServicoExibido = nomeServico($funcionario['servico'], $categoriasNormalizadas);
+
                     echo '
             <a href="desc.php?id=' . $funcionario['id_profissional'] . '">
                 <div class="card-funcionario">
                 <img src="' . 'uploads/' . $funcionario['foto'] . '" alt="' . $funcionario['nome_profissional'] . '">
                     <h3>' . $funcionario['nome_profissional'] . '</h3>
                     <div class="estrelas">' . $estrelas . '</div>
-                    <span class="especialidade">' . $categorias[$funcionario['servico']] . '</span>
+                    <span class="especialidade">' . $nomeServicoExibido . '</span>
                 </div>
             </a>';
                 }
