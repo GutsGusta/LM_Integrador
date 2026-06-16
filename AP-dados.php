@@ -224,11 +224,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_servicos'])) {
 
                     </form>
 
-
-</html>
-</div>
-</div>
-</main>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 
 </html>
