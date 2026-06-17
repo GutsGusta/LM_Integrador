@@ -210,15 +210,9 @@ elseif ($mediaArredondada == 5)
 
                     </div>
                 </div>
-
             </div>
-
-
         </div>
-
-
     </div>
-
 
     <?php require_once "partials/footer.php"; ?>
 

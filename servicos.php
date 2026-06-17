@@ -23,15 +23,13 @@
             <h1 class="titulo">Conheça os Serviços Populares</h1>
 
             <div class="produtos">
-                <?php 
-                foreach ($servicos as $servico): 
-                    
-                    $imagem = !empty($servico['foto_servico']) ? $servico['foto_servico'] : 'exemplo.jpeg';
-                ?>
+                <?php foreach ($servicos as $servico): ?>
                     <article class="card">
-                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['foto_servico'] ?? ''); ?>">
+                        <img src="uploads/<?= $servico['foto_servico']; ?>" alt="<?= htmlspecialchars($servico['nome_servico'] ?? ''); ?>">
+                        
                         <h2><?= htmlspecialchars($servico['nome_servico'] ?? 'Serviço sem Nome'); ?></h2>
                         <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico'] ?? 'Geral'); ?></p>
+                        
                         <details>
                             <summary>Ver Valores</summary>
                             <div class="valores">
@@ -60,9 +58,7 @@
                             Ver Profissionais Qualificados
                         </a> 
                     </article>
-                <?php 
-                endforeach; 
-                ?>
+                <?php endforeach; ?>
             </div>
         </div>
 
