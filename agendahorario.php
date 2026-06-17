@@ -242,7 +242,7 @@ $horario_sistema = [
                 <input type="hidden" name="data_agenda" value="<?php echo htmlspecialchars($data_selecionada); ?>">
 
                 <div class="card-secao">
-                    <h3>📋 Serviço e Horário</h3>
+                    <h3>Serviço e Horário</h3>
                     <div class="campos-grid">
                         <div class="campo">
                             <label for="id_servico">Serviço (Preço por Hora)</label>
