@@ -9,7 +9,7 @@ if (isset($_SESSION['user_tipo'])) {
         header('Location: AP-dashboard.php');
         exit;
     } elseif ($_SESSION['user_tipo'] === 'cliente') {
-        header('Location: AC_dashbord.php');
+        header('Location: AC_dashboard.php');
         exit;
     } elseif ($_SESSION['user_tipo'] === 'admin') {
         header('Location: AD_dashboard.php');
