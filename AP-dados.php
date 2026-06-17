@@ -129,35 +129,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_servicos'])) {
             }
             ?>
             <div class="dados-principais">
-                <h4>Meus Dados:</h4>
+                <h4 class="titulo">Meus Dados:</h4>
+                
                 <form action="" method="POST" class="dados">
                     <div class="campo-horizontal">
                         <div class="campo">
-                            <p>Nome Completo:</p>
-                            <input type="text" name="nome_profissional"
-                                value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
+                            <label>Nome Completo:</label>
+                            <input type="text" name="nome_profissional" value="<?php echo htmlspecialchars($profissional['nome_profissional']); ?>" required>
                         </div>
                         <div class="campo">
-                            <p>E-mail:</p>
-                            <input type="email" name="email"
-                                value="<?php echo htmlspecialchars($profissional['email']); ?>" required>
+                            <label>E-mail:</label>
+                            <input type="email" name="email" value="<?php echo htmlspecialchars($profissional['email']); ?>" required>
                         </div>
                     </div>
+                    
                     <div class="campo-horizontal">
                         <div class="campo">
-                            <p>Telefone:</p>
-                            <input type="text" name="telefone"
-                                value="<?php echo htmlspecialchars($profissional['telefone']); ?>" required>
+                            <label>Telefone:</label>
+                            <input type="text" name="telefone" value="<?php echo htmlspecialchars($profissional['telefone']); ?>" required>
                         </div>
                         <div class="campo">
-                            <p>Cidade de Residência:</p>
-                            <input type="text" name="cidade_estado"
-                                value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
+                            <label>Cidade de Residência:</label>
+                            <input type="text" name="cidade_estado" value="<?php echo htmlspecialchars($profissional['cidade_estado']); ?>" required>
                         </div>
                     </div>
+                    
                     <div class="campo-horizontal">
                         <div class="campo">
-                            <p>Função</p>
+                            <label>Função</label>
                             <select name="funcao" required>
                                 <option value="Servente" <?php echo ($profissional['funcao'] == 'Servente') ? 'selected' : ''; ?>>Servente</option>
                                 <option value="Pedreiro" <?php echo ($profissional['funcao'] == 'Pedreiro') ? 'selected' : ''; ?>>Pedreiro</option>
@@ -165,66 +164,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_servicos'])) {
                             </select>
                         </div>
                         <div class="campo">
-                            <p>Alterar Senha</p>
-                            <input type="password" name="senha"
-                                value="<?php echo htmlspecialchars($profissional['senha']); ?>" required>
+                            <label>Alterar Senha</label>
+                            <input type="password" name="senha" value="<?php echo htmlspecialchars($profissional['senha']); ?>" required>
                         </div>
                     </div>
-                    <div class="botoes">
-                        <div class="botoes">
-                            <button type="submit" name="salvar_dados">Salvar</button>
-                        </div>
-                    </div>
+                    
+                    <button type="submit" name="salvar_dados" class="btn-salvar">Salvar Dados</button>
                 </form>
-                <div class="dados-principais">
-                    <h4>Serviços Qualificados:</h4>
 
-                    <?php
-                    $listaServicos = [
-                        'Reforma Residencial',
-                        'Gerenciamento de Obras',
-                        'Colocação de Pisos e Azulejos',
-                        'Preparação de massa e auxílio geral',
-                        'Construção de Muros',
-                        'Instalação de Portas',
-                        'Pintura',
-                        'Assentamento de Blocos',
-                        'Acabamento',
-                        'Reboco',
-                        'Concretagem',
-                        'Leitura de Projetos'
-                    ];
+                <h4 class="titulo" style="margin-top: 40px;">Serviços Qualificados:</h4>
 
-                    $servicosProfissional = [];
+                <?php
+                $listaServicos = [
+                    'Reforma Residencial',
+                    'Gerenciamento de Obras',
+                    'Colocação de Pisos e Azulejos',
+                    'Preparação de massa e auxílio geral',
+                    'Construção de Muros',
+                    'Instalação de Portas',
+                    'Pintura',
+                    'Assentamento de Blocos',
+                    'Acabamento',
+                    'Reboco',
+                    'Concretagem',
+                    'Leitura de Projetos'
+                ];
 
-                    if (!empty($profissional['servico'])) {
-                        $servicosProfissional = array_map(
-                            'trim',
-                            explode(',', $profissional['servico'])
-                        );
-                    }
-                    ?>
+                $servicosProfissional = [];
+                if (!empty($profissional['servico'])) {
+                    $servicosProfissional = array_map('trim', explode(',', $profissional['servico']));
+                }
+                ?>
 
-                    <form action="" method="POST" class="servicos">
-
-                        <?php foreach ($listaServicos as $servico): ?>
-
-                            <div class="check">
-                                <p><?= htmlspecialchars($servico) ?></p>
-
-                                <input type="checkbox" name="servicos[]" value="<?= htmlspecialchars($servico) ?>"
-                                    <?= in_array($servico, $servicosProfissional) ? 'checked' : '' ?>>
-                            </div>
-
-                        <?php endforeach; ?>
-
-                        <button type="submit" name="salvar_servicos">
-                            Salvar
-                        </button>
-
-                    </form>
-
-                </div>
+                <form action="" method="POST" class="servicos">
+                    <?php foreach ($listaServicos as $servico): ?>
+                        <div class="check">
+                            <input type="checkbox" name="servicos[]" value="<?= htmlspecialchars($servico) ?>" <?= in_array($servico, $servicosProfissional) ? 'checked' : '' ?>>
+                            <label><?= htmlspecialchars($servico) ?></label>
+                        </div>
+                    <?php endforeach; ?>
+                    
+                    <button type="submit" name="salvar_servicos" class="btn-salvar">Salvar Serviços</button>
+                </form>
             </div>
         </div>
     </main>

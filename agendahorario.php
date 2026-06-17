@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_profissional_selecionado = $_GET['id_profissional'] ?? '';
 }
 
-// Busca todos os serviços do profissional selecionado
 $todos_servicos = [];
 
 if (!empty($id_profissional_selecionado)) {
@@ -62,7 +61,6 @@ if (!empty($id_profissional_selecionado)) {
     $todos_servicos = $stmt_servicos->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// Retorna o preço conforme a função do profissional
 function valorPorFuncao(array $servico, string $funcao = ''): float
 {
     switch ($funcao) {
@@ -77,11 +75,9 @@ function valorPorFuncao(array $servico, string $funcao = ''): float
     }
 }
 
-// PROCESSAMENTO DO FORMULÁRIO DE AGENDAMENTO
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 
-    // --- CORREÇÃO: VALIDAÇÃO DO ENDEREÇO ANTES DE SALVAR ---
     $endereco_enviado = $_POST['endereco'] ?? '';
     $endereco_minusculo = mb_strtolower($endereco_enviado, 'UTF-8');
 
@@ -122,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
         exit;
     }
 
-    // --- CÁLCULO DAS HORAS TRABALHADAS ---
     $intervalo = $tempo_inicio->diff($tempo_fim);
     $total_horas = $intervalo->h + ($intervalo->days * 24);
     $valor_total_final = $total_horas * $preco_por_hora;
@@ -312,7 +307,7 @@ $horario_sistema = [
                         
                         <?php if (isset($_GET['erro']) && $_GET['erro'] === 'regiao_invalida'): ?>
                             <p style="color: #ff3333; margin-top: 6px; font-weight: bold; font-size: 14px;">
-                                ❌ Erro: Atendimento indisponível fora do estado de São Paulo (SP).
+                                Erro: Atendimento indisponível fora do estado de São Paulo (SP).
                             </p>
                         <?php endif; ?>
                     </div>

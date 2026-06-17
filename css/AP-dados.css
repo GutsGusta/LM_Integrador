@@ -130,7 +130,7 @@ main {
     justify-content: center;
     flex-direction: row;
     gap: 70px;
-    margin-left: 240px;
+    margin-left: 180px;
     width: calc(100% - 240px);
 }
 
@@ -229,120 +229,145 @@ main {
 }
 
 .dados-principais {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+    flex: 1;
+    margin-left: 240px; 
+    padding: 40px 48px;
+    box-sizing: border-box;
+}
+
+.titulo {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 28px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .dados {
-    background-color: #8f8e8e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
-    width: 650px;
-}
-
-.dados input {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    font-family: 'Poppins', arial, sans-serif;
-    font-size: 14px;
-    outline: none;
-}
-
-.dados select {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid #ffffff26;
-    font-family: 'Poppins', arial, sans-serif;
-    width: 300px;
-    outline: none;
-}
-
-.dados option {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid #ffffff26;
-    font-family: 'Poppins', arial, sans-serif;
-    outline: none;
-}
-
-.dados button {
-    background-color: #800020;
-    color: white;
-    border: none;
-    font-size: 20px;
-    width: 400px;
-    height: 35px;
-    border-radius: 5px;
-    margin: 25px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto; 
+    box-sizing: border-box;
 }
 
 .campo-horizontal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
+    margin-bottom: 28px;
+    width: 100%;
 }
 
 .campo {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 20px;
+    width: 100%;
 }
 
-.campo p {
-    margin-top: 15px;
+.campo label {
+    display: block;
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
 }
 
-.campo input {
+.dados input,
+.dados select {
+    width: 100%;
+    background: #2a2a2a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: white;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.dados input:focus,
+.dados select:focus {
+    border-color: #e79128;
+}
+
+.dados option {
+    background: #2a2a2a;
+    color: white;
+}
+
+.btn-salvar {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    background: #800020;
     border: none;
-    font-size: 25px;
-    width: 300px;
-    border-radius: 5px;
-    text-align: center;
+    color: white;
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+    margin: 24px auto 0 auto;
 }
 
-.campo select {
-    border: none;
-    font-size: 20px;
-    border-radius: 5px;
+.btn-salvar:hover {
+    background: #9a0025;
 }
 
 .servicos {
-    background-color: #8f8e8e;
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: min-content;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
-    max-width: 700px;
-    margin-right: 20px;
-    padding: 20px;
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    box-sizing: border-box;
 }
 
-.servicos button {
-    background-color: #800020;
-    color: white;
-    border: none;
-    font-size: 20px;
-    width: 400px;
-    height: 35px;
-    border-radius: 5px;
-    margin: 25px 0px;
-    grid-column: 1 / -1; 
-    justify-self: center;
+.servicos .btn-salvar {
+    grid-column: 1 / -1;
 }
 
 .check {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 12px;
+    background: #2a2a2a;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-sizing: border-box;
+}
+
+.check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #e79128;
+    cursor: pointer;
+    margin: 0;
+}
+
+.check label {
+    color: white;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

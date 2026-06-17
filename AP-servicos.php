@@ -2,7 +2,6 @@
 require_once './data/crud.php';
 session_start();
 
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -15,18 +14,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit;
 }
 
+$idProfissional = (int) $_SESSION['user_id'];
+
 $profissional = read(
     $pdo,
     'profissional',
-    'id_profissional = ' . (int) $_SESSION['user_id']
+    'id_profissional = ' . $idProfissional
 );
 
 if (!$profissional) {
     die('Profissional não encontrado.');
 }
-$idProfissional = $_SESSION['user_id'];
 
-$sql = "
+if (isset($_GET['id']) && isset($_GET['acao'])) {
+    $id_agendamento = (int)$_GET['id'];
+    $acao = $_GET['acao'];
+    
+    if ($acao === 'aceitar') {
+        $sqlAlterar = "UPDATE agendamento SET status = 'Em andamento' WHERE id_agendamento = ? AND id_profissional = ?";
+        $stmtAlterar = $pdo->prepare($sqlAlterar);
+        $stmtAlterar->execute([$id_agendamento, $idProfissional]);
+    } elseif ($acao === 'recusar') {
+        $sqlAlterar = "UPDATE agendamento SET status = 'Recusado' WHERE id_agendamento = ? AND id_profissional = ?";
+        $stmtAlterar = $pdo->prepare($sqlAlterar);
+        $stmtAlterar->execute([$id_agendamento, $idProfissional]);
+    }
+  
+    header('Location: ' . strtok($_SERVER["REQUEST_URI"], '?'));
+    exit;
+}
+
+$sqlAndamento = "
 SELECT
     a.id_agendamento,
     a.preco,
@@ -36,29 +54,13 @@ SELECT
     c.telefone_cliente,
     s.nome_servico
 FROM agendamento a
-JOIN cliente c
-    ON a.id_cliente = c.id_cliente
-LEFT JOIN servicos s
-    ON a.id_servico = s.id_servico
-WHERE a.id_profissional = ?
-AND a.status = 'Em andamento'
+JOIN cliente c ON a.id_cliente = c.id_cliente
+LEFT JOIN servicos s ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ? AND a.status = 'Em andamento'
 ";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$idProfissional]);
-$agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['user_id']]);
-$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['user_id']]);
-$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['user_id']]);
-
-$agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmtAndamento = $pdo->prepare($sqlAndamento);
+$stmtAndamento->execute([$idProfissional]);
+$agendamentos = $stmtAndamento->fetchAll(PDO::FETCH_ASSOC);
 
 $sqlPendentes = "
 SELECT
@@ -70,28 +72,17 @@ SELECT
     c.telefone_cliente,
     s.nome_servico
 FROM agendamento a
-JOIN cliente c
-    ON a.id_cliente = c.id_cliente
-LEFT JOIN servicos s
-    ON a.id_servico = s.id_servico
-WHERE a.id_profissional = ?
-AND a.status = 'Pendente'
+JOIN cliente c ON a.id_cliente = c.id_cliente
+LEFT JOIN servicos s ON a.id_servico = s.id_servico
+WHERE a.id_profissional = ? AND a.status = 'Pendente'
 ";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$idProfissional]);
-$pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 $stmtPendentes = $pdo->prepare($sqlPendentes);
-$stmtPendentes->execute([$_SESSION['user_id']]);
-
+$stmtPendentes->execute([$idProfissional]);
 $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 
 <head>
     <meta charset="UTF-8">
@@ -102,11 +93,8 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
     <title>Serviços Requeridos</title>
 </head>
 
-
 <body>
-    <?php
-    require_once 'partials/header.php';
-    ?>
+    <?php require_once 'partials/header.php'; ?>
     <main>
         <div class="pagina-principal">
 
@@ -118,7 +106,6 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                         <span><?php echo htmlspecialchars($profissional['cidade_estado']); ?></span>
                         <span><?php echo htmlspecialchars($profissional['funcao']); ?></span>
                     </div>
-
                 </div>
 
                 <a href="AP-dashboard.php" class="nav-item">
@@ -146,14 +133,13 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Sair
                     </button>
-                </form>>
+                </form>
             </div>
 
             <div class="pagina-servicos">
 
                 <div class="servicos">
                     <h3>Serviços em Andamento</h3>
-
                     <table class="servicos-tabela">
                         <tr>
                             <th>Nome do Cliente</th>
@@ -165,9 +151,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
 
                         <?php if (!empty($agendamentos)): ?>
-
                             <?php foreach ($agendamentos as $agendamento): ?>
-
                                 <tr>
                                     <td><?= htmlspecialchars($agendamento['nome_cliente']) ?></td>
                                     <td><?= htmlspecialchars($agendamento['telefone_cliente']) ?></td>
@@ -176,23 +160,17 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                                     <td>R$ <?= number_format($agendamento['preco'], 2, ',', '.') ?></td>
                                     <td><?= htmlspecialchars($agendamento['status']) ?></td>
                                 </tr>
-
                             <?php endforeach; ?>
-
                         <?php else: ?>
-
                             <tr>
                                 <td colspan="6">Nenhum serviço encontrado.</td>
                             </tr>
-
                         <?php endif; ?>
-
                     </table>
                 </div>
 
                 <div class="servicos">
                     <h3>Respostas Pendentes</h3>
-
                     <table class="servicos-tabela">
                         <tr>
                             <th>Nome do Cliente</th>
@@ -204,9 +182,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
 
                         <?php if (!empty($pendentes)): ?>
-
                             <?php foreach ($pendentes as $item): ?>
-
                                 <tr>
                                     <td><?= htmlspecialchars($item['nome_cliente']) ?></td>
                                     <td><?= htmlspecialchars($item['telefone_cliente']) ?></td>
@@ -215,28 +191,24 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
                                     <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
 
                                     <td>
-                                        <a href="aprovar.php?id=<?= $item['id_agendamento'] ?>">
+                                        <a href="?id=<?= $item['id_agendamento'] ?>&acao=aceitar">
                                             <img src="uploads/certo-botao.png" alt="Aprovar">
                                         </a>
 
-                                        <a href="recusar.php?id=<?= $item['id_agendamento'] ?>">
+                                        <a href="?id=<?= $item['id_agendamento'] ?>&acao=recusar">
                                             <img src="uploads/errado.png" alt="Recusar">
                                         </a>
                                     </td>
                                 </tr>
-
                             <?php endforeach; ?>
-
                         <?php else: ?>
-
                             <tr>
                                 <td colspan="6">Nenhuma solicitação pendente.</td>
                             </tr>
-
                         <?php endif; ?>
-
                     </table>
                 </div>
+
             </div>
         </div>
     </main>

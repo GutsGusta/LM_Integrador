@@ -345,6 +345,7 @@ tbody td {
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
     transition: opacity 0.2s;
+    
 }
 
 .btn-acao:hover {
@@ -354,9 +355,11 @@ tbody td {
 .btn-editar {
     background: rgba(231, 145, 40, 0.15);
     color: #e79128;
+    text-decoration: none;
 }
 
 .btn-excluir {
     background: rgba(128, 0, 32, 0.15);
     color: #e57373;
+    text-decoration: none;
 }
