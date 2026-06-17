@@ -1,4 +1,3 @@
-
 <?php
     require_once './data/crud.php';
     
@@ -26,10 +25,11 @@
             <div class="produtos">
                 <?php 
                 foreach ($servicos as $servico): 
-                    $imagem = !empty($servico['imagem_servico']) ? $servico['imagem_servico'] : 'exemplo.jpeg';
+                    
+                    $imagem = !empty($servico['foto_servico']) ? $servico['foto_servico'] : 'exemplo.jpeg';
                 ?>
                     <article class="card">
-                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['imagem_servico'] ?? ''); ?>">
+                        <img src="uploads/<?= $imagem; ?>" alt="<?= htmlspecialchars($servico['foto_servico'] ?? ''); ?>">
                         <h2><?= htmlspecialchars($servico['nome_servico'] ?? 'Serviço sem Nome'); ?></h2>
                         <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico'] ?? 'Geral'); ?></p>
                         <details>
@@ -61,7 +61,6 @@
                         </a> 
                     </article>
                 <?php 
-          
                 endforeach; 
                 ?>
             </div>
@@ -82,5 +81,3 @@
     ?>
 </body>
 </html>
-
-

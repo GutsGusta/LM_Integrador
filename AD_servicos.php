@@ -9,7 +9,6 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
-// CORRIGIDO: 'preco_medio' não existe → usar valor_mestre, valor_pedreiro, valor_servente
 $servicos = $pdo->query("
     SELECT id_servico, nome_servico, tipo_servico,
            valor_mestre, valor_pedreiro, valor_servente
@@ -62,7 +61,6 @@ $servicos = $pdo->query("
                 Funcionários
             </a>
 
-            <!-- CORRIGIDO: action era AD_usuarios.php e AC_agenda.php (errados) → AD_servicos.php -->
             <form method="POST" action="AD_servicos.php">
                 <button type="submit" name="logout" class="nav-item nav-sair">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -75,11 +73,13 @@ $servicos = $pdo->query("
             <h2 class="content-titulo">Gerenciar Serviços</h2>
 
             <div class="tabela-card">
-                <div class="tabela-header">
+                <div class="tabela-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <h3>Tabela de Serviços</h3>
+                    <a href="add-servico.php" class="btn-acao btn-editar" style="text-decoration: none; padding: 8px 15px; border-radius: 4px;">
+                        <i class="fa-solid fa-plus"></i> Adicionar Serviço
+                    </a>
                 </div>
 
-                <!-- CORRIGIDO: removida tabela duplicada e campo preco_medio inexistente -->
                 <table>
                     <thead>
                         <tr>
@@ -88,7 +88,7 @@ $servicos = $pdo->query("
                             <th>Preço Mestre de Obras</th>
                             <th>Preço Pedreiro</th>
                             <th>Preço Servente</th>
-                        </tr>
+                            <th>Ações</th> </tr>
                     </thead>
                     <tbody>
                         <?php if (!empty($servicos)): ?>
@@ -96,15 +96,23 @@ $servicos = $pdo->query("
                                 <tr>
                                     <td><?= htmlspecialchars($servico['nome_servico']) ?></td>
                                     <td><?= htmlspecialchars($servico['tipo_servico']) ?></td>
-                                    <td>R$ <?= number_format($servico['valor_mestre'],   2, ',', '.') ?></td>
+                                    <td>R$ <?= number_format($servico['valor_mestre'],  2, ',', '.') ?></td>
                                     <td>R$ <?= number_format($servico['valor_pedreiro'], 2, ',', '.') ?></td>
                                     <td>R$ <?= number_format($servico['valor_servente'], 2, ',', '.') ?></td>
+                                    <td>
+                                        <div class="acoes">
+                                            <a href="alterservico.php?id=<?= $servico['id_servico'] ?>"
+                                               class="btn-acao btn-editar">Editar</a>
+                                            <a href="deleteserv.php?id=<?= $servico['id_servico'] ?>"
+                                               class="btn-acao btn-excluir"
+                                               onclick="return confirm('Deseja realmente excluir este serviço?')">Excluir</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5">Nenhum serviço encontrado.</td>
-                            </tr>
+                                <td colspan="6">Nenhum serviço encontrado.</td> </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

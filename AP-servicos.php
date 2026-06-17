@@ -121,7 +121,7 @@ $pendentes = $stmtPendentes->fetchAll(PDO::FETCH_ASSOC);
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashboard.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>

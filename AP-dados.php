@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_servicos'])) {
 
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item">
+                <a href="AP-dashboard.php" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>

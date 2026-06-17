@@ -98,7 +98,7 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
 
-                <a href="AP-dashbord.php" class="nav-item ativo">
+                <a href="AP-dashboard.php" class="nav-item ativo">
                     <i class="fa-solid fa-house"></i>
                     Meu Dashboard
                 </a>
@@ -131,7 +131,6 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                 <div class="estatisticas">
 
                     <div class="estatisticas-indv">
-                        <img src="uploads/fatura.png" alt="Experiência">
                         <img src="uploads/fatura.png" alt="Experiência">
                         <div class="estatisticas-txt">
                             <h4>Experiência</h4>
@@ -189,9 +188,6 @@ $proximos_servicos = $stmt_proximos->fetchAll(PDO::FETCH_ASSOC);
                         <?php endif; ?>
                     </div>
 
-                    <div class="quadrados-indv">
-                        <h2>Próximos Serviços</h2>
-                        <div class="linha"></div>
                     <div class="quadrados-indv">
                         <h2>Próximos Serviços</h2>
                         <div class="linha"></div>

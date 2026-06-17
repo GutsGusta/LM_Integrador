@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome        = $_POST['nome_profissional'] ?? '';
     $email       = $_POST['email'] ?? '';
     $telefone    = $_POST['telefone'] ?? '';
+    $cidade_estado = $_POST['cidade_estado'] ?? '';
     $cpf         = $_POST['cpf_profissional'] ?? '';
     $senha       = $_POST['senha'] ?? ''; 
     $funcao      = $_POST['funcao'] ?? '';
@@ -41,12 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'nome_profissional'   => $nome,
             'email'               => $email,
             'telefone'            => $telefone,
-            'cidade_estado'       => 'Não Informado', 
+            'cidade_estado'       => !empty($cidade_estado) ? $cidade_estado . ', SP' : 'Não informada', 
             'cpf'                 => $cpf,            
             'senha'               => $senha,
             'funcao'              => $funcao,         
-            'foto'                => $nome_foto,
-            'servico'             => $funcao,        
+            'foto'                => $nome_foto,    
             'experiencia'         => !empty($experiencia) ? $experiencia . ' anos' : 'Não informada',
         ];
 
@@ -92,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="email" id="email" name="email" placeholder="Email" required>
         <input type="text" id="telefone" name="telefone" placeholder="Telefone">
         <input type="text" id="cpf" name="cpf_profissional" placeholder="CPF" required>
+        <input type="text" id="cpf" name="cidade_estado" placeholder="Cidade de Residência" required>
         
         <p>Qual sua Função?</p>
         <select name="funcao" required>
