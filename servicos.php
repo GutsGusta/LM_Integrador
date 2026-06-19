@@ -28,7 +28,7 @@
                         <img src="uploads/<?= $servico['foto_servico']; ?>" alt="<?= htmlspecialchars($servico['nome_servico'] ?? ''); ?>">
                         
                         <h2><?= htmlspecialchars($servico['nome_servico'] ?? 'Serviço sem Nome'); ?></h2>
-                        <p style="text-align: center; color: #666; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico'] ?? 'Geral'); ?></p>
+                        <p style="text-align: center; color: #ffd767; font-style: italic;"><?= htmlspecialchars($servico['tipo_servico'] ?? 'Geral'); ?></p>
                         
                         <details>
                             <summary>Ver Valores</summary>

@@ -131,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="card-funcionario">
                 <img src="' . 'uploads/' . $funcionario['foto'] . '" alt="' . $funcionario['nome_profissional'] . '">
                     <h3>' . $funcionario['nome_profissional'] . '</h3>
+                    <p style="color: #e79128;">'.$funcionario['cidade_estado'].'</p>
                     <div class="estrelas">' . $estrelas . '</div>
                     <span class="especialidade">' . $nomeFuncaoExibido . '</span>
                 </div>

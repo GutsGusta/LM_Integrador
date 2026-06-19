@@ -94,6 +94,7 @@ elseif ($mediaArredondada == 5)
                     <img src="uploads/<?= htmlspecialchars($profissional['foto']) ?>"
                         alt="<?= htmlspecialchars($profissional['nome_profissional']) ?>">
                     <h2><?= htmlspecialchars($profissional['nome_profissional']) ?></h2>
+                    <p style="color: #e79128; margin-bottom: 5px;"><?= htmlspecialchars($profissional['cidade_estado']) ?></p>
                     <span class="badge-categoria">
                         <?= htmlspecialchars($nomeCategoria) ?>
                     </span>
